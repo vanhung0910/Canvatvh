@@ -714,10 +714,7 @@ const ENTERTAINMENT_PRODUCTS: Product[] = [
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/17/e2/90/ed/3abb07328c29096fd136629e25a6c3e48f3c27a3c5dd986ef062ffe9-w:2400-h:3600-l:5327075-t:image/png.png",
     plans: [
-      { label: "1 Tháng", price: "399.000đ" },
-      { label: "3 Tháng", price: "1.099.000đ" },
-      { label: "6 Tháng", price: "1.999.000đ" },
-      { label: "1 Năm", price: "3.499.000đ" },
+      { label: "1 Năm", price: "399.000đ" },
     ],
   },
   {
