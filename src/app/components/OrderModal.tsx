@@ -13,17 +13,23 @@ export function OrderModal({
 }: OrderModalProps) {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
-  const [selectedPlan, setSelectedPlan] = useState(product.plans[0]?.label || "");
-  const [chatgptType, setChatgptType] = useState<"share" | "chinh-chu">("share");
+  const [selectedPlan, setSelectedPlan] = useState(
+    product.plans[0]?.label || "",
+  );
+  const [chatgptType, setChatgptType] = useState<
+    "share" | "chinh-chu"
+  >("share");
   const [paymentMethod] = useState("Chuyển khoản");
   const [submitted, setSubmitted] = useState(false);
 
   const chatgptPrices: Record<string, string> = {
-    "share": "129.000đ",
+    share: "129.000đ",
     "chinh-chu": "420.000đ",
   };
 
-  const isChatGPT = product.name.toLowerCase().includes("chatgpt");
+  const isChatGPT = product.name
+    .toLowerCase()
+    .includes("chatgpt");
 
   const handleOrder = () => {
     if (!fullName.trim() || !phone.trim()) {
@@ -131,7 +137,7 @@ export function OrderModal({
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="Số điện thoại"
+                placeholder="SĐT có đăng kí Zalo"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all text-sm"
               />
             </div>
@@ -143,10 +149,18 @@ export function OrderModal({
                   <select
                     className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 appearance-none bg-white text-sm pr-8"
                     value={chatgptType}
-                    onChange={(e) => setChatgptType(e.target.value as "share" | "chinh-chu")}
+                    onChange={(e) =>
+                      setChatgptType(
+                        e.target.value as "share" | "chinh-chu",
+                      )
+                    }
                   >
-                    <option value="share">ChatGPT Plus (Dùng chung)</option>
-                    <option value="chinh-chu">ChatGPT Plus (Chính chủ)</option>
+                    <option value="share">
+                      ChatGPT Plus (Dùng chung)
+                    </option>
+                    <option value="chinh-chu">
+                      ChatGPT Plus (Chính chủ)
+                    </option>
                   </select>
                 ) : (
                   <select
@@ -184,10 +198,17 @@ export function OrderModal({
                   <select
                     className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 appearance-none bg-white text-sm pr-8"
                     value={selectedPlan}
-                    onChange={(e) => setSelectedPlan(e.target.value)}
+                    onChange={(e) =>
+                      setSelectedPlan(e.target.value)
+                    }
                   >
                     {product.plans.map((plan) => (
-                      <option key={plan.label} value={plan.label}>{plan.label}</option>
+                      <option
+                        key={plan.label}
+                        value={plan.label}
+                      >
+                        {plan.label}
+                      </option>
                     ))}
                   </select>
                 )}
@@ -242,7 +263,9 @@ export function OrderModal({
                   color: "#1a1a4e",
                 }}
               >
-                {isChatGPT ? chatgptPrices[chatgptType] : (selectedPlanData?.price || "")}
+                {isChatGPT
+                  ? chatgptPrices[chatgptType]
+                  : selectedPlanData?.price || ""}
               </span>
             </div>
 

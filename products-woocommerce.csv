@@ -1,0 +1,91 @@
+Type,SKU,Name,Published,"Is featured?","Visibility in catalog","Short description",Description,"Tax status","In stock?",Stock,"Regular price","Sale price",Categories,Images,Parent,"Attribute 1 name","Attribute 1 value(s)","Attribute 1 visible","Attribute 1 global"
+variable,TVH-001,Capcut Pro,1,1,visible,"Capcut Pro bản quyền giá rẻ","Tài khoản Capcut Pro chính hãng, bảo hành trọn đời",taxable,1,5,,,"Đang Bán Chạy",https://content.pancake.vn/1/s702x1053/fwebp0/13/1a/60/66/6bfe386de212ab2d2d36baf219722399a5996b23e5e5f87eb78cdd49-w:2400-h:3600-l:857912-t:image/png.png,,Gói,"1 Tháng",1,1
+variation,TVH-001-1M,Capcut Pro - 1 Tháng,1,0,visible,,,taxable,1,5,60000,,,,TVH-001,Gói,"1 Tháng",1,1
+variable,TVH-002,Canva Pro,1,1,visible,"Canva Pro bản quyền","Tài khoản Canva Pro chính hãng",taxable,1,7,,,"Đang Bán Chạy, Thiết Kế",https://content.pancake.vn/1/s702x1053/fwebp0/cf/87/0e/58/77923d59f6e92885f56671d17fc3d9885168822cfbc04acc22f9d236-w:2400-h:3600-l:1401843-t:image/png.png,,Gói,"1 Tháng | 1 Năm",1,1
+variation,TVH-002-1M,Canva Pro - 1 Tháng,1,0,visible,,,taxable,1,7,15000,,,,TVH-002,Gói,"1 Tháng",1,1
+variation,TVH-002-1Y,Canva Pro - 1 Năm,1,0,visible,,,taxable,1,7,190000,,,,TVH-002,Gói,"1 Năm",1,1
+variable,TVH-003,Google One 2TB,1,1,visible,"Google One 2TB","Dung lượng lưu trữ 2TB chính hãng",taxable,1,7,,,"Đang Bán Chạy",https://content.pancake.vn/1/s702x1053/fwebp0/9c/85/95/e2/0643a19ac56e0d0e05e1be20b8eff0793ab1d1a5044d62fb8f95ad78-w:2400-h:3600-l:2758098-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-003-1Y,Google One 2TB - 1 Năm,1,0,visible,,,taxable,1,7,250000,,,,TVH-003,Gói,"1 Năm",1,1
+variable,TVH-004,iCloud+ 400GB,1,0,visible,"iCloud+ 400GB","iCloud+ 400GB bản quyền",taxable,1,6,,,"Đang Bán Chạy",https://content.pancake.vn/1/s702x1053/fwebp0/be/22/d4/71/fe6d5e791f0a17e99cb0991fee4acbddab3edfa8bae61cdf58e50378-w:2400-h:3600-l:469472-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-004-1Y,iCloud+ 400GB - 1 Năm,1,0,visible,,,taxable,1,6,650000,,,,TVH-004,Gói,"1 Năm",1,1
+variable,TVH-005,ChatGPT Plus,1,1,visible,"ChatGPT Plus chính chủ","ChatGPT Plus dùng chung hoặc chính chủ",taxable,1,8,,,"Đang Bán Chạy, Trợ Lý AI",https://content.pancake.vn/1/s702x1053/fwebp0/13/ce/96/58/4f93be895e52df7810b3dca33f45664ccc2bcaa559ab4f6f387c62e4-w:2400-h:3600-l:937688-t:image/png.png,,Gói,"1 Tháng",1,1
+variation,TVH-005-1M,ChatGPT Plus - 1 Tháng,1,0,visible,,,taxable,1,8,89000,,,,TVH-005,Gói,"1 Tháng",1,1
+variable,TVH-006,Google AI Ultra,1,0,visible,"Google AI Ultra","Google AI Ultra bản quyền",taxable,1,6,,,"Trợ Lý AI",https://content.pancake.vn/1/s702x1053/fwebp0/60/9c/1f/be/df80fbd6485921fcd5e21cfec9b102fd87686d1371fd0c39e520fb82-w:2400-h:3600-l:2084072-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-006-1M,Google AI Ultra - 1 Tháng,1,0,visible,,,taxable,1,6,650000,,,,TVH-006,Gói,"1 Tháng",1,1
+variation,TVH-006-3M,Google AI Ultra - 3 Tháng,1,0,visible,,,taxable,1,6,1799000,,,,TVH-006,Gói,"3 Tháng",1,1
+variation,TVH-006-6M,Google AI Ultra - 6 Tháng,1,0,visible,,,taxable,1,6,3299000,,,,TVH-006,Gói,"6 Tháng",1,1
+variation,TVH-006-1Y,Google AI Ultra - 1 Năm,1,0,visible,,,taxable,1,6,5999000,,,,TVH-006,Gói,"1 Năm",1,1
+variable,TVH-007,Spotify Premium,1,0,visible,"Spotify Premium","Spotify Premium chính hãng",taxable,1,7,,,"Xem Phim - Giải Trí",https://content.pancake.vn/1/s702x1053/fwebp0/2e/c6/b9/8e/03794cc15316b8f068e8197f7d54ca71971fb40f1fdd440ccd865077-w:2400-h:3600-l:510259-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-007-1Y,Spotify Premium - 1 Năm,1,0,visible,,,taxable,1,7,399000,,,,TVH-007,Gói,"1 Năm",1,1
+variable,TVH-008,Youtube Premium,1,1,visible,"Youtube Premium","Youtube Premium 1 năm",taxable,1,4,,,"Đang Bán Chạy, Xem Phim - Giải Trí",https://content.pancake.vn/1/s702x1053/fwebp0/ca/04/cb/b7/3864eb267345978b394857b0a02aebe0b332027c3ab6e12f318cdc37-w:2400-h:3600-l:463501-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-008-1Y,Youtube Premium - 1 Năm,1,0,visible,,,taxable,1,4,599000,,,,TVH-008,Gói,"1 Năm",1,1
+variable,TVH-009,Office 365,1,1,visible,"Microsoft Office 365","Office 365 bản quyền",taxable,1,3,,,"Làm Việc",https://content.pancake.vn/1/s702x1053/fwebp0/94/3f/23/69/2ff09c3f77802d794693b54f3930d4ba8a5ebf0a1767bd0d14a86445-w:2400-h:3600-l:2948033-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-009-1Y,Office 365 - 1 Năm,1,0,visible,,,taxable,1,3,239000,,,,TVH-009,Gói,"1 Năm",1,1
+variable,TVH-010,Kaspersky Premium,1,0,visible,"Kaspersky Premium","Phần mềm diệt virus bản quyền",taxable,1,8,,,"Đang Bán Chạy",https://content.pancake.vn/1/s702x1053/fwebp0/b9/40/f5/31/4cbac65cf0547f6616af061019ac85225e6cfb011f03b45f9d788b6e-w:2400-h:3600-l:672960-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-010-1Y,Kaspersky Premium - 1 Năm,1,0,visible,,,taxable,1,8,299000,,,,TVH-010,Gói,"1 Năm",1,1
+variable,TVH-011,Quillbot Premium,1,0,visible,"Quillbot Premium","Quillbot Premium 1 năm",taxable,1,7,,,"Học Tập",https://content.pancake.vn/1/s702x1053/fwebp0/6d/be/ff/3f/a89ae0baf4a0a0acb411536c72bf8efb10e2881fd43338814f0f6f3c-w:2400-h:3600-l:1051242-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-011-1Y,Quillbot Premium - 1 Năm,1,0,visible,,,taxable,1,7,199000,,,,TVH-011,Gói,"1 Năm",1,1
+variable,TVH-012,"Grammarly Pro + AI",1,1,visible,"Grammarly Pro + AI","Grammarly Pro tích hợp AI",taxable,1,7,,,"Học Tập",https://content.pancake.vn/1/s702x1053/fwebp0/c6/ac/17/25/f6a3a80c013e0dff7c5edac0f46f4480f7a55db3668d1b5e125ba7c1-w:2400-h:3600-l:776470-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-012-1M,Grammarly Pro - 1 Tháng,1,0,visible,,,taxable,1,7,199000,,,,TVH-012,Gói,"1 Tháng",1,1
+variation,TVH-012-3M,Grammarly Pro - 3 Tháng,1,0,visible,,,taxable,1,7,549000,,,,TVH-012,Gói,"3 Tháng",1,1
+variation,TVH-012-6M,Grammarly Pro - 6 Tháng,1,0,visible,,,taxable,1,7,999000,,,,TVH-012,Gói,"6 Tháng",1,1
+variation,TVH-012-1Y,Grammarly Pro - 1 Năm,1,0,visible,,,taxable,1,7,1799000,,,,TVH-012,Gói,"1 Năm",1,1
+variable,TVH-020,"Adobe Full App",1,0,visible,"Adobe Full App","Trọn bộ Adobe Creative Cloud",taxable,1,5,,,"Thiết Kế",https://content.pancake.vn/1/s702x1053/fwebp0/80/81/b8/7d/fbc5fff362f14a7bf242d4b6557a22447986eb6b421e55744960229a-w:2400-h:3600-l:1748870-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-020-1Y,Adobe Full App - 1 Năm,1,0,visible,,,taxable,1,5,799000,,,,TVH-020,Gói,"1 Năm",1,1
+variable,TVH-021,Autodesk AutoCAD,1,0,visible,"Autodesk AutoCAD","AutoCAD bản quyền",taxable,1,6,,,"Thiết Kế",https://content.pancake.vn/1/s702x1053/fwebp0/f0/b7/a0/a6/d817aa39f4714d3ecd32b9ad9c195badafbd15505a014b31bf562cba-w:2400-h:3600-l:930832-t:image/png.png,,Gói,"1 Năm",1,1
+variation,TVH-021-1Y,AutoCAD - 1 Năm,1,0,visible,,,taxable,1,6,299000,,,,TVH-021,Gói,"1 Năm",1,1
+variable,TVH-022,Figma Pro,1,0,visible,"Figma Pro","Figma Pro bản quyền",taxable,1,4,,,"Thiết Kế",https://content.pancake.vn/1/s702x1053/fwebp0/0b/e0/2c/ea/4f85c905ca87bc4f8cc950905c8eed691e530101fec2497eb9b63abf-w:2400-h:3600-l:297633-t:image/png.png,,Gói,"1 Tháng",1,1
+variation,TVH-022-1M,Figma Pro - 1 Tháng,1,0,visible,,,taxable,1,4,179000,,,,TVH-022,Gói,"1 Tháng",1,1
+variable,TVH-023,Freepik Premium,1,0,visible,"Freepik Premium","Freepik Premium 6 tháng",taxable,1,4,,,"Thiết Kế",https://content.pancake.vn/1/s702x1053/fwebp0/0a/5a/17/b6/26382df2f2cbe8dfb56e9dafb4422597382b49b0a7974989865c0e2f-w:2400-h:3600-l:594939-t:image/png.png,,Gói,"6 Tháng",1,1
+variation,TVH-023-6M,Freepik Premium - 6 Tháng,1,0,visible,,,taxable,1,4,299000,,,,TVH-023,Gói,"6 Tháng",1,1
+variable,TVH-030,SuperGrok,1,0,visible,"SuperGrok","SuperGrok AI",taxable,1,8,,,"Trợ Lý AI",https://content.pancake.vn/1/s702x1053/fwebp0/ae/1e/0e/63/d42e7e23395ebf23d795b1dc8eeeac5998bcae396345e30cb4165899-w:2400-h:3600-l:434204-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-030-1M,SuperGrok - 1 Tháng,1,0,visible,,,taxable,1,8,199000,,,,TVH-030,Gói,"1 Tháng",1,1
+variation,TVH-030-3M,SuperGrok - 3 Tháng,1,0,visible,,,taxable,1,8,549000,,,,TVH-030,Gói,"3 Tháng",1,1
+variation,TVH-030-6M,SuperGrok - 6 Tháng,1,0,visible,,,taxable,1,8,999000,,,,TVH-030,Gói,"6 Tháng",1,1
+variation,TVH-030-1Y,SuperGrok - 1 Năm,1,0,visible,,,taxable,1,8,1799000,,,,TVH-030,Gói,"1 Năm",1,1
+variable,TVH-031,Leonardo AI,1,0,visible,"Leonardo AI","Leonardo AI bản quyền",taxable,1,8,,,"Trợ Lý AI",https://content.pancake.vn/1/s702x1053/fwebp0/7e/c1/bf/0f/4da5a258d48fbe01388c7c96627f28a020d4358e26f794262a54777f-w:2400-h:3600-l:4747953-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-031-1M,Leonardo AI - 1 Tháng,1,0,visible,,,taxable,1,8,239000,,,,TVH-031,Gói,"1 Tháng",1,1
+variation,TVH-031-3M,Leonardo AI - 3 Tháng,1,0,visible,,,taxable,1,8,649000,,,,TVH-031,Gói,"3 Tháng",1,1
+variation,TVH-031-6M,Leonardo AI - 6 Tháng,1,0,visible,,,taxable,1,8,1199000,,,,TVH-031,Gói,"6 Tháng",1,1
+variation,TVH-031-1Y,Leonardo AI - 1 Năm,1,0,visible,,,taxable,1,8,1999000,,,,TVH-031,Gói,"1 Năm",1,1
+variable,TVH-032,Gamma AI Pro,1,0,visible,"Gamma AI Pro","Gamma AI Pro",taxable,1,7,,,"Trợ Lý AI",https://content.pancake.vn/1/s702x1053/fwebp0/bb/d6/f3/ec/f0ee5193609004c2ae13b695cc95cb7f6d619ff9e78e96dac6345b51-w:2400-h:3600-l:798212-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-032-1M,Gamma AI Pro - 1 Tháng,1,0,visible,,,taxable,1,7,99000,,,,TVH-032,Gói,"1 Tháng",1,1
+variation,TVH-032-3M,Gamma AI Pro - 3 Tháng,1,0,visible,,,taxable,1,7,269000,,,,TVH-032,Gói,"3 Tháng",1,1
+variation,TVH-032-6M,Gamma AI Pro - 6 Tháng,1,0,visible,,,taxable,1,7,499000,,,,TVH-032,Gói,"6 Tháng",1,1
+variation,TVH-032-1Y,Gamma AI Pro - 1 Năm,1,0,visible,,,taxable,1,7,899000,,,,TVH-032,Gói,"1 Năm",1,1
+variable,TVH-033,Copilot Pro,1,0,visible,"Copilot Pro","Microsoft Copilot Pro",taxable,1,8,,,"Trợ Lý AI",https://content.pancake.vn/1/s702x1053/fwebp0/70/70/2f/03/7f729f2d79cc119a8602a976438ea8a11c8bb418db5f7e97a4a44bef-w:2400-h:3600-l:620897-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-033-1M,Copilot Pro - 1 Tháng,1,0,visible,,,taxable,1,8,129000,,,,TVH-033,Gói,"1 Tháng",1,1
+variation,TVH-033-3M,Copilot Pro - 3 Tháng,1,0,visible,,,taxable,1,8,349000,,,,TVH-033,Gói,"3 Tháng",1,1
+variation,TVH-033-6M,Copilot Pro - 6 Tháng,1,0,visible,,,taxable,1,8,649000,,,,TVH-033,Gói,"6 Tháng",1,1
+variation,TVH-033-1Y,Copilot Pro - 1 Năm,1,0,visible,,,taxable,1,8,1199000,,,,TVH-033,Gói,"1 Năm",1,1
+variable,TVH-039,Claude AI,1,0,visible,"Claude AI","Anthropic Claude AI",taxable,1,7,,,"Trợ Lý AI",https://content.pancake.vn/1/s702x1053/fwebp0/77/48/bb/84/d0a0704d09275b60f3c8877500ee73c84ff6f4a4bf6dbed5ac61c4b4-w:2400-h:3600-l:973849-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-039-1M,Claude AI - 1 Tháng,1,0,visible,,,taxable,1,7,129000,,,,TVH-039,Gói,"1 Tháng",1,1
+variation,TVH-039-3M,Claude AI - 3 Tháng,1,0,visible,,,taxable,1,7,349000,,,,TVH-039,Gói,"3 Tháng",1,1
+variation,TVH-039-6M,Claude AI - 6 Tháng,1,0,visible,,,taxable,1,7,649000,,,,TVH-039,Gói,"6 Tháng",1,1
+variation,TVH-039-1Y,Claude AI - 1 Năm,1,0,visible,,,taxable,1,7,1199000,,,,TVH-039,Gói,"1 Năm",1,1
+variable,TVH-050,"Google Meet + 2TB",1,0,visible,"Google Meet + 2TB","Google Workspace + 2TB",taxable,1,7,,,"Làm Việc",https://content.pancake.vn/1/s702x1053/fwebp0/aa/7f/06/98/d732ff2e1b9e9537e8674f23bd70dfb690a4c757d719f3bd34a4df27-w:2400-h:3600-l:1066683-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-050-1M,Google Meet - 1 Tháng,1,0,visible,,,taxable,1,7,299000,,,,TVH-050,Gói,"1 Tháng",1,1
+variation,TVH-050-1Y,Google Meet - 1 Năm,1,0,visible,,,taxable,1,7,2499000,,,,TVH-050,Gói,"1 Năm",1,1
+variable,TVH-051,Zoom Pro,1,0,visible,"Zoom Pro","Zoom Pro bản quyền",taxable,1,9,,,"Làm Việc",https://content.pancake.vn/1/s702x1053/fwebp0/62/b9/17/2a/08bb42609843a90c8cd27d610c429caba94abdf190b530eb6cd5eb74-w:2400-h:3600-l:328768-t:image/png.png,,Gói,"1 Tháng | 1 Năm",1,1
+variation,TVH-051-1M,Zoom Pro - 1 Tháng,1,0,visible,,,taxable,1,9,119000,,,,TVH-051,Gói,"1 Tháng",1,1
+variation,TVH-051-1Y,Zoom Pro - 1 Năm,1,0,visible,,,taxable,1,9,999000,,,,TVH-051,Gói,"1 Năm",1,1
+variable,TVH-060,"Netflix Premium 4K",1,1,visible,"Netflix Premium 4K","Netflix Premium 4K chính hãng",taxable,1,2,,,"Xem Phim - Giải Trí",https://content.pancake.vn/1/s702x1053/fwebp0/b8/3c/28/1d/b46f8271b37b7c6e9faaa9acea3515d85cfcd03186ae6818d160c8ce-w:2400-h:3600-l:420124-t:image/png.png,,Gói,"1 Tháng | 3 Tháng | 6 Tháng | 1 Năm",1,1
+variation,TVH-060-1M,Netflix - 1 Tháng,1,0,visible,,,taxable,1,2,99000,,,,TVH-060,Gói,"1 Tháng",1,1
+variation,TVH-060-3M,Netflix - 3 Tháng,1,0,visible,,,taxable,1,2,269000,,,,TVH-060,Gói,"3 Tháng",1,1
+variation,TVH-060-6M,Netflix - 6 Tháng,1,0,visible,,,taxable,1,2,499000,,,,TVH-060,Gói,"6 Tháng",1,1
+variation,TVH-060-1Y,Netflix - 1 Năm,1,0,visible,,,taxable,1,2,899000,,,,TVH-060,Gói,"1 Năm",1,1
+variable,TVH-080,ELSA Premium,1,0,visible,"ELSA Premium","ELSA Speak Premium",taxable,1,8,,,"Học Tập",https://content.pancake.vn/1/s702x1053/fwebp0/62/bb/8b/4b/5eae354cb7e1e5aad5da07c4893037a46fbd342c53fdacbc1bf0ab01-w:2400-h:3600-l:1643427-t:image/png.png,,Gói,"1 Tháng | 1 Năm",1,1
+variation,TVH-080-1M,ELSA - 1 Tháng,1,0,visible,,,taxable,1,8,1350000,,,,TVH-080,Gói,"1 Tháng",1,1
+variation,TVH-080-1Y,ELSA - 1 Năm,1,0,visible,,,taxable,1,8,11999000,,,,TVH-080,Gói,"1 Năm",1,1
+variable,TVH-081,Duolingo Super,1,0,visible,"Duolingo Super","Duolingo Super",taxable,1,8,,,"Học Tập",https://content.pancake.vn/1/s702x1053/fwebp0/10/4f/98/fb/bce52d8c6f2c00a4e8aa80f3f1f79ea33dbc43a1aa8a0511241ed837-w:2400-h:3600-l:902073-t:image/png.png,,Gói,"1 Tháng | 1 Năm",1,1
+variation,TVH-081-1M,Duolingo - 1 Tháng,1,0,visible,,,taxable,1,8,199000,,,,TVH-081,Gói,"1 Tháng",1,1
+variation,TVH-081-1Y,Duolingo - 1 Năm,1,0,visible,,,taxable,1,8,1799000,,,,TVH-081,Gói,"1 Năm",1,1
+variable,TVH-100,HMA VPN,1,0,visible,"HMA VPN","HMA VPN bản quyền",taxable,1,8,,,"VPN Giá Rẻ",https://content.pancake.vn/1/s702x1053/fwebp0/5b/d9/b1/8c/f1cc86c06563a9ed4c561308b3e68ad46ba46e7d7380ddcc28b85e7c-w:2400-h:3600-l:1148196-t:image/png.png,,Gói,"1 Tháng | 1 Năm",1,1
+variation,TVH-100-1M,HMA VPN - 1 Tháng,1,0,visible,,,taxable,1,8,69000,,,,TVH-100,Gói,"1 Tháng",1,1
+variation,TVH-100-1Y,HMA VPN - 1 Năm,1,0,visible,,,taxable,1,8,599000,,,,TVH-100,Gói,"1 Năm",1,1
+variable,TVH-101,Express VPN,1,0,visible,"Express VPN","Express VPN",taxable,1,9,,,"VPN Giá Rẻ",https://content.pancake.vn/1/s702x1053/fwebp0/04/24/f8/ff/154524676dd7caaad228a85600a63e8da1225c4d024b6b9acc6d79ee-w:2400-h:3600-l:568725-t:image/png.png,,Gói,"1 Tháng | 1 Năm",1,1
+variation,TVH-101-1M,Express VPN - 1 Tháng,1,0,visible,,,taxable,1,9,69000,,,,TVH-101,Gói,"1 Tháng",1,1
+variation,TVH-101-1Y,Express VPN - 1 Năm,1,0,visible,,,taxable,1,9,599000,,,,TVH-101,Gói,"1 Năm",1,1
+variable,TVH-102,NordVPN,1,0,visible,"NordVPN","NordVPN bản quyền",taxable,1,8,,,"VPN Giá Rẻ",https://content.pancake.vn/1/s702x1053/fwebp0/08/1e/8d/be/d94f5ee3d6f9e6f5a33ea5a1f75194689f886a7ff58ac0088390d955-w:2400-h:3600-l:2428773-t:image/png.png,,Gói,"1 Tháng | 1 Năm",1,1
+variation,TVH-102-1M,NordVPN - 1 Tháng,1,0,visible,,,taxable,1,8,69000,,,,TVH-102,Gói,"1 Tháng",1,1
+variation,TVH-102-1Y,NordVPN - 1 Năm,1,0,visible,,,taxable,1,8,599000,,,,TVH-102,Gói,"1 Năm",1,1

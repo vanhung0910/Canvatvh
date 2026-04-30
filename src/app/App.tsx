@@ -75,7 +75,7 @@ const BEST_SELLERS: Product[] = [
   {
     id: 5,
     name: "ChatGPT Plus",
-    price: "129.000đ",
+    price: "89.000đ",
     originalPrice: "500.000đ",
     discount: "-74%",
     slotsLeft: 8,
@@ -83,10 +83,7 @@ const BEST_SELLERS: Product[] = [
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/13/ce/96/58/4f93be895e52df7810b3dca33f45664ccc2bcaa559ab4f6f387c62e4-w:2400-h:3600-l:937688-t:image/png.png",
     plans: [
-      { label: "1 Tháng", price: "129.000đ" },
-      { label: "3 Tháng", price: "349.000đ" },
-      { label: "6 Tháng", price: "649.000đ" },
-      { label: "1 Năm", price: "1.199.000đ" },
+      { label: "1 Tháng", price: "89.000đ" },
     ],
   },
   {
