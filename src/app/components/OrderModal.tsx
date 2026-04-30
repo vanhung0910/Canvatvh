@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, MessageCircle } from "lucide-react";
 import type { Product } from "./ProductCard";
+import { buildCheckoutUrl } from "./wcMapping";
 
 interface OrderModalProps {
   product: Product;
@@ -36,7 +37,18 @@ export function OrderModal({
       alert("Vui lòng nhập đầy đủ tên và số điện thoại!");
       return;
     }
-    setSubmitted(true);
+    const planLabel = isChatGPT ? "1 Tháng" : selectedPlan;
+    const url = buildCheckoutUrl(
+      product.name,
+      planLabel,
+      fullName,
+      phone,
+    );
+    if (url) {
+      window.location.href = url;
+    } else {
+      setSubmitted(true);
+    }
   };
 
   const handleConsult = () => {
