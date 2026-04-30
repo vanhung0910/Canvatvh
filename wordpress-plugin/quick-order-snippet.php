@@ -56,10 +56,24 @@ function tvh_quick_order_handler($req) {
 
     $pay_url = $order->get_checkout_payment_url();
 
+    // ====== CẤU HÌNH NGÂN HÀNG (sửa cho khớp tài khoản Sepay) ======
+    $bank_bin       = '970422';        // 970422=MB, 970436=VCB, 970418=BIDV, 970416=ACB
+    $bank_account   = '0123456789';    // Số TK của bạn
+    $account_name   = 'NGUYEN VAN A';  // Tên chủ TK (không dấu)
+    // ===============================================================
+
+    $amount = (int) $order->get_total();
+    $order_code = 'SEVQR' . $order->get_id();
+
     return [
-        'success'  => true,
-        'order_id' => $order->get_id(),
-        'pay_url'  => $pay_url,
+        'success'      => true,
+        'order_id'     => $order->get_id(),
+        'pay_url'      => $pay_url,
+        'amount'       => $amount,
+        'content'      => $order_code,
+        'bank_bin'     => $bank_bin,
+        'bank_account' => $bank_account,
+        'account_name' => $account_name,
     ];
 }
 

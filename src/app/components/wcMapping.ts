@@ -49,27 +49,41 @@ export function buildCheckoutUrl(
   return `${SHOP_URL}/product/${entry.slug}/`;
 }
 
-export async function createQuickOrder(
+function parsePrice(priceStr: string): number {
+  return parseInt(priceStr.replace(/[^\d]/g, ""), 10) || 0;
+}
+
+export async function submitSepayCheckout(
   productName: string,
   planLabel: string,
+  priceStr: string,
   name: string,
   phone: string,
-): Promise<string | null> {
-  const entry = WC_MAPPING[productName];
-  if (!entry) return null;
-  const variationId = entry.variations[planLabel] || 0;
+): Promise<boolean> {
+  const amount = parsePrice(priceStr);
+  if (!amount) return false;
 
-  const res = await fetch(`${SHOP_URL}/wp-json/tvh/v1/quick-order`, {
+  const res = await fetch("/api/sepay-checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name,
-      phone,
-      product_id: entry.productId,
-      variation_id: variationId,
-    }),
+    body: JSON.stringify({ name, phone, productName, planLabel, amount }),
   });
-  if (!res.ok) return null;
+  if (!res.ok) return false;
   const data = await res.json();
-  return data.pay_url || null;
+  if (!data.checkout_url || !data.fields) return false;
+
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = data.checkout_url;
+  form.style.display = "none";
+  Object.entries(data.fields).forEach(([k, v]) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = k;
+    input.value = String(v);
+    form.appendChild(input);
+  });
+  document.body.appendChild(form);
+  form.submit();
+  return true;
 }
