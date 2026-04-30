@@ -17,9 +17,12 @@ const SIGNED_FIELDS = [
 ];
 
 function signFields(fields: Record<string, string>, secret: string): string {
-  const parts = SIGNED_FIELDS.filter((k) => fields[k] !== undefined).map(
-    (k) => `${k}=${fields[k] ?? ""}`,
-  );
+  const parts: string[] = [];
+  for (const key of Object.keys(fields)) {
+    if (SIGNED_FIELDS.includes(key) && fields[key] !== undefined) {
+      parts.push(`${key}=${fields[key]}`);
+    }
+  }
   const hmac = crypto.createHmac("sha256", secret);
   hmac.update(parts.join(","));
   return hmac.digest("base64");
