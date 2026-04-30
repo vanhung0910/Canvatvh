@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { X, MessageCircle } from "lucide-react";
 import type { Product } from "./ProductCard";
-import { buildCheckoutUrl } from "./wcMapping";
+import { createQuickOrder } from "./wcMapping";
 
 interface OrderModalProps {
   product: Product;
@@ -32,22 +32,31 @@ export function OrderModal({
     .toLowerCase()
     .includes("chatgpt");
 
-  const handleOrder = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleOrder = async () => {
     if (!fullName.trim() || !phone.trim()) {
       alert("Vui lòng nhập đầy đủ tên và số điện thoại!");
       return;
     }
-    const planLabel = isChatGPT ? "1 Tháng" : selectedPlan;
-    const url = buildCheckoutUrl(
-      product.name,
-      planLabel,
-      fullName,
-      phone,
-    );
-    if (url) {
-      window.location.href = url;
-    } else {
-      setSubmitted(true);
+    setLoading(true);
+    try {
+      const planLabel = isChatGPT ? "1 Tháng" : selectedPlan;
+      const payUrl = await createQuickOrder(
+        product.name,
+        planLabel,
+        fullName,
+        phone,
+      );
+      if (payUrl) {
+        window.location.href = payUrl;
+      } else {
+        alert("Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Zalo!");
+        setLoading(false);
+      }
+    } catch (err) {
+      alert("Lỗi kết nối. Vui lòng thử lại!");
+      setLoading(false);
     }
   };
 
@@ -284,7 +293,8 @@ export function OrderModal({
             {/* Order button */}
             <button
               onClick={handleOrder}
-              className="w-full text-white py-3.5 rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+              disabled={loading}
+              className="w-full text-white py-3.5 rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-[0.98] disabled:opacity-60"
               style={{
                 background:
                   "linear-gradient(135deg, #c054c0 0%, #e06080 100%)",
@@ -294,7 +304,7 @@ export function OrderModal({
                 textTransform: "uppercase",
               }}
             >
-              ĐẶT HÀNG NGAY
+              {loading ? "ĐANG XỬ LÝ..." : "ĐẶT HÀNG NGAY"}
             </button>
 
             {/* Divider */}
