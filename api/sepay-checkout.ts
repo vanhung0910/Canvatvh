@@ -74,7 +74,7 @@ export default async function handler(req: any, res: any) {
     currency: "VND",
     order_amount: String(amount),
     order_invoice_number: invoiceNumber,
-    order_description: `${productName} - ${planLabel} - ${name} ${phone}`,
+    order_description: `SP:${productName}|GOI:${planLabel}|TEN:${name}|SDT:${phone}`,
     customer_id: phone,
     success_url: `${origin}/?payment=success&inv=${invoiceNumber}`,
     error_url: `${origin}/?payment=error&inv=${invoiceNumber}`,
