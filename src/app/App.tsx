@@ -22,14 +22,14 @@ const BEST_SELLERS: Product[] = [
   {
     id: 1,
     name: "Capcut Pro",
-    price: "60.000đ",
+    price: "50.000đ",
     originalPrice: "1.500.000đ",
     discount: "-96%",
     slotsLeft: 5,
     bgColor: "#1a1a2e",
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/13/1a/60/66/6bfe386de212ab2d2d36baf219722399a5996b23e5e5f87eb78cdd49-w:2400-h:3600-l:857912-t:image/png.png",
-    plans: [{ label: "1 Tháng", price: "60.000đ" }],
+    plans: [{ label: "1 Tháng", price: "50.000đ" }],
   },
   {
     id: 2,
@@ -43,12 +43,12 @@ const BEST_SELLERS: Product[] = [
       "https://content.pancake.vn/1/s702x1053/fwebp0/cf/87/0e/58/77923d59f6e92885f56671d17fc3d9885168822cfbc04acc22f9d236-w:2400-h:3600-l:1401843-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "15.000đ" },
-      { label: "1 Năm", price: "190.000đ" },
+      { label: "1 Năm", price: "200.000đ" },
     ],
   },
   {
     id: 3,
-    name: "Google One 2TB",
+    name: "Google One 5TB",
     price: "250.000đ",
     originalPrice: "2.250.000đ",
     discount: "-87%",
