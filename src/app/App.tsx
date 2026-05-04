@@ -59,20 +59,6 @@ const BEST_SELLERS: Product[] = [
     plans: [{ label: "1 Năm", price: "250.000đ" }],
   },
   {
-    id: 4,
-    name: "iCloud+ 400GB",
-    price: "550.000đ",
-    originalPrice: "990.000đ",
-    discount: "-28%",
-    slotsLeft: 6,
-    bgColor: "#e3f2fd",
-    image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/be/22/d4/71/fe6d5e791f0a17e99cb0991fee4acbddab3edfa8bae61cdf58e50378-w:2400-h:3600-l:469472-t:image/png.png",
-    plans: [
-      { label: "1 Năm", price: "650.000đ" },
-    ],
-  },
-  {
     id: 5,
     name: "ChatGPT Plus",
     price: "89.000đ",
@@ -87,33 +73,18 @@ const BEST_SELLERS: Product[] = [
     ],
   },
   {
-    id: 6,
-    name: "Google AI Ultra",
-    price: "650.000đ",
-    originalPrice: "1.740.000đ",
-    discount: "-92%",
-    slotsLeft: 6,
-    bgColor: "#4caf50",
-    image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/60/9c/1f/be/df80fbd6485921fcd5e21cfec9b102fd87686d1371fd0c39e520fb82-w:2400-h:3600-l:2084072-t:image/png.png",
-    plans: [
-      { label: "1 Tháng", price: "650.000đ" },
-      { label: "3 Tháng", price: "1.799.000đ" },
-      { label: "6 Tháng", price: "3.299.000đ" },
-      { label: "1 Năm", price: "5.999.000đ" },
-    ],
-  },
-  {
     id: 7,
     name: "Spotify Premium",
-    price: "399.000đ",
+    price: "80.000đ",
     originalPrice: "708.000đ",
-    discount: "-57%",
+    discount: "-88%",
     slotsLeft: 7,
     bgColor: "#1db954",
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/2e/c6/b9/8e/03794cc15316b8f068e8197f7d54ca71971fb40f1fdd440ccd865077-w:2400-h:3600-l:510259-t:image/png.png",
     plans: [
+      { label: "1 Tháng", price: "80.000đ" },
+      { label: "3 Tháng", price: "230.000đ" },
       { label: "1 Năm", price: "399.000đ" },
     ],
   },
@@ -132,29 +103,29 @@ const BEST_SELLERS: Product[] = [
     ],
   },
   {
+    id: 60,
+    name: "Netflix Premium 4K",
+    price: "85.000đ",
+    originalPrice: "260.000đ",
+    discount: "-75%",
+    slotsLeft: 2,
+    bgColor: "#e50914",
+    image:
+      "https://content.pancake.vn/1/s702x1053/fwebp0/b8/3c/28/1d/b46f8271b37b7c6e9faaa9acea3515d85cfcd03186ae6818d160c8ce-w:2400-h:3600-l:420124-t:image/png.png",
+    plans: [
+      { label: "1 Tháng", price: "85.000đ" },
+    ],
+  },
+  {
     id: 9,
     name: "Office 365",
-    price: "239.000đ",
+    price: "299.000đ",
     originalPrice: "1.499.000đ",
-    discount: "-87%",
+    discount: "-89%",
     slotsLeft: 3,
     bgColor: "#ff6f00",
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/94/3f/23/69/2ff09c3f77802d794693b54f3930d4ba8a5ebf0a1767bd0d14a86445-w:2400-h:3600-l:2948033-t:image/png.png",
-    plans: [
-      { label: "1 Năm", price: "239.000đ" },
-    ],
-  },
-  {
-    id: 10,
-    name: "Kaspersky Premium",
-    price: "299.000đ",
-    originalPrice: "1.029.000đ",
-    discount: "-65%",
-    slotsLeft: 8,
-    bgColor: "#00796b",
-    image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/b9/40/f5/31/4cbac65cf0547f6616af061019ac85225e6cfb011f03b45f9d788b6e-w:2400-h:3600-l:672960-t:image/png.png",
     plans: [
       { label: "1 Năm", price: "299.000đ" },
     ],
@@ -162,32 +133,29 @@ const BEST_SELLERS: Product[] = [
   {
     id: 11,
     name: "Quillbot Premium",
-    price: "199.000đ",
+    price: "299.000đ",
     originalPrice: "1.178.000đ",
-    discount: "-75%",
+    discount: "-70%",
     slotsLeft: 7,
     bgColor: "#2e7d32",
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/6d/be/ff/3f/a89ae0baf4a0a0acb411536c72bf8efb10e2881fd43338814f0f6f3c-w:2400-h:3600-l:1051242-t:image/png.png",
     plans: [
-      { label: "1 Năm", price: "199.000đ" },
+      { label: "1 Năm", price: "299.000đ" },
     ],
   },
   {
     id: 12,
     name: "Grammarly Pro + AI",
-    price: "199.000đ",
+    price: "100.000đ",
     originalPrice: "3.600.000đ",
-    discount: "-95%",
+    discount: "-96%",
     slotsLeft: 7,
     bgColor: "#15803d",
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/c6/ac/17/25/f6a3a80c013e0dff7c5edac0f46f4480f7a55db3668d1b5e125ba7c1-w:2400-h:3600-l:776470-t:image/png.png",
     plans: [
-      { label: "1 Tháng", price: "199.000đ" },
-      { label: "3 Tháng", price: "549.000đ" },
-      { label: "6 Tháng", price: "999.000đ" },
-      { label: "1 Năm", price: "1.799.000đ" },
+      { label: "1 Tháng", price: "100.000đ" },
     ],
   },
 ];
@@ -237,16 +205,17 @@ const DESIGN_PRODUCTS: Product[] = [
   },
   {
     id: 23,
-    name: "Freepik Premium",
-    price: "299.000đ",
-    originalPrice: "2.400.000đ",
-    discount: "-88%",
+    name: "Meitu Vip",
+    price: "80.000đ",
+    originalPrice: "159.000đ",
+    discount: "-55%",
     slotsLeft: 4,
-    bgColor: "#1976d2",
+    bgColor: "#1e1e1e",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/0a/5a/17/b6/26382df2f2cbe8dfb56e9dafb4422597382b49b0a7974989865c0e2f-w:2400-h:3600-l:594939-t:image/png.png",
+      "https://taikhoanre.com/wp-content/uploads/2024/08/meitu-photo-editor-ai-art-1.jpg",
     plans: [
-      { label: "6 Tháng", price: "299.000đ" },
+      { label: "1 Tháng", price: "80.000đ" },
+      { label: "3 Tháng", price: "239.000đ" },
     ],
   },
 ];
@@ -443,8 +412,8 @@ const AI_PRODUCTS: Product[] = [
     id: 41,
     name: "HeyGen AI",
     price: "599.000đ",
-    originalPrice: "299.000đ",
-    discount: "-30%",
+    originalPrice: "1.800.000đ",
+    discount: "-67%",
     slotsLeft: 7,
     bgColor: "#00838f",
     image:
@@ -460,7 +429,7 @@ const AI_PRODUCTS: Product[] = [
     id: 42,
     name: "Runway AI",
     price: "699.000đ",
-    originalPrice: "699.000đ",
+    originalPrice: "999.000đ",
     discount: "-30%",
     slotsLeft: 7,
     bgColor: "#d32f2f",
@@ -581,23 +550,6 @@ const WORK_PRODUCTS: Product[] = [
 ];
 
 const ENTERTAINMENT_PRODUCTS: Product[] = [
-  {
-    id: 60,
-    name: "Netflix Premium 4K",
-    price: "99.000đ",
-    originalPrice: "260.000đ",
-    discount: "-66%",
-    slotsLeft: 2,
-    bgColor: "#e50914",
-    image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/b8/3c/28/1d/b46f8271b37b7c6e9faaa9acea3515d85cfcd03186ae6818d160c8ce-w:2400-h:3600-l:420124-t:image/png.png",
-    plans: [
-      { label: "1 Tháng", price: "99.000đ" },
-      { label: "3 Tháng", price: "269.000đ" },
-      { label: "6 Tháng", price: "499.000đ" },
-      { label: "1 Năm", price: "899.000đ" },
-    ],
-  },
   {
     id: 61,
     name: "VieON VIP HBO",

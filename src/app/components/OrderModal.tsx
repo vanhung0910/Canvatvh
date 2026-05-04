@@ -24,7 +24,7 @@ export function OrderModal({
   const [submitted, setSubmitted] = useState(false);
 
   const chatgptPrices: Record<string, string> = {
-    share: "129.000đ",
+    share: "89.000đ",
     "chinh-chu": "420.000đ",
   };
 
