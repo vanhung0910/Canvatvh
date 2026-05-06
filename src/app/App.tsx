@@ -49,14 +49,14 @@ const BEST_SELLERS: Product[] = [
   {
     id: 3,
     name: "Google One 5TB",
-    price: "250.000đ",
+    price: "299.000đ",
     originalPrice: "2.250.000đ",
-    discount: "-87%",
+    discount: "-89%",
     slotsLeft: 7,
     bgColor: "#e8f5e9",
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/9c/85/95/e2/0643a19ac56e0d0e05e1be20b8eff0793ab1d1a5044d62fb8f95ad78-w:2400-h:3600-l:2758098-t:image/png.png",
-    plans: [{ label: "1 Năm", price: "250.000đ" }],
+    plans: [{ label: "1 Năm", price: "299.000đ" }],
   },
   {
     id: 5,
