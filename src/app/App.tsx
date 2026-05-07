@@ -8,7 +8,6 @@ import {
   UserCircle,
   Star,
 } from "lucide-react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 import logoImg from "../imports/logo.png";
 import {
   ProductCard,
@@ -1788,9 +1787,6 @@ export default function App() {
           onClose={() => setSelectedProduct(null)}
         />
       )}
-
-      {/* Vercel Speed Insights */}
-      <SpeedInsights />
     </div>
   );
 }
