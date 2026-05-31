@@ -22,14 +22,14 @@ const BEST_SELLERS: Product[] = [
   {
     id: 1,
     name: "Capcut Pro",
-    price: "50.000đ",
+    price: "99.000đ",
     originalPrice: "1.500.000đ",
-    discount: "-96%",
+    discount: "-95%",
     slotsLeft: 5,
     bgColor: "#1a1a2e",
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/13/1a/60/66/6bfe386de212ab2d2d36baf219722399a5996b23e5e5f87eb78cdd49-w:2400-h:3600-l:857912-t:image/png.png",
-    plans: [{ label: "1 Tháng", price: "50.000đ" }],
+    plans: [{ label: "1 Tháng", price: "99.000đ" }],
   },
   {
     id: 2,
