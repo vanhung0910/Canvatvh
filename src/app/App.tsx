@@ -24,7 +24,7 @@ const BEST_SELLERS: Product[] = [
     name: "Capcut Pro",
     price: "30.000đ",
     originalPrice: "1.500.000đ",
-    discount: "-96%",
+    discount: "-97%",
     slotsLeft: 5,
     bgColor: "#1a1a2e",
     image:
@@ -236,9 +236,6 @@ const AI_PRODUCTS: Product[] = [
       "https://content.pancake.vn/1/s702x1053/fwebp0/ae/1e/0e/63/d42e7e23395ebf23d795b1dc8eeeac5998bcae396345e30cb4165899-w:2400-h:3600-l:434204-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "199.000đ" },
-      { label: "3 Tháng", price: "549.000đ" },
-      { label: "6 Tháng", price: "999.000đ" },
-      { label: "1 Năm", price: "1.799.000đ" },
     ],
   },
   {
@@ -253,9 +250,6 @@ const AI_PRODUCTS: Product[] = [
       "https://content.pancake.vn/1/s702x1053/fwebp0/7e/c1/bf/0f/4da5a258d48fbe01388c7c96627f28a020d4358e26f794262a54777f-w:2400-h:3600-l:4747953-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "239.000đ" },
-      { label: "3 Tháng", price: "649.000đ" },
-      { label: "6 Tháng", price: "1.199.000đ" },
-      { label: "1 Năm", price: "1.999.000đ" },
     ],
   },
   {
@@ -270,9 +264,6 @@ const AI_PRODUCTS: Product[] = [
       "https://content.pancake.vn/1/s702x1053/fwebp0/bb/d6/f3/ec/f0ee5193609004c2ae13b695cc95cb7f6d619ff9e78e96dac6345b51-w:2400-h:3600-l:798212-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "99.000đ" },
-      { label: "3 Tháng", price: "269.000đ" },
-      { label: "6 Tháng", price: "499.000đ" },
-      { label: "1 Năm", price: "899.000đ" },
     ],
   },
   {
@@ -287,9 +278,6 @@ const AI_PRODUCTS: Product[] = [
       "https://content.pancake.vn/1/s702x1053/fwebp0/70/70/2f/03/7f729f2d79cc119a8602a976438ea8a11c8bb418db5f7e97a4a44bef-w:2400-h:3600-l:620897-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "129.000đ" },
-      { label: "3 Tháng", price: "349.000đ" },
-      { label: "6 Tháng", price: "649.000đ" },
-      { label: "1 Năm", price: "1.199.000đ" },
     ],
   },
   {
@@ -304,9 +292,6 @@ const AI_PRODUCTS: Product[] = [
       "https://content.pancake.vn/1/s702x1053/fwebp0/a2/43/30/c8/afba8d316732adeb310ab4fe489008defa2566052f0c4e73a72c4f86-w:2400-h:3600-l:504749-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "500.000đ" },
-      { label: "3 Tháng", price: "1.399.000đ" },
-      { label: "6 Tháng", price: "2.499.000đ" },
-      { label: "1 Năm", price: "4.499.000đ" },
     ],
   },
   {
