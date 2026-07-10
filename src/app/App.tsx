@@ -31,7 +31,7 @@ const BEST_SELLERS: Product[] = [
       "https://content.pancake.vn/1/s702x1053/fwebp0/13/1a/60/66/6bfe386de212ab2d2d36baf219722399a5996b23e5e5f87eb78cdd49-w:2400-h:3600-l:857912-t:image/png.png",
     plans: [
       { label: "7 Ngày", price: "25.000đ" },
-      { label: "1 Tháng", price: "90.000đ" },
+      { label: "1 Tháng", price: "85.000đ" },
     ],
   },
   {

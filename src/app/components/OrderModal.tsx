@@ -24,7 +24,7 @@ export function OrderModal({
   const [submitted, setSubmitted] = useState(false);
 
   const chatgptPrices: Record<string, string> = {
-    share: "89.000đ",
+    share: "275.000đ",
     "chinh-chu": "420.000đ",
   };
 
@@ -179,7 +179,7 @@ export function OrderModal({
                     }
                   >
                     <option value="share">
-                      ChatGPT Plus (Dùng chung)
+                      ChatGPT Plus (Cấp tài khoản)
                     </option>
                     <option value="chinh-chu">
                       ChatGPT Plus (Chính chủ)
