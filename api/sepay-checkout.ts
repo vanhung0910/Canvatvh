@@ -1,31 +1,30 @@
-import crypto from "node:crypto";
-
 export const config = { runtime: "nodejs" };
 
-const SIGNED_FIELDS = [
-  "merchant",
-  "operation",
-  "payment_method",
-  "order_amount",
-  "currency",
-  "order_invoice_number",
-  "order_description",
-  "customer_id",
-  "success_url",
-  "error_url",
-  "cancel_url",
-];
+/**
+ * Tạo "đơn hàng" thanh toán bằng VietQR trỏ thẳng vào tài khoản cá nhân.
+ * Phù hợp tài khoản BIDV cá nhân (không cần VA doanh nghiệp).
+ *
+ * Luồng: sinh mã đơn duy nhất -> tạo VietQR (qr.sepay.vn) với nội dung = mã đơn
+ * -> khách chuyển khoản đúng số tiền + nội dung -> Sepay ghi nhận giao dịch
+ * -> api/sepay-order-status đối chiếu giao dịch để xác nhận đã thanh toán.
+ *
+ * Biến môi trường cần cấu hình trên Vercel:
+ *  - SEPAY_ACCOUNT_NUMBER : số tài khoản nhận tiền (vd 5601998234)
+ *  - SEPAY_BANK           : mã ngân hàng cho VietQR (vd "BIDV")
+ *  - SEPAY_ACCOUNT_HOLDER : (tùy chọn) tên chủ tài khoản để hiển thị
+ *  - TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID : thông báo đơn mới
+ */
 
-function signFields(fields: Record<string, string>, secret: string): string {
-  const parts: string[] = [];
-  for (const key of Object.keys(fields)) {
-    if (SIGNED_FIELDS.includes(key) && fields[key] !== undefined) {
-      parts.push(`${key}=${fields[key]}`);
-    }
-  }
-  const hmac = crypto.createHmac("sha256", secret);
-  hmac.update(parts.join(","));
-  return hmac.digest("base64");
+// Đơn Canva 1 tháng (15.000đ) dùng tiền tố "TVHC" để nhận diện đơn cần trả link Canva.
+const CANVA_ORDER_PREFIX = "TVHC";
+const DEFAULT_ORDER_PREFIX = "TVH";
+
+function isCanvaOrder(productName: string, planLabel: string, amount: number): boolean {
+  return (
+    productName.toLowerCase().includes("canva") &&
+    planLabel.trim() === "1 Tháng" &&
+    amount === 15000
+  );
 }
 
 export default async function handler(req: any, res: any) {
@@ -36,56 +35,66 @@ export default async function handler(req: any, res: any) {
   if (req.method === "GET") {
     return res.status(200).json({
       ok: true,
-      message: "Sepay checkout endpoint ready",
-      env: process.env.SEPAY_ENV || "sandbox",
-      has_merchant: !!process.env.SEPAY_MERCHANT_ID,
-      has_secret: !!process.env.SEPAY_SECRET_KEY,
+      message: "Sepay VietQR checkout endpoint ready",
+      bank: process.env.SEPAY_BANK || "(chưa cấu hình)",
+      has_account: !!process.env.SEPAY_ACCOUNT_NUMBER,
     });
   }
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const merchant = process.env.SEPAY_MERCHANT_ID;
-  const secret = process.env.SEPAY_SECRET_KEY;
-  const env = process.env.SEPAY_ENV || "sandbox";
-
-  if (!merchant || !secret) {
-    return res.status(500).json({ error: "Sepay credentials not configured" });
+  const account = process.env.SEPAY_ACCOUNT_NUMBER;
+  const bank = (process.env.SEPAY_BANK || "").trim();
+  if (!account || !bank) {
+    return res.status(500).json({ error: "Chưa cấu hình SEPAY_ACCOUNT_NUMBER / SEPAY_BANK" });
   }
-
-  const checkoutUrl =
-    env === "production"
-      ? "https://pay.sepay.vn/v1/checkout/init"
-      : "https://pay-sandbox.sepay.vn/v1/checkout/init";
 
   const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
   const { name, phone, productName, planLabel, amount } = body || {};
-
   if (!name || !phone || !productName || !amount) {
-    return res.status(400).json({ error: "Missing fields" });
+    return res.status(400).json({ error: "Thiếu thông tin đơn hàng" });
   }
 
-  const invoiceNumber = "TVH" + Date.now();
-  const origin = req.headers.origin || "https://tvhcanva.com";
+  const numericAmount = Number(amount);
+  if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
+    return res.status(400).json({ error: "Số tiền không hợp lệ" });
+  }
 
-  const fields: Record<string, string> = {
-    merchant,
-    operation: "PURCHASE",
-    payment_method: "BANK_TRANSFER",
-    currency: "VND",
-    order_amount: String(amount),
-    order_invoice_number: invoiceNumber,
-    order_description: `${productName} - ${planLabel} - ${name} ${phone}`,
-    customer_id: phone,
-    success_url: `${origin}/?payment=success&inv=${invoiceNumber}`,
-    error_url: `${origin}/?payment=error&inv=${invoiceNumber}`,
-    cancel_url: `${origin}/?payment=cancel&inv=${invoiceNumber}`,
-  };
+  const canva = isCanvaOrder(productName, planLabel, numericAmount);
+  // Mã đơn ngắn gọn, duy nhất, chỉ chữ + số để ngân hàng giữ nguyên trong nội dung CK.
+  const orderCode = (canva ? CANVA_ORDER_PREFIX : DEFAULT_ORDER_PREFIX) + Date.now().toString(36).toUpperCase();
 
-  fields.signature = signFields(fields, secret);
+  const qrUrl =
+    `https://qr.sepay.vn/img?acc=${encodeURIComponent(account)}` +
+    `&bank=${encodeURIComponent(bank)}` +
+    `&amount=${numericAmount}` +
+    `&des=${encodeURIComponent(orderCode)}`;
+
+  // Thông báo đơn mới về Telegram để đối chiếu theo mã đơn.
+  const tgToken = process.env.TELEGRAM_BOT_TOKEN;
+  const tgChat = process.env.TELEGRAM_CHAT_ID;
+  if (tgToken && tgChat) {
+    const text =
+      `🆕 ĐƠN MỚI (chờ thanh toán)\n` +
+      `Mã: ${orderCode}\n` +
+      `Sản phẩm: ${productName} - ${planLabel}\n` +
+      `Khách: ${name} - ${phone}\n` +
+      `Số tiền: ${numericAmount.toLocaleString("vi-VN")}đ`;
+    try {
+      await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: tgChat, text }),
+      });
+    } catch {}
+  }
 
   return res.status(200).json({
-    checkout_url: checkoutUrl,
-    fields,
-    invoice_number: invoiceNumber,
+    order_code: orderCode,
+    is_canva: canva,
+    qr_url: qrUrl,
+    account_number: account,
+    bank_name: bank,
+    account_holder: process.env.SEPAY_ACCOUNT_HOLDER || "",
+    amount: numericAmount,
   });
 }
