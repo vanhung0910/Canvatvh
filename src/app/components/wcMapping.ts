@@ -98,55 +98,41 @@ export function buildCheckoutUrl(
   return `${SHOP_URL}/product/${entry.slug}/`;
 }
 
-export function parsePrice(priceStr: string): number {
+function parsePrice(priceStr: string): number {
   return parseInt(priceStr.replace(/[^\d]/g, ""), 10) || 0;
 }
 
-export type SepayOrder = {
-  order_code: string;
-  is_canva: boolean;
-  qr_url: string;
-  account_number: string;
-  bank_name: string;
-  account_holder?: string;
-  amount: number;
-};
-
-export type SepayOrderStatus = {
-  status: "Pending" | "Paid";
-  canva_link?: string;
-};
-
-/** Tạo đơn thanh toán VietQR. Trả về mã đơn + QR để hiển thị cho khách. */
-export async function createSepayOrder(
+export async function submitSepayCheckout(
   productName: string,
   planLabel: string,
   priceStr: string,
   name: string,
   phone: string,
-): Promise<SepayOrder> {
+): Promise<boolean> {
   const amount = parsePrice(priceStr);
-  if (!amount) throw new Error("Số tiền không hợp lệ");
+  if (!amount) return false;
 
   const res = await fetch("/api/sepay-checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, phone, productName, planLabel, amount }),
   });
+  if (!res.ok) return false;
   const data = await res.json();
-  if (!res.ok) throw new Error(data?.error || "Không tạo được đơn hàng");
-  return data as SepayOrder;
-}
+  if (!data.checkout_url || !data.fields) return false;
 
-/** Đối chiếu giao dịch. Trả kèm link Canva nếu đơn Canva đã thanh toán. */
-export async function getSepayOrderStatus(
-  code: string,
-  amount: number,
-): Promise<SepayOrderStatus> {
-  const res = await fetch(
-    `/api/sepay-order-status?code=${encodeURIComponent(code)}&amount=${amount}`,
-  );
-  const data = await res.json();
-  if (!res.ok) throw new Error(data?.error || "Không tra cứu được đơn hàng");
-  return data as SepayOrderStatus;
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = data.checkout_url;
+  form.style.display = "none";
+  Object.entries(data.fields).forEach(([k, v]) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = k;
+    input.value = String(v);
+    form.appendChild(input);
+  });
+  document.body.appendChild(form);
+  form.submit();
+  return true;
 }
