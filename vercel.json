@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/webhook/sepay", "destination": "/api/sepay-webhook" }
+  ]
+}
