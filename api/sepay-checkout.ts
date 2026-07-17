@@ -83,6 +83,25 @@ export default async function handler(req: any, res: any) {
 
   fields.signature = signFields(fields, secret);
 
+  // Báo đơn mới (chờ thanh toán) về Telegram.
+  const tgToken = process.env.TELEGRAM_BOT_TOKEN;
+  const tgChat = process.env.TELEGRAM_CHAT_ID;
+  if (tgToken && tgChat) {
+    const text =
+      `🆕 ĐƠN MỚI (chờ thanh toán)\n` +
+      `Mã: ${invoiceNumber}\n` +
+      `Sản phẩm: ${productName} - ${planLabel}\n` +
+      `Khách: ${name} - ${phone}\n` +
+      `Số tiền: ${Number(amount).toLocaleString("vi-VN")}đ`;
+    try {
+      await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: tgChat, text }),
+      });
+    } catch {}
+  }
+
   return res.status(200).json({
     checkout_url: checkoutUrl,
     fields,
