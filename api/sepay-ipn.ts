@@ -20,7 +20,18 @@ const SUPABASE_ANON_KEY =
 
 export default async function handler(req: any, res: any) {
   if (req.method === "GET") {
-    return res.status(200).json({ ok: true, message: "Sepay IPN endpoint ready" });
+    // Chẩn đoán: mở URL này trên trình duyệt để kiểm tra Vercel đã set env + redeploy chưa.
+    // Chỉ trả true/false, KHÔNG lộ giá trị secret.
+    return res.status(200).json({
+      ok: true,
+      message: "Sepay IPN endpoint ready",
+      config: {
+        has_sepay_ipn_secret: !!process.env.SEPAY_IPN_SECRET,
+        has_ipn_shared_secret: !!process.env.IPN_SHARED_SECRET,
+        has_telegram: !!process.env.TELEGRAM_BOT_TOKEN && !!process.env.TELEGRAM_CHAT_ID,
+        supabase_function_url: SUPABASE_FUNCTION_URL,
+      },
+    });
   }
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 

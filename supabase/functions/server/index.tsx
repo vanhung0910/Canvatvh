@@ -24,6 +24,14 @@ app.get("/make-server-4d3e30ca/health", (c) => {
   return c.json({ status: "ok" });
 });
 
+// Chẩn đoán env phía Supabase (chỉ true/false, không lộ giá trị).
+app.get("/make-server-4d3e30ca/diag", (c) => {
+  return c.json({
+    has_ipn_shared_secret: !!Deno.env.get("IPN_SHARED_SECRET"),
+    has_canva_invite_link: !!Deno.env.get("CANVA_INVITE_LINK"),
+  });
+});
+
 /**
  * Đánh dấu một đơn đã thanh toán. CHỈ được gọi bởi server IPN của Vercel,
  * bảo vệ bằng secret riêng (x-shared-secret === IPN_SHARED_SECRET).
