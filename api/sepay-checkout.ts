@@ -64,7 +64,12 @@ export default async function handler(req: any, res: any) {
     return res.status(400).json({ error: "Missing fields" });
   }
 
-  const invoiceNumber = "TVH" + Date.now();
+  // Đơn Canva 1 tháng (15.000đ) dùng tiền tố "TVHC" để nhận diện đơn cần trả link Canva.
+  const isCanva =
+    String(productName).toLowerCase().includes("canva") &&
+    String(planLabel).trim() === "1 Tháng" &&
+    Number(amount) === 15000;
+  const invoiceNumber = (isCanva ? "TVHC" : "TVH") + Date.now();
   const origin = req.headers.origin || "https://tvhcanva.com";
 
   const fields: Record<string, string> = {

@@ -1,4 +1,27 @@
+import { projectId, publicAnonKey } from "/utils/supabase/info";
+
 export const SHOP_URL = "https://shop.tvhcanva.com";
+
+const SUPABASE_FN_URL = `https://${projectId}.supabase.co/functions/v1/make-server-4d3e30ca`;
+
+export type CanvaStatus = {
+  status: "Pending" | "Paid";
+  canva_link?: string;
+};
+
+/**
+ * Hỏi trạng thái đơn sau khi thanh toán. Chỉ đơn Canva đã thanh toán mới kèm link.
+ * Link Canva do server Supabase giữ, không có trong bundle.
+ */
+export async function getCanvaStatus(invoice: string): Promise<CanvaStatus> {
+  const res = await fetch(
+    `${SUPABASE_FN_URL}/canva-link?inv=${encodeURIComponent(invoice)}`,
+    { headers: { Authorization: `Bearer ${publicAnonKey}` } },
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(data?.error || "Không tra cứu được đơn hàng");
+  return data as CanvaStatus;
+}
 
 type WcEntry = {
   productId: number;

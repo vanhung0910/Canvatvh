@@ -14,6 +14,7 @@ import {
   type Product,
 } from "./components/ProductCard";
 import { OrderModal } from "./components/OrderModal";
+import { PaymentReturnModal } from "./components/PaymentReturnModal";
 import { FloatingButtons } from "./components/FloatingButtons";
 
 // ============ PRODUCT DATA ============
@@ -1120,6 +1121,27 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] =
     useState<Product | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [paymentReturn, setPaymentReturn] = useState<{
+    status: "success" | "error" | "cancel";
+    invoice: string;
+  } | null>(null);
+
+  // Xử lý khi khách quay lại từ trang thanh toán Sepay (?payment=...&inv=...).
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const payment = params.get("payment");
+    if (payment === "success" || payment === "error" || payment === "cancel") {
+      setPaymentReturn({
+        status: payment,
+        invoice: params.get("inv") || "",
+      });
+      // Dọn URL để không hiện lại khi tải lại trang.
+      const url = new URL(window.location.href);
+      url.searchParams.delete("payment");
+      url.searchParams.delete("inv");
+      window.history.replaceState({}, "", url.pathname + url.hash);
+    }
+  }, []);
 
   useEffect(() => {
     const GA_ID = "G-B3YY70S3TZ";
@@ -1773,6 +1795,15 @@ export default function App() {
         <OrderModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
+        />
+      )}
+
+      {/* Màn hình quay lại sau thanh toán (tự nhận link Canva với đơn Canva) */}
+      {paymentReturn && (
+        <PaymentReturnModal
+          status={paymentReturn.status}
+          invoice={paymentReturn.invoice}
+          onClose={() => setPaymentReturn(null)}
         />
       )}
     </div>
