@@ -20,6 +20,30 @@ const SUPABASE_ANON_KEY =
 
 export default async function handler(req: any, res: any) {
   if (req.method === "GET") {
+    // Tự kiểm chặng Vercel -> Supabase mark-paid (kiểm tra IPN_SHARED_SECRET có KHỚP không).
+    // Dùng invoice giả + amount 1 (không phải đơn Canva) nên KHÔNG lộ link.
+    if (req.query?.selftest === "1") {
+      try {
+        const r = await fetch(`${SUPABASE_FUNCTION_URL}/mark-paid`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            "x-shared-secret": process.env.IPN_SHARED_SECRET || "",
+          },
+          body: JSON.stringify({ invoice: "TVHSELFTEST", amount: 1 }),
+        });
+        const text = await r.text();
+        return res.status(200).json({
+          selftest: true,
+          supabase_status: r.status,
+          supabase_response: text,
+          shared_secret_matches: r.status === 200,
+        });
+      } catch (err) {
+        return res.status(200).json({ selftest: true, error: String(err) });
+      }
+    }
     // Chẩn đoán: mở URL này trên trình duyệt để kiểm tra Vercel đã set env + redeploy chưa.
     // Chỉ trả true/false, KHÔNG lộ giá trị secret.
     return res.status(200).json({
