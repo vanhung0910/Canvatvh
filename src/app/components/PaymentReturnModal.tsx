@@ -107,8 +107,34 @@ export function PaymentReturnModal({
               {isCanvaOrder ? (
                 canvaLink ? (
                   <div className="mt-4">
+                    <div className="text-left bg-purple-50 border border-purple-200 rounded-xl p-4 mb-4">
+                      <p
+                        className="text-purple-800 mb-2"
+                        style={{ fontWeight: 800, fontSize: "0.95rem" }}
+                      >
+                        Hướng dẫn tham gia (làm đúng để không bị lỗi):
+                      </p>
+                      <ol className="space-y-2 text-sm text-gray-700 list-decimal pl-5">
+                        <li>
+                          <span style={{ fontWeight: 700 }}>Bắt buộc</span> đăng
+                          nhập tài khoản Canva của bạn trên{" "}
+                          <span style={{ fontWeight: 700 }}>
+                            chính thiết bị / trình duyệt bạn đang dùng
+                          </span>{" "}
+                          (bằng app Canva hoặc trên trình duyệt hiện tại).
+                        </li>
+                        <li>
+                          Sau khi đã đăng nhập xong, quay lại đúng trang này và
+                          nhấn nút{" "}
+                          <span style={{ fontWeight: 700 }}>
+                            THAM GIA CANVA NGAY
+                          </span>{" "}
+                          bên dưới để vào nhóm Canva Pro.
+                        </li>
+                      </ol>
+                    </div>
                     <p className="text-gray-600 text-sm mb-3">
-                      Nhấn nút bên dưới để tham gia Canva của bạn:
+                      Đã đăng nhập Canva xong? Nhấn nút bên dưới để vào nhóm:
                     </p>
                     <a
                       href={canvaLink}
