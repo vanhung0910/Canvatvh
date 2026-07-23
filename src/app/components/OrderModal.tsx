@@ -160,7 +160,7 @@ export function OrderModal({
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="SĐT có đăng kí Zalo"
+                placeholder="Email"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all text-sm"
               />
             </div>
