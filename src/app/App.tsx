@@ -7,7 +7,12 @@ import {
   Smartphone,
   UserCircle,
   Star,
+  Facebook,
+  Gift,
+  Bell,
 } from "lucide-react";
+
+const FACEBOOK_GROUP_URL = "https://www.facebook.com/groups/tvhcanva";
 import logoImg from "../imports/logo.png";
 import {
   ProductCard,
@@ -1568,6 +1573,78 @@ export default function App() {
         onClick={setSelectedProduct}
       />
 
+      {/* Facebook Community CTA */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div
+            className="rounded-3xl p-8 md:p-10 text-center text-white shadow-2xl relative overflow-hidden"
+            style={{
+              background:
+                "linear-gradient(135deg, #1877f2 0%, #4267B2 60%, #5b2fa0 100%)",
+            }}
+          >
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center">
+                <Facebook size={40} className="text-white" fill="white" />
+              </div>
+            </div>
+            <h2
+              style={{
+                fontSize: "clamp(1.4rem, 3vw, 2rem)",
+                fontWeight: 900,
+                fontStyle: "italic",
+                textTransform: "uppercase",
+              }}
+            >
+              Tham gia nhóm Facebook TVHCanva
+            </h2>
+            <p
+              className="text-white/90 mt-3 max-w-2xl mx-auto"
+              style={{ fontSize: "0.95rem", lineHeight: 1.7 }}
+            >
+              Vào nhóm để nhận thông báo sản phẩm mới, mã giảm giá độc quyền và
+              tham gia tặng tài khoản miễn phí hằng tháng như{" "}
+              <span style={{ fontWeight: 800 }}>Capcut Pro</span>,{" "}
+              <span style={{ fontWeight: 800 }}>Netflix Premium</span> và nhiều
+              phần mềm hot khác!
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6 mb-7">
+              {[
+                { icon: <Bell size={18} />, text: "Thông báo sản phẩm mới" },
+                { icon: <Gift size={18} />, text: "Tặng tài khoản miễn phí hằng tháng" },
+                { icon: <Star size={18} />, text: "Ưu đãi & mã giảm giá độc quyền" },
+              ].map((b) => (
+                <div
+                  key={b.text}
+                  className="flex items-center gap-2 bg-white/15 rounded-full px-4 py-2"
+                  style={{ fontSize: "0.82rem", fontWeight: 600 }}
+                >
+                  {b.icon}
+                  <span>{b.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href={FACEBOOK_GROUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-white text-[#1877f2] px-8 py-3.5 rounded-xl transition-transform hover:scale-105 shadow-lg"
+              style={{
+                fontSize: "1.05rem",
+                fontWeight: 900,
+                fontStyle: "italic",
+                textTransform: "uppercase",
+              }}
+            >
+              <Facebook size={20} fill="#1877f2" />
+              Tham gia nhóm ngay
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section
         id="testimonials"
@@ -1718,7 +1795,7 @@ export default function App() {
                       rel="noopener noreferrer"
                       className="text-white hover:text-pink-400 transition-colors"
                     >
-                      https://www.facebook.com/huwng910
+                      https://www.facebook.com/groups/tvhcanva
                     </a>
                   </p>
                 </div>

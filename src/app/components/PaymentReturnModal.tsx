@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { X, Facebook, Gift } from "lucide-react";
 import { getCanvaStatus } from "./wcMapping";
+
+const FACEBOOK_GROUP_URL = "https://www.facebook.com/groups/tvhcanva";
 
 interface PaymentReturnModalProps {
   status: "success" | "error" | "cancel";
@@ -173,6 +175,32 @@ export function PaymentReturnModal({
                   gian sớm nhất.
                 </p>
               )}
+
+              {/* Mời tham gia nhóm Facebook để nhận ưu đãi & tài khoản miễn phí */}
+              <div className="mt-6 pt-5 border-t border-gray-100 text-left">
+                <div className="flex items-start gap-2 mb-3">
+                  <Gift size={18} className="text-pink-500 flex-shrink-0 mt-0.5" />
+                  <p className="text-gray-600 text-sm">
+                    Tham gia nhóm Facebook để nhận thông báo sản phẩm mới và cơ
+                    hội nhận <span style={{ fontWeight: 700 }}>tài khoản miễn
+                    phí hằng tháng</span> như Capcut, Netflix...
+                  </p>
+                </div>
+                <a
+                  href={FACEBOOK_GROUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 w-full text-white py-3 rounded-xl transition-all shadow-lg hover:shadow-xl"
+                  style={{
+                    background: "#1877f2",
+                    fontSize: "0.95rem",
+                    fontWeight: 800,
+                  }}
+                >
+                  <Facebook size={18} fill="white" />
+                  Tham gia nhóm Facebook
+                </a>
+              </div>
             </>
           ) : (
             <>

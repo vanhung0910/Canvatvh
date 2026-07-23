@@ -66,7 +66,7 @@ export function OrderModal({
     const msg = encodeURIComponent(
       `Xin chào! Tôi muốn tư vấn về sản phẩm: ${product.name} - Gói: ${selectedPlan}`,
     );
-    window.open(`https://www.facebook.com/huwng910`, "_blank");
+    window.open(`https://www.facebook.com/groups/tvhcanva`, "_blank");
   };
 
   const selectedPlanData = product.plans.find(
