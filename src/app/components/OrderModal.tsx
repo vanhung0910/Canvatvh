@@ -158,8 +158,8 @@ export function OrderModal({
               />
               <input
                 type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 placeholder="Email"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all text-sm"
               />
