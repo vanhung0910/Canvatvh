@@ -42,12 +42,13 @@ function signFields(fields: Record<string, string>, secret: string): string {
 
 /** Cắt bớt và bỏ ký tự điều khiển để không phá order_description gửi sang SePay. */
 function clean(input: unknown, maxLen: number): string {
-  return String(input ?? "")
-    // eslint-disable-next-line no-control-regex
-    .replace(/[\u0000-\u001f\u007f]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, maxLen);
+  const raw = String(input ?? "");
+  let out = "";
+  for (let i = 0; i < raw.length; i++) {
+    const code = raw.charCodeAt(i);
+    out += code < 32 || code === 127 ? " " : raw[i];
+  }
+  return out.replace(/\s+/g, " ").trim().slice(0, maxLen);
 }
 
 export default async function handler(req: any, res: any) {
@@ -143,7 +144,7 @@ export default async function handler(req: any, res: any) {
 
   fields.signature = signFields(fields, secret);
 
-  // Báo đơn mới (chờ thanh toán) về Telegram.
+  // Báo đơn mới (chờthanh toán) về Telegram.
   const tgToken = process.env.TELEGRAM_BOT_TOKEN;
   const tgChat = process.env.TELEGRAM_CHAT_ID;
   if (tgToken && tgChat) {
