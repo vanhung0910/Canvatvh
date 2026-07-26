@@ -144,7 +144,7 @@ export default async function handler(req: any, res: any) {
 
   fields.signature = signFields(fields, secret);
 
-  // Báo đơn mới (chờthanh toán) về Telegram.
+  // Báo đơn mới (chờ thanh toán) về Telegram.
   const tgToken = process.env.TELEGRAM_BOT_TOKEN;
   const tgChat = process.env.TELEGRAM_CHAT_ID;
   if (tgToken && tgChat) {
