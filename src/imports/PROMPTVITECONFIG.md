@@ -1,3 +1,41 @@
+# NHIỆM VỤ: Sửa 2 file, một lần duy nhất
+
+Chỉ sửa `vite.config.ts` và tạo `.gitignore`. **Không đụng vào bất kỳ file nào khác.**
+
+## Bối cảnh — vì sao phải làm ở `vite.config.ts` chứ không phải nơi khác
+
+Figma Make tự sinh lại `index.html` và `src/imports/logo.png` sau mỗi lần push,
+nên mọi sửa đổi trực tiếp trên hai file đó đều bị ghi đè ở lần push kế tiếp
+(đã xảy ra 2 lần rồi). `vite.config.ts` thì Make không đụng tới, nên bản vá
+đặt ở đây sẽ tồn tại lâu dài.
+
+Hai vấn đề được vá:
+
+**1. Website đang tự chặn Google.** `index.html` do Make sinh ra luôn chứa
+`<meta name="robots" content="noindex, nofollow">` — dòng này bảo Google đừng
+đưa trang vào kết quả tìm kiếm. Kèm theo là `lang="en"` cho một trang tiếng
+Việt và thẻ mô tả mẫu nói về "công cụ nhân bản website".
+Không thể sửa bằng JavaScript lúc chạy: khi Googlebot thấy `noindex` trong
+HTML gốc, nó bỏ qua luôn bước render JavaScript.
+
+**2. Logo nặng 6,24 MB.** `src/imports/logo.png` là ảnh 2816x1536 nhưng chỉ
+hiển thị ở 40x40 pixel trên header — nặng gấp 21 lần toàn bộ JS + CSS cộng lại.
+
+## LUẬT BẮT BUỘC
+
+1. **Thay TOÀN BỘ nội dung `vite.config.ts`** bằng đoạn code bên dưới. Không giữ lại dòng nào của bản cũ.
+2. **KHÔNG sửa `index.html`.** Plugin sẽ tự xử lý lúc build. Sửa file đó là vô ích vì bạn sẽ ghi đè lại ở lần push sau.
+3. **KHÔNG sửa `src/imports/logo.png`**, không xoá nó. Plugin chỉ chặn không cho nó vào bundle, file gốc vẫn nằm nguyên chỗ cũ.
+4. **KHÔNG rút gọn, xuống dòng lại, hay "làm đẹp" chuỗi base64 của logo.** Copy nguyên văn từng ký tự. Sai một ký tự là logo hỏng.
+5. **GIỮ NGUYÊN** `figmaAssetResolver`, `react()`, `tailwindcss()`, `resolve.alias`, `assetsInclude` — chúng đã có sẵn trong đoạn code bên dưới, đúng vị trí.
+6. **KHÔNG sửa** `package.json`, `App.tsx`, `api/`, `supabase/`, `src/app/components/`, hay bất kỳ file nào khác.
+7. Không chạy lệnh build/test/deploy. Không viết README hay tài liệu.
+
+---
+
+## FILE 1: `vite.config.ts` — THAY TOÀN BỘ
+
+```ts
 import { defineConfig } from 'vite'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
@@ -83,7 +121,7 @@ const LOGO_DATA_URI =
   '2fTSGl6XbkMOA7ZwpGOtGGLHOvxdGy8tS+WchjHRx5C3s7VAH/bNR4KOBNg1YSaT74zVAtnlKWsAZQ+gaRDWGMHObeaVFQxrA4oo' +
   'HqGywjCXZVropwUe3RZHq+heyoBlRlgNBq+gcz3OLEjk0FHXOjVv5Qh0Ka2l0W2g4bWYFmA1F7Dh0SDgCxIm0VRVQYA1utFC2RAf' +
   'BqDZTcDqe/t7vumINcK/xDuW8i6f7zo0k2M4KJRggynrqDoBusHh2NagWxA2BJ4uQl7DMcBWqciZw/xbDd+aChhD0zSGF0ZaHI7s' +
-  '5l3Arhf5EHiyJ+RgD1ZhZ7qramgyZnCMYtqxYBhkJoe0so8ShiybYd6ejuOXke1hGp7eL+BsXKUlrOg9xMuOoE8rnQq0XUTtebDH' +
+  '5l3Abhf5EHiyJ+RgD1ZhZ7qramgyZnCMYtqxYBhkJoe0so8ShiybYd6ejuOXke1hGp7eL+BsXKUlrOg9xMuOoE8rnQq0XUTtebDH' +
   'IPt1+fz9rjijigCalQgUeY7sewn7e03zn31rxVIgL+8L9nccL5gf3uR4/Dz3JgfanCiKQrcCFwNPl1EhJ9Crmfzuu28WpHGd8CX4' +
   'fB4VdgL4sONgyhULlZ79AAJiTPABR1uFu99OhdgCXwXFmGBAW4Vbu/2pUMglfihmjOwU6/EO2VqVP8x7T0fFlzatJXwC/gs5WsbF' +
   'PAU8Ym855fs6441PzKiJBnggPfA0TIHBB73tEIUPAScdZEHF2zR0LcEwU2PpsZXuXdhoQHshLuEpWxxmNYY2V/8SDDO1dDBmbkoG' +
@@ -203,3 +241,33 @@ export default defineConfig({
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
 })
+```
+
+---
+
+## FILE 2: `.gitignore` — TẠO MỚI ở thư mục gốc
+
+File này đã từng có nhưng bị mất. Không có nó, ai clone repo về chạy
+`npm install` rồi lỡ `git add .` sẽ commit cả `node_modules` lên.
+
+```text
+node_modules/
+dist/
+.vercel/
+*.local
+.DS_Store
+```
+
+---
+
+## TỰ KIỂM TRA
+
+- [ ] `vite.config.ts` có đủ 3 hàm plugin: `figmaAssetResolver`, `inlineLogo`, `seoHead`
+- [ ] Mảng `plugins` theo đúng thứ tự: `figmaAssetResolver(), inlineLogo(), seoHead(), react(), tailwindcss()`
+- [ ] Chuỗi base64 trong `LOGO_DATA_URI` còn nguyên vẹn, không bị cắt ngắn
+- [ ] `index.html` **không bị sửa**
+- [ ] `src/imports/logo.png` **vẫn còn nguyên**, không bị xoá
+- [ ] Không file nào khác trong dự án bị thay đổi
+- [ ] `.gitignore` đã được tạo
+
+Báo cáo ngắn gọn: đã sửa file nào, và bất kỳ chỗ nào bạn phải suy đoán.
