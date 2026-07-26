@@ -107,7 +107,7 @@ export function OrderModal({ product, onClose }: OrderModalProps) {
               textTransform: "uppercase",
             }}
           >
-            ĐẶT MUA TÀI KHOẢN
+            ĐẮT MUA TÀI KHOẢN
           </h2>
         </div>
 
@@ -298,7 +298,7 @@ export function OrderModal({ product, onClose }: OrderModalProps) {
               textTransform: "uppercase",
             }}
           >
-            {loading ? "ĐANG XỬ LÝ..." : "ĐẶT HÀNG NGAY"}
+            {loading ? "ĐANG XỬ LÝ..." : "ĐẮT HÀNG NGAY"}
           </button>
 
           {/* Divider */}
