@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { Flame } from "lucide-react";
 
 interface Plan {
   label: string;
@@ -20,32 +20,15 @@ export interface Product {
 interface ProductCardProps {
   product: Product;
   onClick: (product: Product) => void;
-  /** Đặt true cho vài thẻ đầu tiên nằm trong màn hình đầu (nếu muốn ưu tiên tải). */
-  priority?: boolean;
 }
 
-/**
- * TỐI ƯU (giao diện giữ nguyên 100%, chỉ đổi cách tải ảnh):
- *  - loading="lazy": 61 ảnh sản phẩm không còn tải cùng lúc lúc mở trang.
- *    Trình duyệt vẫn tải ngay những ảnh đang/sắp lọt vào màn hình, nên
- *    người dùng không thấy khác biệt, chỉ tiết kiệm băng thông.
- *  - decoding="async": giải mã ảnh ngoài luồng chính, cuộn mượt hơn.
- *  - width/height: cho trình duyệt biết tỉ lệ trước, tránh giật layout (CLS).
- *  - memo(): thẻ sản phẩm không render lại khi mở/đóng modal.
- */
-function ProductCardBase({
+export function ProductCard({
   product,
   onClick,
-  priority = false,
 }: ProductCardProps) {
   const slotPercent = product.slotsLeft
     ? Math.min(product.slotsLeft * 12, 90)
     : 50;
-
-  // fetchpriority chưa có trong kiểu JSX của React 18 → truyền qua spread.
-  const imgPriorityAttrs: Record<string, string> = {
-    fetchpriority: priority ? "high" : "low",
-  };
 
   return (
     <div
@@ -62,13 +45,8 @@ function ProductCardBase({
       >
         <img
           src={product.image}
-          alt={`${product.name} giá rẻ - TVHCanva`}
+          alt={product.name}
           className="w-full group-hover:scale-105 transition-transform duration-300"
-          width={702}
-          height={1053}
-          loading={priority ? "eager" : "lazy"}
-          decoding="async"
-          {...imgPriorityAttrs}
           style={{
             objectFit: "cover",
             objectPosition: "top",
@@ -145,8 +123,6 @@ function ProductCardBase({
         {/* Divider */}
         <div className="border-t border-gray-100 pt-2">
           <button
-            type="button"
-            aria-label={`Mua ${product.name}`}
             className="w-full text-blue-500 hover:text-blue-700 transition-colors text-center"
             style={{ fontSize: "0.95rem", fontWeight: 700 }}
           >
@@ -157,5 +133,3 @@ function ProductCardBase({
     </div>
   );
 }
-
-export const ProductCard = memo(ProductCardBase);
