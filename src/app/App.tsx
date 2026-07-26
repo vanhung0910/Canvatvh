@@ -21,7 +21,6 @@ import {
 import { OrderModal } from "./components/OrderModal";
 import { PaymentReturnModal } from "./components/PaymentReturnModal";
 import { FloatingButtons } from "./components/FloatingButtons";
-import { SeoHead } from "./components/SeoHead";
 
 // ============ PRODUCT DATA ============
 
@@ -1110,12 +1109,11 @@ function ProductSection({
           {title}
         </SectionTitle>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {products.map((p, i) => (
+          {products.map((p) => (
             <ProductCard
               key={p.id}
               product={p}
               onClick={onClick}
-              priority={id === "best-sellers" && i < 4}
             />
           ))}
         </div>
@@ -1123,16 +1121,6 @@ function ProductSection({
     </section>
   );
 }
-
-const ALL_PRODUCTS: Product[] = [
-  ...BEST_SELLERS,
-  ...DESIGN_PRODUCTS,
-  ...AI_PRODUCTS,
-  ...WORK_PRODUCTS,
-  ...ENTERTAINMENT_PRODUCTS,
-  ...EDUCATION_PRODUCTS,
-  ...VPN_PRODUCTS,
-];
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] =
@@ -1174,7 +1162,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <SeoHead products={ALL_PRODUCTS} />
       {/* Header */}
       <header
         className="sticky top-0 z-40"
