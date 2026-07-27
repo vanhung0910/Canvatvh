@@ -30,8 +30,11 @@ const SIGNED_FIELDS = [
 
 function signFields(fields: Record<string, string>, secret: string): string {
   const parts: string[] = [];
-  for (const key of Object.keys(fields)) {
-    if (SIGNED_FIELDS.includes(key) && fields[key] !== undefined) {
+  // Duyệt theo thứ tự SIGNED_FIELDS, không theo Object.keys(fields).
+  // Object.keys cho thứ tự chèn (currency trước order_amount),
+  // nhưng SePay yêu cầu đúng thứ tự khai báo trong SIGNED_FIELDS.
+  for (const key of SIGNED_FIELDS) {
+    if (fields[key] !== undefined) {
       parts.push(`${key}=${fields[key]}`);
     }
   }
@@ -75,7 +78,7 @@ export default async function handler(req: any, res: any) {
 
   const merchant = process.env.SEPAY_MERCHANT_ID;
   const secret = process.env.SEPAY_SECRET_KEY;
-  const env = process.env.SEPAY_ENV || "sandbox";
+  const env = process.env.SEPAY_ENV || "production";
 
   if (!merchant || !secret) {
     return res.status(500).json({ error: "Sepay credentials not configured" });
@@ -125,7 +128,7 @@ export default async function handler(req: any, res: any) {
   const invoiceNumber = `${isCanva ? "TVHC" : "TVH"}${Date.now()}${rand}`;
 
   // GIỮ NGUYÊN như bản cũ.
-  const origin = req.headers.origin || "https://tvhcanva.com";
+  const origin = req.headers.origin || "https://www.tvhcanva.com";
 
   const fields: Record<string, string> = {
     merchant,
