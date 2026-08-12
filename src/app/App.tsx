@@ -51,7 +51,7 @@ const BEST_SELLERS: Product[] = [
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/cf/87/0e/58/77923d59f6e92885f56671d17fc3d9885168822cfbc04acc22f9d236-w:2400-h:3600-l:1401843-t:image/png.png",
     plans: [
-      { label: "1 Tháng - 7 ngày đổi nhóm 1 lần", price: "15.000đ" },
+      { label: "1 Tháng - 7 ngày đổi nhóm 1 lần", price: "15.000đ", key: "1 Tháng" },
       { label: "1 Năm", price: "200.000đ" },
     ],
   },

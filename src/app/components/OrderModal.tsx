@@ -41,19 +41,18 @@ export function OrderModal({
     }
     setLoading(true);
     try {
-      const planLabel = isChatGPT ? "1 Tháng" : selectedPlan;
-      const priceStr = isChatGPT
-        ? chatgptPrices[chatgptType]
-        : selectedPlanData?.price || "0";
-      const ok = await submitSepayCheckout(
+      // Dùng plan.key nếu có (tách text hiển thị khỏi key catalog server-side).
+      const planLabel = isChatGPT
+        ? (chatgptType === "chinh-chu" ? "1 Tháng (Chính chủ)" : "1 Tháng (Cấp tài khoản)")
+        : (selectedPlanData?.key || selectedPlan);
+      const result = await submitSepayCheckout(
         product.name,
         planLabel,
-        priceStr,
         fullName,
         phone,
       );
-      if (!ok) {
-        alert("Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Zalo!");
+      if (!result.ok) {
+        alert(result.error || "Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Zalo!");
         setLoading(false);
       }
     } catch (err) {
