@@ -3,8 +3,6 @@ import { Flame } from "lucide-react";
 interface Plan {
   label: string;
   price: string;
-  /** Key gửi lên server (_catalog.ts). Dùng khi label hiển thị khác key catalog. */
-  key?: string;
 }
 
 export interface Product {
