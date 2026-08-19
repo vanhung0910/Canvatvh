@@ -64,11 +64,12 @@ export default async function handler(req: any, res: any) {
     return res.status(400).json({ error: "Missing fields" });
   }
 
-  // Đơn Canva 1 tháng (15.000đ) dùng tiền tố "TVHC" để nhận diện đơn cần trả link Canva.
+  // Đơn Canva (1 Tháng 15.000đ / 3 Tháng 40.000đ / 1 Năm 200.000đ) dùng tiền tố
+  // "TVHC" để nhận diện đơn cần trả link Canva. Số tiền dùng để chọn đúng link theo gói.
+  const CANVA_AMOUNTS = new Set([15000, 40000, 200000]);
   const isCanva =
     String(productName).toLowerCase().includes("canva") &&
-    String(planLabel).trim() === "1 Tháng" &&
-    Number(amount) === 15000;
+    CANVA_AMOUNTS.has(Number(amount));
   const invoiceNumber = (isCanva ? "TVHC" : "TVH") + Date.now();
   const origin = req.headers.origin || "https://tvhcanva.com";
 

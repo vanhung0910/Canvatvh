@@ -29,6 +29,8 @@ app.get("/make-server-4d3e30ca/diag", (c) => {
   return c.json({
     has_ipn_shared_secret: !!Deno.env.get("IPN_SHARED_SECRET"),
     has_canva_invite_link: !!Deno.env.get("CANVA_INVITE_LINK"),
+    has_canva_invite_link_3m: !!Deno.env.get("CANVA_INVITE_LINK_3M"),
+    has_canva_invite_link_1y: !!Deno.env.get("CANVA_INVITE_LINK_1Y"),
   });
 });
 
@@ -58,7 +60,7 @@ app.post("/make-server-4d3e30ca/mark-paid", async (c) => {
   const amount = Number(body?.amount) || 0;
   if (!invoice) return c.json({ error: "Thiếu invoice" }, 400);
 
-  const isCanva = invoice.toUpperCase().startsWith("TVHC") && amount === 15000;
+  const isCanva = invoice.toUpperCase().startsWith("TVHC");
 
   try {
     await kv.set(`paid:${invoice}`, {
@@ -98,7 +100,12 @@ app.get("/make-server-4d3e30ca/canva-link", async (c) => {
 
   const result: Record<string, unknown> = { status: "Paid" };
   if (record.is_canva) {
-    const link = Deno.env.get("CANVA_INVITE_LINK");
+    // Chọn đúng link theo số tiền của gói: 40.000đ = 3 Tháng, 200.000đ = 1 Năm,
+    // còn lại (15.000đ) = 1 Tháng.
+    let link: string | undefined;
+    if (record.amount === 40000) link = Deno.env.get("CANVA_INVITE_LINK_3M");
+    else if (record.amount === 200000) link = Deno.env.get("CANVA_INVITE_LINK_1Y");
+    else link = Deno.env.get("CANVA_INVITE_LINK");
     if (link) result.canva_link = link;
   }
   return c.json(result);
