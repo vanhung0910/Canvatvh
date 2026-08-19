@@ -115,7 +115,7 @@ const BEST_SELLERS: Product[] = [
   {
     id: 60,
     name: "Netflix Premium 4K",
-    price: "85.000đ",
+    price: "80.000đ",
     originalPrice: "260.000đ",
     discount: "-75%",
     slotsLeft: 2,
@@ -123,7 +123,7 @@ const BEST_SELLERS: Product[] = [
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/b8/3c/28/1d/b46f8271b37b7c6e9faaa9acea3515d85cfcd03186ae6818d160c8ce-w:2400-h:3600-l:420124-t:image/png.png",
     plans: [
-      { label: "1 Tháng", price: "85.000đ" },
+      { label: "1 Tháng", price: "80.000đ" },
     ],
   },
   {
