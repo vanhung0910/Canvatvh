@@ -53,7 +53,7 @@ const BEST_SELLERS: Product[] = [
     plans: [
       { label: "1 Tháng", price: "15.000đ" },
       { label: "3 Tháng", price: "40.000đ" },
-      { label: "1 Năm", price: "200.000đ" },
+      { label: "1 Năm", price: "180.000đ" },
     ],
   },
   {
