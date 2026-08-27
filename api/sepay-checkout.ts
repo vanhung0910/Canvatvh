@@ -66,7 +66,7 @@ export default async function handler(req: any, res: any) {
 
   // Đơn Canva (1 Tháng 15.000đ / 3 Tháng 40.000đ / 1 Năm 200.000đ) dùng tiền tố
   // "TVHC" để nhận diện đơn cần trả link Canva. Số tiền dùng để chọn đúng link theo gói.
-  const CANVA_AMOUNTS = new Set([15000, 40000, 200000]);
+  const CANVA_AMOUNTS = new Set([15000, 40000, 180000]);
   const isCanva =
     String(productName).toLowerCase().includes("canva") &&
     CANVA_AMOUNTS.has(Number(amount));
