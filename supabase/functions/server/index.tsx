@@ -100,11 +100,11 @@ app.get("/make-server-4d3e30ca/canva-link", async (c) => {
 
   const result: Record<string, unknown> = { status: "Paid" };
   if (record.is_canva) {
-    // Chọn đúng link theo số tiền của gói: 40.000đ = 3 Tháng, 200.000đ = 1 Năm,
+    // Chọn đúng link theo số tiền của gói: 40.000đ = 3 Tháng, 180.000đ = 1 Năm,
     // còn lại (15.000đ) = 1 Tháng.
     let link: string | undefined;
     if (record.amount === 40000) link = Deno.env.get("CANVA_INVITE_LINK_3M");
-    else if (record.amount === 200000) link = Deno.env.get("CANVA_INVITE_LINK_1Y");
+    else if (record.amount === 180000) link = Deno.env.get("CANVA_INVITE_LINK_1Y");
     else link = Deno.env.get("CANVA_INVITE_LINK");
     if (link) result.canva_link = link;
   }
