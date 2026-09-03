@@ -216,16 +216,16 @@ const DESIGN_PRODUCTS: Product[] = [
   {
     id: 23,
     name: "Meitu Vip",
-    price: "80.000đ",
+    price: "25.000đ",
     originalPrice: "159.000đ",
-    discount: "-55%",
+    discount: "-79%",
     slotsLeft: 4,
     bgColor: "#1e1e1e",
     image:
       "https://taikhoanre.com/wp-content/uploads/2024/08/meitu-photo-editor-ai-art-1.jpg",
     plans: [
-      { label: "1 Tháng", price: "80.000đ" },
-      { label: "3 Tháng", price: "239.000đ" },
+      { label: "7 Ngày", price: "25.000đ" },
+      { label: "1 Tháng", price: "90.000đ" },
     ],
   },
 ];
