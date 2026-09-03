@@ -187,16 +187,16 @@ const DESIGN_PRODUCTS: Product[] = [
   },
   {
     id: 21,
-    name: "Autodesk AutoCAD",
-    price: "299.000đ",
-    originalPrice: "2.075.000đ",
+    name: "Wink VIP+",
+    price: "25.000đ",
+    originalPrice: "130.000đ",
     discount: "-85%",
     slotsLeft: 6,
     bgColor: "#c62828",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/f0/b7/a0/a6/d817aa39f4714d3ecd32b9ad9c195badafbd15505a014b31bf562cba-w:2400-h:3600-l:930832-t:image/png.png",
+      "https://socialmmovn.com/wp-content/uploads/2026/01/ChatGPT-Image-08_18_08-8-thg-1-2026.png",
     plans: [
-      { label: "1 Năm", price: "299.000đ" },
+      { label: "7 Ngày", price: "25.000đ" },
     ],
   },
   {
