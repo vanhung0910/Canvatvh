@@ -222,7 +222,7 @@ const DESIGN_PRODUCTS: Product[] = [
     slotsLeft: 4,
     bgColor: "#1e1e1e",
     image:
-      "https://taikhoanre.com/wp-content/uploads/2024/08/meitu-photo-editor-ai-art-1.jpg",
+      "https://khoahocgiare.org/storage/banner/banner-meitu-vip.jpeg",
     plans: [
       { label: "7 Ngày", price: "25.000đ" },
       { label: "1 Tháng", price: "90.000đ" },
