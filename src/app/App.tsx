@@ -37,7 +37,7 @@ const BEST_SELLERS: Product[] = [
       "https://content.pancake.vn/1/s702x1053/fwebp0/13/1a/60/66/6bfe386de212ab2d2d36baf219722399a5996b23e5e5f87eb78cdd49-w:2400-h:3600-l:857912-t:image/png.png",
     plans: [
       { label: "7 Ngày", price: "15.000đ" },
-      { label: "1 Tháng", price: "65.000đ" },
+      { label: "1 Tháng", price: "68.000đ" },
     ],
   },
   {
@@ -71,7 +71,7 @@ const BEST_SELLERS: Product[] = [
   {
     id: 5,
     name: "ChatGPT Plus",
-    price: "89.000đ",
+    price: "320.000đ",
     originalPrice: "500.000đ",
     discount: "-74%",
     slotsLeft: 8,
@@ -79,7 +79,7 @@ const BEST_SELLERS: Product[] = [
     image:
       "https://content.pancake.vn/1/s702x1053/fwebp0/13/ce/96/58/4f93be895e52df7810b3dca33f45664ccc2bcaa559ab4f6f387c62e4-w:2400-h:3600-l:937688-t:image/png.png",
     plans: [
-      { label: "1 Tháng", price: "89.000đ" },
+      { label: "1 Tháng", price: "320.000đ" },
     ],
   },
   {
@@ -188,7 +188,7 @@ const DESIGN_PRODUCTS: Product[] = [
   {
     id: 21,
     name: "Wink VIP+",
-    price: "25.000đ",
+    price: "32.000đ",
     originalPrice: "130.000đ",
     discount: "-85%",
     slotsLeft: 6,
@@ -196,7 +196,7 @@ const DESIGN_PRODUCTS: Product[] = [
     image:
       "https://socialmmovn.com/wp-content/uploads/2026/01/ChatGPT-Image-08_18_08-8-thg-1-2026.png",
     plans: [
-      { label: "7 Ngày", price: "25.000đ" },
+      { label: "7 Ngày", price: "32.000đ" },
     ],
   },
   {
@@ -216,7 +216,7 @@ const DESIGN_PRODUCTS: Product[] = [
   {
     id: 23,
     name: "Meitu Vip",
-    price: "25.000đ",
+    price: "32.000đ",
     originalPrice: "159.000đ",
     discount: "-79%",
     slotsLeft: 4,
@@ -224,8 +224,8 @@ const DESIGN_PRODUCTS: Product[] = [
     image:
       "https://khoahocgiare.org/storage/banner/banner-meitu-vip.jpeg",
     plans: [
-      { label: "7 Ngày", price: "25.000đ" },
-      { label: "1 Tháng", price: "90.000đ" },
+      { label: "7 Ngày", price: "32.000đ" },
+      { label: "1 Tháng", price: "110.000đ" },
     ],
   },
 ];
