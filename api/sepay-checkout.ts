@@ -66,13 +66,20 @@ export default async function handler(req: any, res: any) {
     return res.status(400).json({ error: "Body không hợp lệ" });
   }
   const name = String(body.name || "").trim().slice(0, 80);
-  const phone = String(body.phone || "").replace(/[^\d+]/g, "").slice(0, 15);
+  // Ô liên hệ trên form là Email (field vẫn tên "phone"); chấp nhận email hoặc SĐT.
+  const contact = String(body.phone || "").trim().slice(0, 100);
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+  const isPhone = /^\+?\d{9,15}$/.test(contact.replace(/[\s.-]/g, ""));
+  const phone = isEmail ? contact.toLowerCase() : contact.replace(/[\s.-]/g, "");
   const productName = String(body.productName || "");
   const planLabel = String(body.planLabel || "");
   const chatgptType = body.chatgptType ? String(body.chatgptType) : undefined;
 
-  if (!name || phone.length < 9 || !productName || !planLabel) {
-    return res.status(400).json({ error: "Thiếu hoặc sai thông tin" });
+  if (!name || !productName || !planLabel) {
+    return res.status(400).json({ error: "Vui lòng nhập đầy đủ thông tin" });
+  }
+  if (!isEmail && !isPhone) {
+    return res.status(400).json({ error: "Email không hợp lệ, vui lòng kiểm tra lại" });
   }
 
   // Giá tính từ bảng giá phía server, KHÔNG dùng số tiền client gửi.

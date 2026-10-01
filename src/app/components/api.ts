@@ -27,7 +27,7 @@ export async function submitSepayCheckout(
   name: string,
   phone: string,
   chatgptType?: string,
-): Promise<boolean> {
+): Promise<true> {
   // Server tự tính giá theo bảng giá, client chỉ gửi sản phẩm + gói.
 
   const res = await fetch("/api/sepay-checkout", {
@@ -35,9 +35,10 @@ export async function submitSepayCheckout(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, phone, productName, planLabel, chatgptType }),
   });
-  if (!res.ok) return false;
-  const data = await res.json();
-  if (!data.checkout_url || !data.fields) return false;
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.checkout_url || !data.fields) {
+    throw new Error(data?.error || "Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Zalo!");
+  }
 
   const form = document.createElement("form");
   form.method = "POST";

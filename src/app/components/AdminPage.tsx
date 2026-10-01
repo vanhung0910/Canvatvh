@@ -220,7 +220,7 @@ export function AdminPage() {
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Mã đơn, tên, SĐT..."
+              placeholder="Mã đơn, tên, email..."
               className="w-48 bg-transparent text-sm outline-none"
             />
           </label>
@@ -265,7 +265,7 @@ export function AdminPage() {
                   </td>
                   <td className="px-4 py-3">
                     <p className="font-medium">{o.name || "—"}</p>
-                    <a href={`https://zalo.me/${o.phone}`} target="_blank" rel="noreferrer" className="text-xs text-gray-500 hover:text-[#5b2fa0]">
+                    <a href={o.phone.includes("@") ? `mailto:${o.phone}` : `https://zalo.me/${o.phone}`} target="_blank" rel="noreferrer" className="text-xs text-gray-500 hover:text-[#5b2fa0]">
                       {o.phone}
                     </a>
                   </td>

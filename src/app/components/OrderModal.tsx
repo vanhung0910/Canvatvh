@@ -36,25 +36,21 @@ export function OrderModal({
 
   const handleOrder = async () => {
     if (!fullName.trim() || !phone.trim()) {
-      alert("Vui lòng nhập đầy đủ tên và số điện thoại!");
+      alert("Vui lòng nhập đầy đủ tên và email!");
       return;
     }
     setLoading(true);
     try {
       const planLabel = isChatGPT ? "1 Tháng" : selectedPlan;
-      const ok = await submitSepayCheckout(
+      await submitSepayCheckout(
         product.name,
         planLabel,
         fullName,
         phone,
         isChatGPT ? chatgptType : undefined,
       );
-      if (!ok) {
-        alert("Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Zalo!");
-        setLoading(false);
-      }
     } catch (err) {
-      alert("Lỗi kết nối. Vui lòng thử lại!");
+      alert((err as Error).message || "Lỗi kết nối. Vui lòng thử lại!");
       setLoading(false);
     }
   };
