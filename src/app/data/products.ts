@@ -989,10 +989,10 @@ export const VPN_PRODUCTS: Product[] = [
 
 
 // Giá ChatGPT Plus theo loại tài khoản (chọn trong OrderModal).
-export const CHATGPT_PRICES: Record<string, number> = {
-  share: 320000,
-  "chinh-chu": 420000,
-};
+export const CHATGPT_VARIANTS = [
+  { key: "share", label: "Cấp tài khoản", price: 320000 },
+  { key: "chinh-chu", label: "Chính chủ", price: 420000 },
+] as const;
 
 export const ALL_PRODUCTS: Product[] = [
   ...BEST_SELLERS,
@@ -1004,8 +1004,55 @@ export const ALL_PRODUCTS: Product[] = [
   ...VPN_PRODUCTS,
 ];
 
+// Gói Canva tự động giao link (link chọn theo TÊN GÓI, không theo số tiền).
+export const CANVA_PLANS = ["1 Tháng", "3 Tháng", "1 Năm"];
+
+/**
+ * Giá admin sửa trên trang quản trị (lưu ở Supabase, key "prices").
+ * plans: tên gói -> giá (ChatGPT dùng key "share" / "chinh-chu"); original: giá gốc gạch ngang.
+ */
+export type PriceOverrides = Record<string, { plans?: Record<string, number>; original?: number }>;
+
 export function parsePrice(priceStr: string): number {
-  return parseInt(priceStr.replace(/[^\d]/g, ""), 10) || 0;
+  return parseInt(String(priceStr).replace(/[^\d]/g, ""), 10) || 0;
+}
+
+export function formatVnd(n: number): string {
+  return `${n.toLocaleString("vi-VN")}đ`;
+}
+
+export const isChatGPTProduct = (name: string) => name.toLowerCase().includes("chatgpt");
+
+/** Danh sách gói + giá hiện hành (đã áp giá admin) — dùng cho trang quản trị. */
+export function editablePlans(product: Product, ov?: PriceOverrides) {
+  const o = ov?.[product.name]?.plans || {};
+  if (isChatGPTProduct(product.name)) {
+    return CHATGPT_VARIANTS.map((v) => ({ key: v.key, label: v.label, price: o[v.key] ?? v.price }));
+  }
+  return product.plans.map((p) => ({ key: p.label, label: p.label, price: o[p.label] ?? parsePrice(p.price) }));
+}
+
+/** Áp giá admin + tự tính lại % giảm từ giá gốc và giá thấp nhất. */
+export function applyOverrides(product: Product, ov?: PriceOverrides): Product {
+  const plansNow = editablePlans(product, ov);
+  const minPrice = Math.min(...plansNow.map((p) => p.price));
+  const original = ov?.[product.name]?.original ?? parsePrice(product.originalPrice || "");
+  const pct = original > minPrice ? Math.round((1 - minPrice / original) * 100) : 0;
+  return {
+    ...product,
+    price: formatVnd(minPrice),
+    originalPrice: original ? formatVnd(original) : undefined,
+    discount: pct > 0 ? `-${pct}%` : undefined,
+    plans: isChatGPTProduct(product.name)
+      ? [{ label: "1 Tháng", price: formatVnd(plansNow[0].price) }]
+      : plansNow.map((p) => ({ label: p.label, price: formatVnd(p.price) })),
+  };
+}
+
+/** Giá ChatGPT theo loại (dùng trong OrderModal). */
+export function chatgptPrice(type: string, ov?: PriceOverrides): number {
+  const v = CHATGPT_VARIANTS.find((x) => x.key === type) || CHATGPT_VARIANTS[0];
+  return ov?.["ChatGPT Plus"]?.plans?.[v.key] ?? v.price;
 }
 
 /**
@@ -1016,19 +1063,34 @@ export function resolvePrice(
   productName: string,
   planLabel: string,
   chatgptType?: string,
+  ov?: PriceOverrides,
 ): number {
   const product = ALL_PRODUCTS.find((p) => p.name === productName);
   if (!product) return 0;
-  if (product.name.toLowerCase().includes("chatgpt")) {
-    return CHATGPT_PRICES[chatgptType || "share"] || 0;
-  }
-  const plan = product.plans.find((p) => p.label === planLabel);
-  return plan ? parsePrice(plan.price) : 0;
+  const plans = editablePlans(product, ov);
+  const key = isChatGPTProduct(product.name) ? chatgptType || "share" : planLabel;
+  return plans.find((p) => p.key === key)?.price || 0;
 }
 
-// Gói Canva tự động giao link: số tiền -> tên secret trên Supabase.
-export const CANVA_PLAN_AMOUNTS: Record<string, number> = {
-  "1 Tháng": 15000,
-  "3 Tháng": 40000,
-  "1 Năm": 180000,
-};
+/**
+ * Số slot "còn lại" tự động: mỗi ngày mỗi sản phẩm bắt đầu 9–16 slot,
+ * giảm dần theo giờ (giờ VN) xuống còn 1–4 vào cuối ngày, có dao động nhỏ.
+ * Cùng thời điểm thì mọi khách thấy cùng một con số.
+ */
+export function autoSlots(productId: number, now = Date.now()) {
+  const vn = new Date(now + 7 * 3600_000);
+  const day = Math.floor(vn.getTime() / 86400_000);
+  const hash = (n: number) => {
+    let x = (n ^ 0x9e3779b9) >>> 0;
+    x = Math.imul(x ^ (x >>> 16), 0x85ebca6b) >>> 0;
+    x = Math.imul(x ^ (x >>> 13), 0xc2b2ae35) >>> 0;
+    return ((x ^ (x >>> 16)) >>> 0) / 4294967296;
+  };
+  const total = 9 + Math.floor(hash(productId * 31 + day) * 8);
+  const end = 1 + Math.floor(hash(productId * 17 + day * 3) * 4);
+  const hour = vn.getUTCHours() + vn.getUTCMinutes() / 60;
+  const progress = Math.min(Math.max((hour - 7) / 16, 0), 1); // 7h -> 23h
+  const jitter = Math.round((hash(productId + day * 7 + Math.floor(hour / 2)) - 0.5) * 2);
+  const left = Math.max(1, Math.min(total, Math.round(total - (total - end) * progress) + jitter));
+  return { left, total };
+}

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Lock, RefreshCw, LogOut, Search, AlertTriangle, CheckCircle2, Copy, Mail, X } from "lucide-react";
 import { projectId, publicAnonKey } from "/utils/supabase/info";
+import { PriceEditor } from "./PriceEditor";
 
 const FN = `https://${projectId}.supabase.co/functions/v1/make-server-4d3e30ca`;
 const KEY_STORAGE = "tvh_admin_key";
@@ -58,6 +59,7 @@ export function AdminPage() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState<"all" | Order["status"]>("all");
   const [q, setQ] = useState("");
+  const [tab, setTab] = useState<"orders" | "prices">("orders");
   const [deliverFor, setDeliverFor] = useState<Order | null>(null);
   const [deliverEmail, setDeliverEmail] = useState("");
   const [deliverContent, setDeliverContent] = useState("");
@@ -187,7 +189,22 @@ export function AdminPage() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3">
           <div className="flex items-baseline gap-3">
             <h1 className="text-lg font-extrabold">TVH Canva</h1>
-            <span className="text-xs uppercase tracking-widest text-gray-400">Quản trị đơn hàng</span>
+            <nav className="ml-4 flex gap-1">
+              {([
+                ["orders", "Đơn hàng"],
+                ["prices", "Bảng giá"],
+              ] as const).map(([id, label]) => (
+                <button
+                  key={id}
+                  onClick={() => setTab(id)}
+                  className={`rounded-lg px-3 py-1.5 text-sm transition ${
+                    tab === id ? "bg-[#5b2fa0]/10 font-semibold text-[#5b2fa0]" : "text-gray-500 hover:bg-gray-100"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -218,6 +235,10 @@ export function AdminPage() {
         )}
         {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
 
+        {tab === "prices" ? (
+          <PriceEditor call={(path, init) => call(path, key, init)} />
+        ) : (
+          <>
         <section className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             ["Doanh thu hôm nay", vnd(stats.revenueToday)],
@@ -355,6 +376,8 @@ export function AdminPage() {
             </tbody>
           </table>
         </div>
+          </>
+        )}
       </main>
 
       {deliverFor && (

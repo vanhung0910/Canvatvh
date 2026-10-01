@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Flame } from "lucide-react";
+import { autoSlots } from "../data/products";
 
 interface Plan {
   label: string;
@@ -26,9 +28,14 @@ export function ProductCard({
   product,
   onClick,
 }: ProductCardProps) {
-  const slotPercent = product.slotsLeft
-    ? Math.min(product.slotsLeft * 12, 90)
-    : 50;
+  // Slot tự động theo giờ trong ngày, cập nhật mỗi phút.
+  const [slots, setSlots] = useState(() => autoSlots(product.id));
+  useEffect(() => {
+    const t = setInterval(() => setSlots(autoSlots(product.id)), 60_000);
+    return () => clearInterval(t);
+  }, [product.id]);
+  // Thanh hiển thị phần đã bán: càng ít slot, thanh càng đầy.
+  const slotPercent = Math.min(95, Math.max(15, Math.round((1 - slots.left / slots.total) * 100)));
 
   return (
     <div
@@ -95,7 +102,7 @@ export function ProductCard({
         </div>
 
         {/* Slots left */}
-        {product.slotsLeft && (
+        {(
           <div className="flex items-center gap-1.5 mb-2">
             <span style={{ fontSize: "1.2rem" }}>🔥</span>
             <div
@@ -114,7 +121,7 @@ export function ProductCard({
                 className="absolute inset-0 flex items-center justify-center text-gray-700"
                 style={{ fontSize: "0.72rem", fontWeight: 600 }}
               >
-                Chỉ còn {product.slotsLeft} slots
+                Chỉ còn {slots.left} slot
               </span>
             </div>
           </div>

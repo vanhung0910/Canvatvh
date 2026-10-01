@@ -30,7 +30,9 @@ import {
   ENTERTAINMENT_PRODUCTS,
   EDUCATION_PRODUCTS,
   VPN_PRODUCTS,
+  applyOverrides,
 } from "./data/products";
+import { usePrices } from "./data/usePrices";
 
 const TESTIMONIALS = [
   {
@@ -147,6 +149,8 @@ function ProductSection({
 }
 
 function Storefront() {
+  const prices = usePrices();
+  const withPrices = (list: Product[]) => list.map((p) => applyOverrides(p, prices));
   const [selectedProduct, setSelectedProduct] =
     useState<Product | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -544,44 +548,44 @@ function Storefront() {
       <ProductSection
         id="best-sellers"
         title="ĐANG BÁN CHẠY"
-        products={BEST_SELLERS}
+        products={withPrices(BEST_SELLERS)}
         bg="gray"
         onClick={setSelectedProduct}
       />
       <ProductSection
         id="other-products"
         title="THIẾT KẾ"
-        products={DESIGN_PRODUCTS}
+        products={withPrices(DESIGN_PRODUCTS)}
         bg="gradient"
         onClick={setSelectedProduct}
       />
       <ProductSection
         title="TRỢ LÝ AI"
-        products={AI_PRODUCTS}
+        products={withPrices(AI_PRODUCTS)}
         bg="gray"
         onClick={setSelectedProduct}
       />
       <ProductSection
         title="LÀM VIỆC"
-        products={WORK_PRODUCTS}
+        products={withPrices(WORK_PRODUCTS)}
         bg="gradient"
         onClick={setSelectedProduct}
       />
       <ProductSection
         title="XEM PHIM - GIẢI TRÍ"
-        products={ENTERTAINMENT_PRODUCTS}
+        products={withPrices(ENTERTAINMENT_PRODUCTS)}
         bg="gray"
         onClick={setSelectedProduct}
       />
       <ProductSection
         title="HỌC TẬP"
-        products={EDUCATION_PRODUCTS}
+        products={withPrices(EDUCATION_PRODUCTS)}
         bg="gradient"
         onClick={setSelectedProduct}
       />
       <ProductSection
         title="VPN GIÁ RẺ"
-        products={VPN_PRODUCTS}
+        products={withPrices(VPN_PRODUCTS)}
         bg="gray"
         onClick={setSelectedProduct}
       />

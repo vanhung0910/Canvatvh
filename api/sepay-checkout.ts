@@ -91,19 +91,32 @@ async function handle(req: any, res: any) {
   }
 
   // ESM trên Vercel bắt buộc đuôi .js khi import file TS; import động để lỗi (nếu có) trả về JSON.
-  const { resolvePrice, CANVA_PLAN_AMOUNTS } = await import("../src/app/data/products.js");
+  const { resolvePrice, CANVA_PLANS } = await import("../src/app/data/products.js");
+
+  // Giá admin sửa trên trang quản trị (Supabase). Không đọc được thì dừng, tránh tính sai giá.
+  let overrides: any = {};
+  try {
+    const r = await fetch(`${SUPABASE_FUNCTION_URL}/prices`, {
+      headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+    });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    overrides = (await r.json())?.prices || {};
+  } catch (err) {
+    console.log(`Không đọc được bảng giá: ${String(err)}`);
+    return res.status(502).json({ error: "Không tải được bảng giá, vui lòng thử lại" });
+  }
 
   // Giá tính từ bảng giá phía server, KHÔNG dùng số tiền client gửi.
-  const amount = resolvePrice(productName, planLabel, chatgptType);
+  const amount = resolvePrice(productName, planLabel, chatgptType, overrides);
   if (!amount) return res.status(400).json({ error: "Sản phẩm/gói không tồn tại" });
 
-  // Đơn Canva (1 Tháng 15.000đ / 3 Tháng 40.000đ / 1 Năm 180.000đ) dùng tiền tố "TVHC".
-  const isCanva = productName === "Canva Pro" && CANVA_PLAN_AMOUNTS[planLabel] === amount;
+  // Đơn Canva (gói 1 Tháng / 3 Tháng / 1 Năm) dùng tiền tố "TVHC"; link chọn theo tên gói.
+  const isCanva = productName === "Canva Pro" && CANVA_PLANS.includes(planLabel);
   const rand = crypto.randomBytes(3).toString("hex").toUpperCase();
   const invoiceNumber = (isCanva ? "TVHC" : "TVH") + Date.now() + rand;
   const reqOrigin = String(req.headers.origin || "");
   const origin = ALLOWED_ORIGINS.includes(reqOrigin) ? reqOrigin : "https://tvhcanva.com";
-  const variantLabel = chatgptType === "chinh-chu" ? " (Chính chủ)" : chatgptType ? " (Share)" : "";
+  const variantLabel = chatgptType === "chinh-chu" ? " (Chính chủ)" : chatgptType ? " (Cấp tài khoản)" : "";
 
   // Lưu đơn chờ thanh toán để IPN đối chiếu số tiền + để trang quản trị hiển thị.
   try {
@@ -122,6 +135,7 @@ async function handle(req: any, res: any) {
         name,
         phone,
         is_canva: isCanva,
+        canva_plan: isCanva ? planLabel : undefined,
       }),
     });
     if (!r.ok) {

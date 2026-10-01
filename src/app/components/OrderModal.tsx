@@ -2,6 +2,8 @@ import { useState } from "react";
 import { X, MessageCircle } from "lucide-react";
 import type { Product } from "./ProductCard";
 import { submitSepayCheckout } from "./api";
+import { chatgptPrice, formatVnd } from "../data/products";
+import { usePrices } from "../data/usePrices";
 
 interface OrderModalProps {
   product: Product;
@@ -23,9 +25,10 @@ export function OrderModal({
   const [paymentMethod] = useState("Chuyển khoản");
   const [submitted, setSubmitted] = useState(false);
 
+  const prices = usePrices();
   const chatgptPrices: Record<string, string> = {
-    share: "320.000đ",
-    "chinh-chu": "420.000đ",
+    share: formatVnd(chatgptPrice("share", prices)),
+    "chinh-chu": formatVnd(chatgptPrice("chinh-chu", prices)),
   };
 
   const isChatGPT = product.name

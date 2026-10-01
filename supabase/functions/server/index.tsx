@@ -6,12 +6,14 @@ const app = new Hono();
 
 const P = "/make-server-4d3e30ca";
 
-// Gói Canva tự động giao link: số tiền -> tên secret.
-const CANVA_LINK_ENV: Record<number, string> = {
-  15000: "CANVA_INVITE_LINK",
-  40000: "CANVA_INVITE_LINK_3M",
-  180000: "CANVA_INVITE_LINK_1Y",
+// Gói Canva tự động giao link: tên gói -> tên secret (không phụ thuộc giá, admin sửa giá thoải mái).
+const CANVA_LINK_ENV: Record<string, string> = {
+  "1 Tháng": "CANVA_INVITE_LINK",
+  "3 Tháng": "CANVA_INVITE_LINK_3M",
+  "1 Năm": "CANVA_INVITE_LINK_1Y",
 };
+// Đơn cũ (trước khi lưu canva_plan) suy ra gói theo số tiền.
+const LEGACY_CANVA_AMOUNT: Record<number, string> = { 15000: "1 Tháng", 40000: "3 Tháng", 180000: "1 Năm" };
 
 app.use("*", logger(console.log));
 
@@ -39,8 +41,9 @@ function adminOk(c: any): boolean {
   return !!pass && c.req.header("x-admin-key") === pass;
 }
 
-function canvaLinkFor(amount: number): string | undefined {
-  const envName = CANVA_LINK_ENV[amount];
+function canvaLinkFor(order: any): string | undefined {
+  const plan = order?.canva_plan || LEGACY_CANVA_AMOUNT[Number(order?.amount)];
+  const envName = plan ? CANVA_LINK_ENV[plan] : undefined;
   return envName ? Deno.env.get(envName) || undefined : undefined;
 }
 
@@ -181,6 +184,7 @@ app.post(`${P}/create-order`, async (c) => {
       name: String(b.name || ""),
       phone: String(b.phone || ""),
       is_canva: !!b.is_canva,
+      canva_plan: b.canva_plan ? String(b.canva_plan) : undefined,
       status: "pending",
       created_at: Date.now(),
     });
@@ -220,7 +224,7 @@ app.post(`${P}/mark-paid`, async (c) => {
     } else if (order.amount !== paidAmount) {
       status = "mismatch";
       warning = `Số tiền không khớp: đơn ${order.amount}đ, nhận ${paidAmount}đ — không tự giao link.`;
-    } else if (order.is_canva && !canvaLinkFor(order.amount)) {
+    } else if (order.is_canva && !canvaLinkFor(order)) {
       warning = "Đơn Canva đã trả nhưng thiếu secret link Canva cho gói này — cần gửi link tay.";
     }
     const updated: any = {
@@ -231,7 +235,7 @@ app.post(`${P}/mark-paid`, async (c) => {
       warning: warning || undefined,
     };
     // Đơn Canva hợp lệ: tự gửi link vào email khách (dự phòng khi khách đóng trang sớm).
-    const link = status === "paid" && order?.is_canva ? canvaLinkFor(order.amount) : undefined;
+    const link = status === "paid" && order?.is_canva ? canvaLinkFor(order) : undefined;
     if (link && !order.email_sent_at) {
       const err = await sendEmail(order.phone, "Link tham gia Canva Pro – đơn " + invoice, canvaEmail(order, link));
       if (err) {
@@ -272,10 +276,19 @@ app.get(`${P}/canva-link`, async (c) => {
 
   const result: Record<string, unknown> = { status: "Paid" };
   if (order.is_canva) {
-    const link = canvaLinkFor(order.amount);
+    const link = canvaLinkFor(order);
     if (link) result.canva_link = link;
   }
   return c.json(result);
+});
+
+/** Giá admin đã sửa (công khai — chỉ là bảng giá). */
+app.get(`${P}/prices`, async (c) => {
+  try {
+    return c.json({ prices: (await kv.get("prices")) || {} });
+  } catch (err) {
+    return c.json({ error: `Lỗi đọc bảng giá: ${String(err)}` }, 500);
+  }
 });
 
 // ================= QUẢN TRỊ (header x-admin-key === ADMIN_PASSWORD) =================
@@ -323,6 +336,36 @@ app.post(`${P}/admin/update`, async (c) => {
   return c.json({ success: true, order: updated });
 });
 
+/** Admin lưu giá 1 sản phẩm. reset=true -> về giá mặc định trong code. */
+app.post(`${P}/admin/prices`, async (c) => {
+  if (!adminOk(c)) return c.json({ error: "Sai mật khẩu quản trị" }, 401);
+  let b: any = {};
+  try {
+    b = await c.req.json();
+  } catch (err) {
+    return c.json({ error: `Body không hợp lệ: ${String(err)}` }, 400);
+  }
+  const name = String(b?.name || "").trim();
+  if (!name) return c.json({ error: "Thiếu tên sản phẩm" }, 400);
+  const prices: any = (await kv.get("prices")) || {};
+  if (b.reset) {
+    delete prices[name];
+  } else {
+    const plans: Record<string, number> = {};
+    for (const [k, v] of Object.entries(b.plans || {})) {
+      const n = Math.round(Number(v));
+      if (!Number.isFinite(n) || n < 1000 || n > 100_000_000) {
+        return c.json({ error: `Giá gói "${k}" không hợp lệ (tối thiểu 1.000đ)` }, 400);
+      }
+      plans[k] = n;
+    }
+    const original = Math.round(Number(b.original) || 0);
+    prices[name] = { plans, ...(original > 0 ? { original } : {}) };
+  }
+  await kv.set("prices", prices);
+  return c.json({ success: true, prices });
+});
+
 /**
  * Admin gửi email giao hàng. Đơn Canva: gửi lại link theo gói.
  * Đơn khác: gửi nội dung admin nhập (tài khoản/hướng dẫn), rồi chuyển "delivered".
@@ -343,7 +386,7 @@ app.post(`${P}/admin/deliver`, async (c) => {
 
   let err: string | null;
   if (order.is_canva && !content) {
-    const link = canvaLinkFor(order.amount);
+    const link = canvaLinkFor(order);
     if (!link) return c.json({ error: "Thiếu secret link Canva cho gói này" }, 400);
     err = await sendEmail(to, "Link tham gia Canva Pro – đơn " + invoice, canvaEmail(order, link));
   } else {
