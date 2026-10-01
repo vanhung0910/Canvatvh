@@ -172,17 +172,6 @@ function Storefront() {
     }
   }, []);
 
-  useEffect(() => {
-    const GA_ID = "G-B3YY70S3TZ";
-    if (document.querySelector(`script[src*="${GA_ID}"]`)) return;
-    const s1 = document.createElement("script");
-    s1.async = true;
-    s1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-    document.head.appendChild(s1);
-    const s2 = document.createElement("script");
-    s2.innerHTML = `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${GA_ID}');`;
-    document.head.appendChild(s2);
-  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
