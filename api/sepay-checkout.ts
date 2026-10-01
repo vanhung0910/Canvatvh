@@ -1,5 +1,4 @@
 import crypto from "node:crypto";
-import { resolvePrice, CANVA_PLAN_AMOUNTS } from "../src/app/data/products";
 
 export const config = { runtime: "nodejs" };
 
@@ -39,6 +38,15 @@ function signFields(fields: Record<string, string>, secret: string): string {
 const ALLOWED_ORIGINS = ["https://tvhcanva.com", "https://www.tvhcanva.com"];
 
 export default async function handler(req: any, res: any) {
+  try {
+    return await handle(req, res);
+  } catch (err) {
+    console.log(`sepay-checkout lỗi: ${String(err)}`);
+    return res.status(500).json({ error: `Lỗi máy chủ: ${String((err as Error)?.message || err)}` });
+  }
+}
+
+async function handle(req: any, res: any) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -81,6 +89,9 @@ export default async function handler(req: any, res: any) {
   if (!isEmail && !isPhone) {
     return res.status(400).json({ error: "Email không hợp lệ, vui lòng kiểm tra lại" });
   }
+
+  // ESM trên Vercel bắt buộc đuôi .js khi import file TS; import động để lỗi (nếu có) trả về JSON.
+  const { resolvePrice, CANVA_PLAN_AMOUNTS } = await import("../src/app/data/products.js");
 
   // Giá tính từ bảng giá phía server, KHÔNG dùng số tiền client gửi.
   const amount = resolvePrice(productName, planLabel, chatgptType);
