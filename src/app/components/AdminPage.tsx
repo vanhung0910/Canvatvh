@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Lock, RefreshCw, LogOut, Search, AlertTriangle, CheckCircle2, Copy } from "lucide-react";
+import { Lock, RefreshCw, LogOut, Search, AlertTriangle, CheckCircle2, Copy, Mail, X } from "lucide-react";
 import { projectId, publicAnonKey } from "/utils/supabase/info";
 
 const FN = `https://${projectId}.supabase.co/functions/v1/make-server-4d3e30ca`;
@@ -19,6 +19,8 @@ type Order = {
   paid_at?: number;
   warning?: string;
   note?: string;
+  email_sent_at?: number;
+  email_error?: string;
 };
 
 const STATUS: Record<Order["status"], { label: string; cls: string }> = {
@@ -56,6 +58,33 @@ export function AdminPage() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState<"all" | Order["status"]>("all");
   const [q, setQ] = useState("");
+  const [deliverFor, setDeliverFor] = useState<Order | null>(null);
+  const [deliverEmail, setDeliverEmail] = useState("");
+  const [deliverContent, setDeliverContent] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const openDeliver = (o: Order) => {
+    setDeliverFor(o);
+    setDeliverEmail(o.phone.includes("@") ? o.phone : "");
+    setDeliverContent("");
+  };
+
+  const sendDelivery = async () => {
+    if (!deliverFor) return;
+    setSending(true);
+    try {
+      const r = await call("/admin/deliver", key, {
+        method: "POST",
+        body: JSON.stringify({ invoice: deliverFor.invoice, email: deliverEmail, content: deliverContent }),
+      });
+      setOrders((list) => list.map((o) => (o.invoice === deliverFor.invoice ? r.order : o)));
+      setDeliverFor(null);
+    } catch (e) {
+      alert(String((e as Error).message));
+    } finally {
+      setSending(false);
+    }
+  };
 
   const load = useCallback(async (k: string) => {
     setLoading(true);
@@ -284,6 +313,11 @@ export function AdminPage() {
                       {STATUS[o.status]?.label || o.status}
                     </span>
                     {o.warning && <p className="mt-1 max-w-[220px] text-xs text-red-600">{o.warning}</p>}
+                    {o.email_sent_at && (
+                      <p className="mt-1 inline-flex items-center gap-1 text-xs text-emerald-700">
+                        <Mail size={11} /> Đã gửi email {time(o.email_sent_at)}
+                      </p>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-xs text-gray-500">
                     <p>Tạo {time(o.created_at)}</p>
@@ -291,6 +325,14 @@ export function AdminPage() {
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="inline-flex gap-1">
+                      {o.status !== "pending" && o.status !== "cancelled" && (
+                        <button
+                          onClick={() => openDeliver(o)}
+                          className="inline-flex items-center gap-1 rounded-md border border-[#5b2fa0]/30 px-2 py-1 text-xs text-[#5b2fa0] hover:bg-[#5b2fa0]/5"
+                        >
+                          <Mail size={12} /> {o.email_sent_at ? "Gửi lại" : "Gửi email"}
+                        </button>
+                      )}
                       {o.status === "mismatch" && (
                         <button onClick={() => update(o.invoice, "paid")} className="rounded-md bg-emerald-600 px-2 py-1 text-xs text-white hover:bg-emerald-700">
                           Duyệt
@@ -314,6 +356,57 @@ export function AdminPage() {
           </table>
         </div>
       </main>
+
+      {deliverFor && (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"
+          onClick={(e) => e.target === e.currentTarget && setDeliverFor(null)}
+        >
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="mb-4 flex items-start justify-between">
+              <div>
+                <h2 className="text-lg font-bold">Gửi email giao hàng</h2>
+                <p className="text-xs text-gray-500">
+                  {deliverFor.invoice} · {deliverFor.product} – {deliverFor.plan}
+                </p>
+              </div>
+              <button onClick={() => setDeliverFor(null)} className="rounded-md p-1 text-gray-400 hover:bg-gray-100">
+                <X size={18} />
+              </button>
+            </div>
+            <label className="text-xs font-medium text-gray-500">Email khách</label>
+            <input
+              value={deliverEmail}
+              onChange={(e) => setDeliverEmail(e.target.value)}
+              placeholder="khach@gmail.com"
+              className="mb-4 mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#5b2fa0] focus:ring-2 focus:ring-[#5b2fa0]/20"
+            />
+            <label className="text-xs font-medium text-gray-500">
+              {deliverFor.is_canva ? "Nội dung (để trống = gửi lại link Canva theo gói)" : "Thông tin tài khoản / hướng dẫn"}
+            </label>
+            <textarea
+              value={deliverContent}
+              onChange={(e) => setDeliverContent(e.target.value)}
+              rows={6}
+              placeholder={"Tài khoản: abc@gmail.com\nMật khẩu: ********\nHạn dùng: 01/11/2026"}
+              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 font-mono text-sm outline-none focus:border-[#5b2fa0] focus:ring-2 focus:ring-[#5b2fa0]/20"
+            />
+            <p className="mt-2 text-xs text-gray-400">Gửi xong, đơn tự chuyển sang “Đã giao”.</p>
+            <div className="mt-5 flex justify-end gap-2">
+              <button onClick={() => setDeliverFor(null)} className="rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-100">
+                Đóng
+              </button>
+              <button
+                onClick={sendDelivery}
+                disabled={sending || !deliverEmail}
+                className="inline-flex items-center gap-2 rounded-lg bg-[#5b2fa0] px-4 py-2 text-sm font-semibold text-white hover:bg-[#4a2585] disabled:opacity-50"
+              >
+                <Mail size={14} /> {sending ? "Đang gửi..." : "Gửi email"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

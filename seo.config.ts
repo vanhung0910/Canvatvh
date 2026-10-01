@@ -21,7 +21,11 @@ const HEAD = `
     <meta property="og:url" content="${SITE}/" />
     <meta property="og:title" content="${TITLE}" />
     <meta property="og:description" content="${DESCRIPTION}" />
-    <meta property="og:image" content="${SITE}/logo.png" />
+    <meta property="og:image" content="${SITE}/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="TVH Canva – Canva Pro & CapCut giá rẻ" />
+    <meta name="twitter:image" content="${SITE}/og-image.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">${JSON.stringify({
       "@context": "https://schema.org",
@@ -74,9 +78,14 @@ export function seoPlugin(): Plugin {
     generateBundle() {
       this.emitFile({ type: "asset", fileName: "robots.txt", source: ROBOTS });
       this.emitFile({ type: "asset", fileName: "sitemap.xml", source: SITEMAP });
-      const logo = path.resolve(__dirname, "src/imports/logo.png");
-      if (fs.existsSync(logo)) {
-        this.emitFile({ type: "asset", fileName: "logo.png", source: fs.readFileSync(logo) });
+      for (const [src, out] of [
+        ["src/imports/logo.png", "logo.png"],
+        ["src/imports/og-image.jpg", "og-image.jpg"],
+      ]) {
+        const file = path.resolve(__dirname, src);
+        if (fs.existsSync(file)) {
+          this.emitFile({ type: "asset", fileName: out, source: fs.readFileSync(file) });
+        }
       }
     },
     transformIndexHtml(html) {

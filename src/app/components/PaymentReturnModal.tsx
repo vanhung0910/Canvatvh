@@ -155,7 +155,7 @@ export function PaymentReturnModal({
                       THAM GIA CANVA NGAY
                     </a>
                     <p className="text-gray-400 text-xs mt-3">
-                      Link tham gia là riêng của bạn, vui lòng không chia sẻ cho người khác.
+                      Link cũng đã được gửi vào email của bạn. Link là riêng của bạn, vui lòng không chia sẻ.
                     </p>
                   </div>
                 ) : checking ? (
@@ -165,14 +165,14 @@ export function PaymentReturnModal({
                   </div>
                 ) : (
                   <p className="text-gray-500 text-sm mt-4">
-                    Chúng tôi đang xác nhận thanh toán. Nếu đã chuyển khoản, link
-                    Canva sẽ được gửi ngay khi xác nhận xong. Vui lòng liên hệ Zalo nếu cần hỗ trợ.
+                    Chúng tôi đang xác nhận thanh toán. Link Canva sẽ được gửi vào
+                    email của bạn ngay khi xác nhận xong (kiểm tra cả mục Spam). Liên hệ Zalo nếu cần hỗ trợ.
                   </p>
                 )
               ) : (
                 <p className="text-gray-500 text-sm">
-                  Chúng tôi sẽ bàn giao tài khoản và liên hệ với bạn trong thời
-                  gian sớm nhất.
+                  Thông tin tài khoản sẽ được gửi vào email của bạn trong thời
+                  gian sớm nhất (kiểm tra cả mục Spam).
                 </p>
               )}
 
