@@ -17,6 +17,7 @@ export interface Product {
   slotsLeft?: number;
   plans: Plan[];
   bgColor?: string;
+  soldOut?: boolean;
 }
 
 interface ProductCardProps {
@@ -39,8 +40,11 @@ export function ProductCard({
 
   return (
     <div
-      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group hover:-translate-y-1 border border-gray-100"
-      onClick={() => onClick(product)}
+      className={`bg-white rounded-2xl shadow-md transition-all duration-300 overflow-hidden group border border-gray-100 ${
+        product.soldOut ? "cursor-not-allowed" : "cursor-pointer hover:shadow-xl hover:-translate-y-1"
+      }`}
+      onClick={() => !product.soldOut && onClick(product)}
+      aria-disabled={product.soldOut}
     >
       {/* Image - crop to show logo + product name area */}
       <div
@@ -53,7 +57,9 @@ export function ProductCard({
         <img
           src={product.image}
           alt={product.name}
-          className="w-full group-hover:scale-105 transition-transform duration-300"
+          className={`w-full transition-transform duration-300 ${
+            product.soldOut ? "grayscale opacity-60" : "group-hover:scale-105"
+          }`}
           style={{
             objectFit: "cover",
             objectPosition: "top",
@@ -61,6 +67,16 @@ export function ProductCard({
             marginTop: 0,
           }}
         />
+        {product.soldOut && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/25">
+            <span
+              className="bg-white/95 text-gray-800 px-4 py-1.5 rounded-full shadow-lg -rotate-6 border-2 border-gray-800"
+              style={{ fontSize: "0.95rem", fontWeight: 800, letterSpacing: "0.08em" }}
+            >
+              HẾT HÀNG
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Info */}
@@ -102,7 +118,14 @@ export function ProductCard({
         </div>
 
         {/* Slots left */}
-        {(
+        {product.soldOut ? (
+          <div
+            className="mb-2 flex items-center justify-center rounded-full bg-gray-100 text-gray-500"
+            style={{ height: 24, fontSize: "0.72rem", fontWeight: 600 }}
+          >
+            Tạm hết hàng · đang nhập thêm
+          </div>
+        ) : (
           <div className="flex items-center gap-1.5 mb-2">
             <span style={{ fontSize: "1.2rem" }}>🔥</span>
             <div
@@ -130,10 +153,13 @@ export function ProductCard({
         {/* Divider */}
         <div className="border-t border-gray-100 pt-2">
           <button
-            className="w-full text-blue-500 hover:text-blue-700 transition-colors text-center"
+            disabled={product.soldOut}
+            className={`w-full transition-colors text-center ${
+              product.soldOut ? "text-gray-400" : "text-blue-500 hover:text-blue-700"
+            }`}
             style={{ fontSize: "0.95rem", fontWeight: 700 }}
           >
-            Mua ngay
+            {product.soldOut ? "Hết hàng" : "Mua ngay"}
           </button>
         </div>
       </div>

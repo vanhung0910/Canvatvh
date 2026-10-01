@@ -37,6 +37,21 @@ export function PriceEditor({
     return ALL_PRODUCTS.filter((p) => !s || p.name.toLowerCase().includes(s));
   }, [q]);
 
+  const toggleSoldOut = async (product: Product, soldOut: boolean) => {
+    setSaving(product.name);
+    try {
+      const r = await call("/admin/prices", {
+        method: "POST",
+        body: JSON.stringify({ name: product.name, soldOut }),
+      });
+      setPrices(r.prices || {});
+    } catch (e) {
+      alert(String((e as Error).message));
+    } finally {
+      setSaving(null);
+    }
+  };
+
   const save = async (product: Product, reset = false) => {
     const d = drafts[product.name] || toDraft(product, prices);
     const plans: Record<string, number> = {};
@@ -82,7 +97,8 @@ export function PriceEditor({
         {list.map((product) => {
           const d = drafts[product.name] || toDraft(product, prices);
           const dirty = !!drafts[product.name];
-          const edited = !!prices[product.name];
+          const edited = !!(prices[product.name]?.plans || prices[product.name]?.original);
+          const soldOut = !!prices[product.name]?.soldOut;
           const preview = applyOverrides(product, {
             [product.name]: {
               plans: Object.fromEntries(Object.entries(d.plans).map(([k, v]) => [k, Number(v) || 0])),
@@ -94,10 +110,15 @@ export function PriceEditor({
             setDrafts((all) => ({ ...all, [product.name]: { ...d, ...patch } }));
 
           return (
-            <div key={product.name} className={`rounded-xl bg-white p-4 ring-1 ${dirty ? "ring-[#5b2fa0]/40" : "ring-black/5"}`}>
+            <div key={product.name} className={`rounded-xl p-4 ring-1 ${soldOut ? "bg-gray-50" : "bg-white"} ${dirty ? "ring-[#5b2fa0]/40" : "ring-black/5"}`}>
               <div className="mb-3 flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="font-bold">{product.name}</h3>
+                  <h3 className="flex items-center gap-2 font-bold">
+                    {product.name}
+                    {soldOut && (
+                      <span className="rounded bg-red-100 px-1.5 py-0.5 text-[10px] font-bold text-red-700">HẾT HÀNG</span>
+                    )}
+                  </h3>
                   <p className="mt-0.5 text-xs text-gray-500">
                     Hiển thị: <b className="text-pink-600">{preview.price}</b>
                     {preview.originalPrice && <span className="ml-1 line-through">{preview.originalPrice}</span>}
@@ -136,6 +157,31 @@ export function PriceEditor({
                   />
                 ))}
               </div>
+
+              <label className="mt-3 flex cursor-pointer items-center justify-between gap-3 border-t border-gray-100 pt-3">
+                <span className="text-sm">
+                  <b className={soldOut ? "text-red-600" : "text-gray-700"}>Hết hàng</b>
+                  <span className="ml-2 text-xs text-gray-400">
+                    {soldOut ? "Web hiện “Hết hàng”, không nhận đơn" : "Đang nhận đơn"}
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={soldOut}
+                  disabled={saving === product.name}
+                  onClick={() => toggleSoldOut(product, !soldOut)}
+                  className={`relative h-6 w-11 shrink-0 rounded-full transition-colors disabled:opacity-50 ${
+                    soldOut ? "bg-red-500" : "bg-gray-300"
+                  }`}
+                >
+                  <span
+                    className={`absolute top-0.5 left-0.5 size-5 rounded-full bg-white shadow transition-transform ${
+                      soldOut ? "translate-x-5" : ""
+                    }`}
+                  />
+                </button>
+              </label>
             </div>
           );
         })}

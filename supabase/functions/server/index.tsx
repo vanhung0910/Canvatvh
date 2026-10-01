@@ -348,8 +348,15 @@ app.post(`${P}/admin/prices`, async (c) => {
   const name = String(b?.name || "").trim();
   if (!name) return c.json({ error: "Thiếu tên sản phẩm" }, 400);
   const prices: any = (await kv.get("prices")) || {};
-  if (b.reset) {
-    delete prices[name];
+  if (b.soldOut !== undefined && b.plans === undefined && !b.reset) {
+    // Chỉ bật/tắt hết hàng, giữ nguyên giá đang có.
+    prices[name] = { ...(prices[name] || {}), soldOut: !!b.soldOut };
+    if (!prices[name].soldOut) delete prices[name].soldOut;
+    if (!Object.keys(prices[name]).length) delete prices[name];
+  } else if (b.reset) {
+    // Về giá mặc định nhưng giữ trạng thái hết hàng.
+    if (prices[name]?.soldOut) prices[name] = { soldOut: true };
+    else delete prices[name];
   } else {
     const plans: Record<string, number> = {};
     for (const [k, v] of Object.entries(b.plans || {})) {
@@ -360,7 +367,11 @@ app.post(`${P}/admin/prices`, async (c) => {
       plans[k] = n;
     }
     const original = Math.round(Number(b.original) || 0);
-    prices[name] = { plans, ...(original > 0 ? { original } : {}) };
+    prices[name] = {
+      plans,
+      ...(original > 0 ? { original } : {}),
+      ...(prices[name]?.soldOut ? { soldOut: true } : {}),
+    };
   }
   await kv.set("prices", prices);
   return c.json({ success: true, prices });

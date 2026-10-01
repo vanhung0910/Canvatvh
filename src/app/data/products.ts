@@ -1009,9 +1009,13 @@ export const CANVA_PLANS = ["1 Tháng", "3 Tháng", "1 Năm"];
 
 /**
  * Giá admin sửa trên trang quản trị (lưu ở Supabase, key "prices").
- * plans: tên gói -> giá (ChatGPT dùng key "share" / "chinh-chu"); original: giá gốc gạch ngang.
+ * plans: tên gói -> giá (ChatGPT dùng key "share" / "chinh-chu"); original: giá gốc gạch ngang;
+ * soldOut: hết hàng (ẩn nút mua, server từ chối tạo đơn).
  */
-export type PriceOverrides = Record<string, { plans?: Record<string, number>; original?: number }>;
+export type PriceOverrides = Record<
+  string,
+  { plans?: Record<string, number>; original?: number; soldOut?: boolean }
+>;
 
 export function parsePrice(priceStr: string): number {
   return parseInt(String(priceStr).replace(/[^\d]/g, ""), 10) || 0;
@@ -1043,6 +1047,7 @@ export function applyOverrides(product: Product, ov?: PriceOverrides): Product {
     price: formatVnd(minPrice),
     originalPrice: original ? formatVnd(original) : undefined,
     discount: pct > 0 ? `-${pct}%` : undefined,
+    soldOut: !!ov?.[product.name]?.soldOut,
     plans: isChatGPTProduct(product.name)
       ? [{ label: "1 Tháng", price: formatVnd(plansNow[0].price) }]
       : plansNow.map((p) => ({ label: p.label, price: formatVnd(p.price) })),

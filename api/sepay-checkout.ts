@@ -106,6 +106,10 @@ async function handle(req: any, res: any) {
     return res.status(502).json({ error: "Không tải được bảng giá, vui lòng thử lại" });
   }
 
+  if (overrides?.[productName]?.soldOut) {
+    return res.status(409).json({ error: "Sản phẩm tạm hết hàng, vui lòng liên hệ Zalo để được hỗ trợ" });
+  }
+
   // Giá tính từ bảng giá phía server, KHÔNG dùng số tiền client gửi.
   const amount = resolvePrice(productName, planLabel, chatgptType, overrides);
   if (!amount) return res.status(400).json({ error: "Sản phẩm/gói không tồn tại" });

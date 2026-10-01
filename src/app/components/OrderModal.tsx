@@ -42,6 +42,10 @@ export function OrderModal({
       alert("Vui lòng nhập đầy đủ tên và email!");
       return;
     }
+    if (product.soldOut) {
+      alert("Sản phẩm tạm hết hàng, vui lòng liên hệ Zalo để được hỗ trợ!");
+      return;
+    }
     setLoading(true);
     try {
       const planLabel = isChatGPT ? "1 Tháng" : selectedPlan;
