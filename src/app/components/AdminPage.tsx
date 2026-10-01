@@ -382,16 +382,25 @@ export function AdminPage() {
               className="mb-4 mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#5b2fa0] focus:ring-2 focus:ring-[#5b2fa0]/20"
             />
             <label className="text-xs font-medium text-gray-500">
-              {deliverFor.is_canva ? "Nội dung (để trống = gửi lại link Canva theo gói)" : "Thông tin tài khoản / hướng dẫn"}
+              {deliverFor.is_canva ? "Để trống = gửi lại link Canva theo gói" : "Thông tin tài khoản"}
             </label>
             <textarea
               value={deliverContent}
               onChange={(e) => setDeliverContent(e.target.value)}
               rows={6}
-              placeholder={"Tài khoản: abc@gmail.com\nMật khẩu: ********\nHạn dùng: 01/11/2026"}
+              placeholder={"khach.capcut@gmail.com | Mk@12345 | Hạn dùng: 01/11/2026 | Không đổi mật khẩu"}
               className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 font-mono text-sm outline-none focus:border-[#5b2fa0] focus:ring-2 focus:ring-[#5b2fa0]/20"
             />
-            <p className="mt-2 text-xs text-gray-400">Gửi xong, đơn tự chuyển sang “Đã giao”.</p>
+            <div className="mt-2 rounded-lg bg-[#f6f5fb] p-3 text-xs leading-relaxed text-gray-600">
+              <p>
+                Định dạng: <code className="font-mono font-semibold text-[#5b2fa0]">tài khoản | mật khẩu | thêm...</code>
+              </p>
+              <p>
+                Mục thứ 3 trở đi ghi <code className="font-mono">Nhãn: giá trị</code> (vd <code className="font-mono">Hạn dùng: 01/11/2026</code>,{" "}
+                <code className="font-mono">2FA: ABCD</code>), không có nhãn sẽ hiện là “Ghi chú”.
+              </p>
+              <p>Nhiều tài khoản: mỗi tài khoản 1 dòng. Gửi xong đơn tự chuyển “Đã giao”.</p>
+            </div>
             <div className="mt-5 flex justify-end gap-2">
               <button onClick={() => setDeliverFor(null)} className="rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-100">
                 Đóng

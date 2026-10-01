@@ -59,7 +59,7 @@ function emailLayout(title: string, body: string): string {
 <table width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px"><tr><td align="center">
 <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fff;border-radius:16px;overflow:hidden">
 <tr><td style="background:linear-gradient(135deg,#1a1a4e,#5b2fa0);background-color:#5b2fa0;padding:24px;text-align:center;color:#fff">
-<div style="font-size:13px;letter-spacing:2px;opacity:.8">TVHCANVA.COM</div>
+<div style="font-size:13px;letter-spacing:2px;color:#d9d3f0">TVHCANVA<span>&#8203;</span>.COM</div>
 <div style="font-size:22px;font-weight:800;margin-top:6px">${title}</div></td></tr>
 <tr><td style="padding:28px 28px 8px;font-size:15px;line-height:1.6">${body}</td></tr>
 <tr><td style="padding:16px 28px 28px;font-size:13px;color:#6b6b8a;border-top:1px solid #eee">
@@ -106,18 +106,57 @@ ${orderSummary(o)}
 <p style="margin:0 0 16px"><b>Bước 2:</b> Bấm nút bên dưới và chọn <b>Tham gia nhóm</b>.</p>
 <p style="text-align:center;margin:24px 0"><a href="${esc(link)}" style="display:inline-block;background:#5b2fa0;color:#fff;text-decoration:none;font-weight:800;padding:14px 28px;border-radius:12px">THAM GIA CANVA NGAY</a></p>
 <p style="font-size:13px;color:#6b6b8a">Nếu nút không bấm được, copy link: <br><a href="${esc(link)}" style="color:#5b2fa0;word-break:break-all">${esc(link)}</a></p>
+<div style="background:#fff7e6;border:1px solid #ffd591;border-radius:10px;padding:12px 14px;font-size:14px;color:#874d00;margin-top:8px">
+⏰ <b>Link sẽ hết hạn sau 3 ngày.</b> Vui lòng kiểm tra và tham gia sớm nhất để không bị gián đoạn. Nếu link đã hết hạn, nhắn Zalo kèm mã đơn để được cấp lại.</div>
 <p style="font-size:13px;color:#6b6b8a">Link là riêng của bạn, vui lòng không chia sẻ cho người khác.</p>`,
   );
 }
 
+/**
+ * Nội dung giao hàng admin nhập theo định dạng:
+ *   tài khoản | mật khẩu | thông tin thêm | ...
+ * Mỗi dòng là 1 tài khoản. Mục từ thứ 3 trở đi có thể ghi "Nhãn: giá trị"
+ * (vd "Hạn dùng: 01/11/2026", "2FA: ABCD") — không có nhãn thì hiện là "Ghi chú".
+ */
+function parseDelivery(content: string): { label: string; value: string }[][] {
+  return content
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) =>
+      line.split("|").map((raw, i) => {
+        const part = raw.trim();
+        if (i === 0) return { label: "Tài khoản", value: part };
+        if (i === 1) return { label: "Mật khẩu", value: part };
+        const m = /^https?:\/\//i.test(part) ? null : part.match(/^([^:]{1,30}):\s*(.+)$/);
+        return m ? { label: m[1].trim(), value: m[2].trim() } : { label: "Ghi chú", value: part };
+      }).filter((f) => f.value),
+    );
+}
+
 function deliveryEmail(o: any, content: string): string {
+  const accounts = parseDelivery(content);
+  const blocks = accounts
+    .map(
+      (fields, idx) => `
+<table cellpadding="0" cellspacing="0" style="width:100%;border:1px solid #e6e1f5;border-radius:10px;margin:0 0 12px;font-size:14px">
+${accounts.length > 1 ? `<tr><td colspan="2" style="background:#f4f0ff;padding:8px 14px;font-weight:700;color:#5b2fa0;border-radius:10px 10px 0 0">Tài khoản ${idx + 1}</td></tr>` : ""}
+${fields
+  .map(
+    (f) => `<tr><td style="padding:10px 14px;color:#6b6b8a;width:110px;vertical-align:top;border-top:1px solid #f0edf8">${esc(f.label)}</td>
+<td style="padding:10px 14px;font-family:Consolas,monospace;font-weight:700;color:#1a1a4e;word-break:break-all;border-top:1px solid #f0edf8">${esc(f.value)}</td></tr>`,
+  )
+  .join("")}
+</table>`,
+    )
+    .join("");
   return emailLayout(
     "Đơn hàng của bạn đã sẵn sàng",
     `<p>Chào <b>${esc(o.name || "bạn")}</b>, đơn hàng của bạn đã được bàn giao.</p>
 ${orderSummary(o)}
-<p style="margin:20px 0 8px"><b>Thông tin tài khoản / hướng dẫn:</b></p>
-<div style="background:#1a1a4e;color:#fff;border-radius:10px;padding:16px;font-family:Consolas,monospace;font-size:14px;white-space:pre-wrap;word-break:break-word">${esc(content)}</div>
-<p style="font-size:13px;color:#6b6b8a;margin-top:16px">Vui lòng đổi mật khẩu (nếu được phép) và không chia sẻ thông tin này cho người khác.</p>`,
+<p style="margin:20px 0 8px"><b>Thông tin tài khoản:</b></p>
+${blocks}
+<p style="font-size:13px;color:#6b6b8a;margin-top:16px">Vui lòng không đổi thông tin đăng nhập nếu không được hướng dẫn và không chia sẻ tài khoản cho người khác để tránh bị khóa.</p>`,
   );
 }
 
