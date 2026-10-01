@@ -19,54 +19,19 @@ const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6bnFrdXFzdW52emhtand6dWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5OTU2NDIsImV4cCI6MjA5MzU3MTY0Mn0.s3N7QxZLTVb6GhJHjyquCI3oD15XS42HBGySVKhc-GM";
 
 export default async function handler(req: any, res: any) {
-  if (req.method === "GET") {
-    // Tự kiểm chặng Vercel -> Supabase mark-paid (kiểm tra IPN_SHARED_SECRET có KHỚP không).
-    // Dùng invoice giả + amount 1 (không phải đơn Canva) nên KHÔNG lộ link.
-    if (req.query?.selftest === "1") {
-      try {
-        const r = await fetch(`${SUPABASE_FUNCTION_URL}/mark-paid`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-            "x-shared-secret": process.env.IPN_SHARED_SECRET || "",
-          },
-          body: JSON.stringify({ invoice: "TVHSELFTEST", amount: 1 }),
-        });
-        const text = await r.text();
-        return res.status(200).json({
-          selftest: true,
-          supabase_status: r.status,
-          supabase_response: text,
-          shared_secret_matches: r.status === 200,
-        });
-      } catch (err) {
-        return res.status(200).json({ selftest: true, error: String(err) });
-      }
-    }
-    // Chẩn đoán: mở URL này trên trình duyệt để kiểm tra Vercel đã set env + redeploy chưa.
-    // Chỉ trả true/false, KHÔNG lộ giá trị secret.
-    return res.status(200).json({
-      ok: true,
-      message: "Sepay IPN endpoint ready",
-      config: {
-        has_sepay_ipn_secret: !!process.env.SEPAY_IPN_SECRET,
-        has_ipn_shared_secret: !!process.env.IPN_SHARED_SECRET,
-        has_telegram: !!process.env.TELEGRAM_BOT_TOKEN && !!process.env.TELEGRAM_CHAT_ID,
-        supabase_function_url: SUPABASE_FUNCTION_URL,
-      },
-    });
-  }
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  // Xác thực IPN đến từ Sepay bằng X-Secret-Key.
+  // Fail-closed: thiếu secret thì từ chối mọi IPN, tránh bị giả "đã thanh toán".
   const ipnSecret = process.env.SEPAY_IPN_SECRET;
-  if (ipnSecret) {
-    const got = (req.headers?.["x-secret-key"] || "").toString();
-    if (got !== ipnSecret) {
-      console.log("IPN Sepay bị từ chối: X-Secret-Key không khớp");
-      return res.status(401).json({ success: false, error: "Unauthorized" });
-    }
+  const shared = process.env.IPN_SHARED_SECRET;
+  if (!ipnSecret || !shared) {
+    console.log("IPN bị từ chối: thiếu SEPAY_IPN_SECRET hoặc IPN_SHARED_SECRET");
+    return res.status(500).json({ success: false, error: "Server misconfigured" });
+  }
+  const got = (req.headers?.["x-secret-key"] || "").toString();
+  if (got !== ipnSecret) {
+    console.log("IPN Sepay bị từ chối: X-Secret-Key không khớp");
+    return res.status(401).json({ success: false, error: "Unauthorized" });
   }
 
   const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
@@ -75,6 +40,7 @@ export default async function handler(req: any, res: any) {
     const invoice = data.order?.order_invoice_number;
     const amount = Number(data.order?.order_amount);
     const description = data.order?.order_description || "";
+    let warning = "";
 
     // 1) Đánh dấu đơn đã thanh toán trên Supabase (để frontend nhận link Canva an toàn).
     if (invoice) {
@@ -84,10 +50,12 @@ export default async function handler(req: any, res: any) {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-            "x-shared-secret": process.env.IPN_SHARED_SECRET || "",
+            "x-shared-secret": shared,
           },
           body: JSON.stringify({ invoice, amount }),
         });
+        const result = await r.clone().json().catch(() => ({}));
+        if (result?.warning) warning = String(result.warning);
         if (!r.ok) {
           console.log(
             `Lỗi đánh dấu đơn đã trả trên Supabase (${invoice}): HTTP ${r.status} ${await r.text()}`,
@@ -106,7 +74,8 @@ export default async function handler(req: any, res: any) {
         `✅ ĐƠN HÀNG MỚI ĐÃ THANH TOÁN\n` +
         `Mã: ${invoice}\n` +
         `Số tiền: ${Number(amount).toLocaleString("vi-VN")}đ\n` +
-        `Chi tiết: ${description}`;
+        `Chi tiết: ${description}` +
+        (warning ? `\n⚠️ ${warning}` : "");
       try {
         await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
           method: "POST",

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Facebook, Gift } from "lucide-react";
-import { getCanvaStatus } from "./wcMapping";
+import { getCanvaStatus } from "./api";
 
 const FACEBOOK_GROUP_URL = "https://www.facebook.com/groups/tvhcanva";
 
@@ -32,7 +32,7 @@ export function PaymentReturnModal({
       triesRef.current += 1;
       try {
         const st = await getCanvaStatus(invoice);
-        if (st.status === "Paid") {
+        if (st.status === "Paid" || st.status === "Review") {
           if (st.canva_link) setCanvaLink(st.canva_link);
           setChecking(false);
           if (pollRef.current) clearInterval(pollRef.current);

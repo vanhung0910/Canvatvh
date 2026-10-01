@@ -1,6 +1,14 @@
 import crypto from "node:crypto";
+import { resolvePrice, CANVA_PLAN_AMOUNTS } from "../src/app/data/products";
 
 export const config = { runtime: "nodejs" };
+
+const SUPABASE_FUNCTION_URL =
+  process.env.SUPABASE_FUNCTION_URL ||
+  "https://tznqkuqsunvzhmjwzufd.supabase.co/functions/v1/make-server-4d3e30ca";
+const SUPABASE_ANON_KEY =
+  process.env.SUPABASE_ANON_KEY ||
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6bnFrdXFzdW52emhtand6dWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5OTU2NDIsImV4cCI6MjA5MzU3MTY0Mn0.s3N7QxZLTVb6GhJHjyquCI3oD15XS42HBGySVKhc-GM";
 
 const SIGNED_FIELDS = [
   "merchant",
@@ -28,28 +36,22 @@ function signFields(fields: Record<string, string>, secret: string): string {
   return hmac.digest("base64");
 }
 
+const ALLOWED_ORIGINS = ["https://tvhcanva.com", "https://www.tvhcanva.com"];
+
 export default async function handler(req: any, res: any) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   if (req.method === "OPTIONS") return res.status(200).end();
-  if (req.method === "GET") {
-    return res.status(200).json({
-      ok: true,
-      message: "Sepay checkout endpoint ready",
-      env: process.env.SEPAY_ENV || "sandbox",
-      has_merchant: !!process.env.SEPAY_MERCHANT_ID,
-      has_secret: !!process.env.SEPAY_SECRET_KEY,
-    });
-  }
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const merchant = process.env.SEPAY_MERCHANT_ID;
   const secret = process.env.SEPAY_SECRET_KEY;
+  const shared = process.env.IPN_SHARED_SECRET;
   const env = process.env.SEPAY_ENV || "sandbox";
 
-  if (!merchant || !secret) {
-    return res.status(500).json({ error: "Sepay credentials not configured" });
+  if (!merchant || !secret || !shared) {
+    return res.status(500).json({ error: "Server chưa cấu hình đủ secret" });
   }
 
   const checkoutUrl =
@@ -57,21 +59,61 @@ export default async function handler(req: any, res: any) {
       ? "https://pay.sepay.vn/v1/checkout/init"
       : "https://pay-sandbox.sepay.vn/v1/checkout/init";
 
-  const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-  const { name, phone, productName, planLabel, amount } = body || {};
+  let body: any = {};
+  try {
+    body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
+  } catch {
+    return res.status(400).json({ error: "Body không hợp lệ" });
+  }
+  const name = String(body.name || "").trim().slice(0, 80);
+  const phone = String(body.phone || "").replace(/[^\d+]/g, "").slice(0, 15);
+  const productName = String(body.productName || "");
+  const planLabel = String(body.planLabel || "");
+  const chatgptType = body.chatgptType ? String(body.chatgptType) : undefined;
 
-  if (!name || !phone || !productName || !amount) {
-    return res.status(400).json({ error: "Missing fields" });
+  if (!name || phone.length < 9 || !productName || !planLabel) {
+    return res.status(400).json({ error: "Thiếu hoặc sai thông tin" });
   }
 
-  // Đơn Canva (1 Tháng 15.000đ / 3 Tháng 40.000đ / 1 Năm 200.000đ) dùng tiền tố
-  // "TVHC" để nhận diện đơn cần trả link Canva. Số tiền dùng để chọn đúng link theo gói.
-  const CANVA_AMOUNTS = new Set([15000, 40000, 180000]);
-  const isCanva =
-    String(productName).toLowerCase().includes("canva") &&
-    CANVA_AMOUNTS.has(Number(amount));
-  const invoiceNumber = (isCanva ? "TVHC" : "TVH") + Date.now();
-  const origin = req.headers.origin || "https://tvhcanva.com";
+  // Giá tính từ bảng giá phía server, KHÔNG dùng số tiền client gửi.
+  const amount = resolvePrice(productName, planLabel, chatgptType);
+  if (!amount) return res.status(400).json({ error: "Sản phẩm/gói không tồn tại" });
+
+  // Đơn Canva (1 Tháng 15.000đ / 3 Tháng 40.000đ / 1 Năm 180.000đ) dùng tiền tố "TVHC".
+  const isCanva = productName === "Canva Pro" && CANVA_PLAN_AMOUNTS[planLabel] === amount;
+  const rand = crypto.randomBytes(3).toString("hex").toUpperCase();
+  const invoiceNumber = (isCanva ? "TVHC" : "TVH") + Date.now() + rand;
+  const reqOrigin = String(req.headers.origin || "");
+  const origin = ALLOWED_ORIGINS.includes(reqOrigin) ? reqOrigin : "https://tvhcanva.com";
+  const variantLabel = chatgptType === "chinh-chu" ? " (Chính chủ)" : chatgptType ? " (Share)" : "";
+
+  // Lưu đơn chờ thanh toán để IPN đối chiếu số tiền + để trang quản trị hiển thị.
+  try {
+    const r = await fetch(`${SUPABASE_FUNCTION_URL}/create-order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        "x-shared-secret": shared,
+      },
+      body: JSON.stringify({
+        invoice: invoiceNumber,
+        amount,
+        product: productName,
+        plan: planLabel + variantLabel,
+        name,
+        phone,
+        is_canva: isCanva,
+      }),
+    });
+    if (!r.ok) {
+      console.log(`Lỗi lưu đơn ${invoiceNumber}: HTTP ${r.status} ${await r.text()}`);
+      return res.status(502).json({ error: "Không tạo được đơn, vui lòng thử lại" });
+    }
+  } catch (err) {
+    console.log(`Lỗi kết nối Supabase khi tạo đơn: ${String(err)}`);
+    return res.status(502).json({ error: "Không tạo được đơn, vui lòng thử lại" });
+  }
 
   const fields: Record<string, string> = {
     merchant,
@@ -80,7 +122,7 @@ export default async function handler(req: any, res: any) {
     currency: "VND",
     order_amount: String(amount),
     order_invoice_number: invoiceNumber,
-    order_description: `${productName} - ${planLabel} - ${name} ${phone}`,
+    order_description: `${productName} - ${planLabel}${variantLabel} - ${name} ${phone}`,
     customer_id: phone,
     success_url: `${origin}/?payment=success&inv=${invoiceNumber}`,
     error_url: `${origin}/?payment=error&inv=${invoiceNumber}`,
@@ -96,9 +138,9 @@ export default async function handler(req: any, res: any) {
     const text =
       `🆕 ĐƠN MỚI (chờ thanh toán)\n` +
       `Mã: ${invoiceNumber}\n` +
-      `Sản phẩm: ${productName} - ${planLabel}\n` +
+      `Sản phẩm: ${productName} - ${planLabel}${variantLabel}\n` +
       `Khách: ${name} - ${phone}\n` +
-      `Số tiền: ${Number(amount).toLocaleString("vi-VN")}đ`;
+      `Số tiền: ${amount.toLocaleString("vi-VN")}đ`;
     try {
       await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
         method: "POST",

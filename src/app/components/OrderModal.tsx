@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { X, MessageCircle } from "lucide-react";
 import type { Product } from "./ProductCard";
-import { submitSepayCheckout } from "./wcMapping";
+import { submitSepayCheckout } from "./api";
 
 interface OrderModalProps {
   product: Product;
@@ -42,15 +42,12 @@ export function OrderModal({
     setLoading(true);
     try {
       const planLabel = isChatGPT ? "1 Tháng" : selectedPlan;
-      const priceStr = isChatGPT
-        ? chatgptPrices[chatgptType]
-        : selectedPlanData?.price || "0";
       const ok = await submitSepayCheckout(
         product.name,
         planLabel,
-        priceStr,
         fullName,
         phone,
+        isChatGPT ? chatgptType : undefined,
       );
       if (!ok) {
         alert("Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Zalo!");

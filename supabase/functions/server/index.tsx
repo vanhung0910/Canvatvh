@@ -4,111 +4,193 @@ import { logger } from "npm:hono/logger";
 import * as kv from "./kv_store.tsx";
 const app = new Hono();
 
-// Enable logger
-app.use('*', logger(console.log));
+const P = "/make-server-4d3e30ca";
 
-// Enable CORS for all routes and methods
+// Gói Canva tự động giao link: số tiền -> tên secret.
+const CANVA_LINK_ENV: Record<number, string> = {
+  15000: "CANVA_INVITE_LINK",
+  40000: "CANVA_INVITE_LINK_3M",
+  180000: "CANVA_INVITE_LINK_1Y",
+};
+
+app.use("*", logger(console.log));
+
 app.use(
   "/*",
   cors({
     origin: "*",
-    allowHeaders: ["Content-Type", "Authorization"],
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization", "x-admin-key"],
+    allowMethods: ["GET", "POST", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
   }),
 );
 
-// Health check endpoint
-app.get("/make-server-4d3e30ca/health", (c) => {
-  return c.json({ status: "ok" });
-});
+app.get(`${P}/health`, (c) => c.json({ status: "ok" }));
 
-// Chẩn đoán env phía Supabase (chỉ true/false, không lộ giá trị).
-app.get("/make-server-4d3e30ca/diag", (c) => {
-  return c.json({
-    has_ipn_shared_secret: !!Deno.env.get("IPN_SHARED_SECRET"),
-    has_canva_invite_link: !!Deno.env.get("CANVA_INVITE_LINK"),
-    has_canva_invite_link_3m: !!Deno.env.get("CANVA_INVITE_LINK_3M"),
-    has_canva_invite_link_1y: !!Deno.env.get("CANVA_INVITE_LINK_1Y"),
-  });
+/** Fail-closed: chỉ chấp nhận khi secret đã cấu hình VÀ khớp. */
+function sharedOk(c: any): boolean {
+  const shared = Deno.env.get("IPN_SHARED_SECRET");
+  return !!shared && c.req.header("x-shared-secret") === shared;
+}
+
+function adminOk(c: any): boolean {
+  const pass = Deno.env.get("ADMIN_PASSWORD");
+  return !!pass && c.req.header("x-admin-key") === pass;
+}
+
+function canvaLinkFor(amount: number): string | undefined {
+  const envName = CANVA_LINK_ENV[amount];
+  return envName ? Deno.env.get(envName) || undefined : undefined;
+}
+
+/** Vercel tạo đơn chờ thanh toán (giá đã tính phía server). */
+app.post(`${P}/create-order`, async (c) => {
+  if (!sharedOk(c)) return c.json({ error: "Unauthorized" }, 401);
+  let b: any = {};
+  try {
+    b = await c.req.json();
+  } catch (err) {
+    return c.json({ error: `Body không hợp lệ: ${String(err)}` }, 400);
+  }
+  const invoice = String(b?.invoice || "").trim();
+  const amount = Number(b?.amount) || 0;
+  if (!invoice || !amount) return c.json({ error: "Thiếu invoice/amount" }, 400);
+  try {
+    await kv.set(`order:${invoice}`, {
+      invoice,
+      amount,
+      product: String(b.product || ""),
+      plan: String(b.plan || ""),
+      name: String(b.name || ""),
+      phone: String(b.phone || ""),
+      is_canva: !!b.is_canva,
+      status: "pending",
+      created_at: Date.now(),
+    });
+  } catch (err) {
+    console.log(`Lỗi lưu đơn ${invoice}: ${String(err)}`);
+    return c.json({ error: `Lỗi lưu đơn: ${String(err)}` }, 500);
+  }
+  return c.json({ success: true });
 });
 
 /**
- * Đánh dấu một đơn đã thanh toán. CHỈ được gọi bởi server IPN của Vercel,
- * bảo vệ bằng secret riêng (x-shared-secret === IPN_SHARED_SECRET).
- * Đơn Canva 1 tháng (mã bắt đầu "TVHC" + số tiền 15.000đ) được đánh dấu is_canva.
+ * IPN (Vercel) báo đã thanh toán. Đối chiếu số tiền với đơn pending:
+ * chỉ trả link Canva khi đơn có thật, là đơn Canva và số tiền khớp đúng.
  */
-app.post("/make-server-4d3e30ca/mark-paid", async (c) => {
-  const shared = Deno.env.get("IPN_SHARED_SECRET");
-  if (shared) {
-    const got = c.req.header("x-shared-secret") || "";
-    if (got !== shared) {
-      console.log("mark-paid bị từ chối: x-shared-secret không khớp");
-      return c.json({ error: "Unauthorized" }, 401);
-    }
+app.post(`${P}/mark-paid`, async (c) => {
+  if (!sharedOk(c)) {
+    console.log("mark-paid bị từ chối: thiếu hoặc sai x-shared-secret");
+    return c.json({ error: "Unauthorized" }, 401);
   }
-
   let body: any = {};
   try {
     body = await c.req.json();
   } catch (err) {
     return c.json({ error: `Body không hợp lệ: ${String(err)}` }, 400);
   }
-
   const invoice = String(body?.invoice || "").trim();
-  const amount = Number(body?.amount) || 0;
+  const paidAmount = Number(body?.amount) || 0;
   if (!invoice) return c.json({ error: "Thiếu invoice" }, 400);
 
-  const isCanva = invoice.toUpperCase().startsWith("TVHC");
-
   try {
-    await kv.set(`paid:${invoice}`, {
-      paid: true,
-      amount,
-      is_canva: isCanva,
-      ts: Date.now(),
+    const order = await kv.get(`order:${invoice}`);
+    let status = "paid";
+    let warning = "";
+    if (!order) {
+      status = "mismatch";
+      warning = "Không tìm thấy đơn chờ thanh toán tương ứng — cần kiểm tra tay.";
+    } else if (order.amount !== paidAmount) {
+      status = "mismatch";
+      warning = `Số tiền không khớp: đơn ${order.amount}đ, nhận ${paidAmount}đ — không tự giao link.`;
+    } else if (order.is_canva && !canvaLinkFor(order.amount)) {
+      warning = "Đơn Canva đã trả nhưng thiếu secret link Canva cho gói này — cần gửi link tay.";
+    }
+    await kv.set(`order:${invoice}`, {
+      ...(order || { invoice, amount: paidAmount, product: "", plan: "", name: "", phone: "", is_canva: false, created_at: Date.now() }),
+      status,
+      paid_amount: paidAmount,
+      paid_at: Date.now(),
+      warning: warning || undefined,
     });
+    if (warning) console.log(`mark-paid ${invoice}: ${warning}`);
+    return c.json({ success: true, status, warning: warning || undefined });
   } catch (err) {
-    console.log(`Lỗi lưu trạng thái đơn ${invoice}: ${String(err)}`);
-    return c.json({ error: `Lỗi lưu trạng thái: ${String(err)}` }, 500);
+    console.log(`Lỗi cập nhật đơn ${invoice}: ${String(err)}`);
+    return c.json({ error: `Lỗi cập nhật đơn: ${String(err)}` }, 500);
   }
-
-  return c.json({ success: true, is_canva: isCanva });
 });
 
 /**
- * Frontend hỏi trạng thái đơn sau khi thanh toán.
- * Chỉ trả link Canva khi: đơn đã thanh toán + là đơn Canva.
- * Link Canva nằm trong env CANVA_INVITE_LINK (server-side), không có trong bundle.
+ * Frontend hỏi trạng thái đơn. Link Canva chỉ trả khi đơn đã "paid" (đã khớp tiền)
+ * và là đơn Canva. Mã đơn có chuỗi ngẫu nhiên nên không đoán được.
  */
-app.get("/make-server-4d3e30ca/canva-link", async (c) => {
+app.get(`${P}/canva-link`, async (c) => {
   const invoice = (c.req.query("inv") || "").trim();
   if (!invoice) return c.json({ error: "Thiếu inv" }, 400);
-
-  let record: any = null;
+  let order: any = null;
   try {
-    record = await kv.get(`paid:${invoice}`);
+    order = await kv.get(`order:${invoice}`);
   } catch (err) {
-    console.log(`Lỗi đọc trạng thái đơn ${invoice}: ${String(err)}`);
-    return c.json({ error: `Lỗi đọc trạng thái: ${String(err)}` }, 500);
+    console.log(`Lỗi đọc đơn ${invoice}: ${String(err)}`);
+    return c.json({ error: `Lỗi đọc đơn: ${String(err)}` }, 500);
   }
-
-  if (!record?.paid) {
-    return c.json({ status: "Pending" });
+  if (!order || order.status === "pending") return c.json({ status: "Pending" });
+  if (order.status !== "paid" && order.status !== "delivered") {
+    return c.json({ status: "Review" });
   }
 
   const result: Record<string, unknown> = { status: "Paid" };
-  if (record.is_canva) {
-    // Chọn đúng link theo số tiền của gói: 40.000đ = 3 Tháng, 180.000đ = 1 Năm,
-    // còn lại (15.000đ) = 1 Tháng.
-    let link: string | undefined;
-    if (record.amount === 40000) link = Deno.env.get("CANVA_INVITE_LINK_3M");
-    else if (record.amount === 180000) link = Deno.env.get("CANVA_INVITE_LINK_1Y");
-    else link = Deno.env.get("CANVA_INVITE_LINK");
+  if (order.is_canva) {
+    const link = canvaLinkFor(order.amount);
     if (link) result.canva_link = link;
   }
   return c.json(result);
+});
+
+// ================= QUẢN TRỊ (header x-admin-key === ADMIN_PASSWORD) =================
+
+app.get(`${P}/admin/orders`, async (c) => {
+  if (!adminOk(c)) return c.json({ error: "Sai mật khẩu quản trị" }, 401);
+  try {
+    const orders = await kv.getByPrefix("order:");
+    orders.sort((a: any, b: any) => (b.created_at || 0) - (a.created_at || 0));
+    return c.json({ orders });
+  } catch (err) {
+    return c.json({ error: `Lỗi đọc đơn: ${String(err)}` }, 500);
+  }
+});
+
+app.get(`${P}/admin/diag`, (c) => {
+  if (!adminOk(c)) return c.json({ error: "Sai mật khẩu quản trị" }, 401);
+  return c.json({
+    IPN_SHARED_SECRET: !!Deno.env.get("IPN_SHARED_SECRET"),
+    CANVA_INVITE_LINK: !!Deno.env.get("CANVA_INVITE_LINK"),
+    CANVA_INVITE_LINK_3M: !!Deno.env.get("CANVA_INVITE_LINK_3M"),
+    CANVA_INVITE_LINK_1Y: !!Deno.env.get("CANVA_INVITE_LINK_1Y"),
+  });
+});
+
+/** Admin xử lý tay: duyệt đơn lệch tiền, đánh dấu đã giao, hoặc hủy. */
+app.post(`${P}/admin/update`, async (c) => {
+  if (!adminOk(c)) return c.json({ error: "Sai mật khẩu quản trị" }, 401);
+  let b: any = {};
+  try {
+    b = await c.req.json();
+  } catch (err) {
+    return c.json({ error: `Body không hợp lệ: ${String(err)}` }, 400);
+  }
+  const invoice = String(b?.invoice || "");
+  const status = String(b?.status || "");
+  if (!["paid", "delivered", "cancelled", "pending"].includes(status)) {
+    return c.json({ error: "Trạng thái không hợp lệ" }, 400);
+  }
+  const order = await kv.get(`order:${invoice}`);
+  if (!order) return c.json({ error: "Không tìm thấy đơn" }, 404);
+  const updated = { ...order, status, note: b.note ?? order.note, updated_at: Date.now() };
+  await kv.set(`order:${invoice}`, updated);
+  return c.json({ success: true, order: updated });
 });
 
 Deno.serve(app.fetch);
