@@ -285,7 +285,8 @@ app.get(`${P}/canva-link`, async (c) => {
 /** Giá admin đã sửa (công khai — chỉ là bảng giá). */
 app.get(`${P}/prices`, async (c) => {
   try {
-    return c.json({ prices: (await kv.get("prices")) || {} });
+    const [prices, order] = await Promise.all([kv.get("prices"), kv.get("layout")]);
+    return c.json({ prices: prices || {}, order: order || {} });
   } catch (err) {
     return c.json({ error: `Lỗi đọc bảng giá: ${String(err)}` }, 500);
   }
@@ -359,7 +360,17 @@ app.post(`${P}/admin/prices`, async (c) => {
     else delete prices[name];
   } else {
     const plans: Record<string, number> = {};
+    const planList: string[] = Array.isArray(b.planList)
+      ? b.planList.map((l: any) => String(l).trim().slice(0, 40)).filter(Boolean)
+      : [];
+    if (planList.length && new Set(planList).size !== planList.length) {
+      return c.json({ error: "Tên gói bị trùng" }, 400);
+    }
+    if (Array.isArray(b.planList) && !planList.length) {
+      return c.json({ error: "Sản phẩm cần ít nhất 1 gói" }, 400);
+    }
     for (const [k, v] of Object.entries(b.plans || {})) {
+      if (planList.length && !planList.includes(k)) continue;
       const n = Math.round(Number(v));
       if (!Number.isFinite(n) || n < 1000 || n > 100_000_000) {
         return c.json({ error: `Giá gói "${k}" không hợp lệ (tối thiểu 1.000đ)` }, 400);
@@ -367,14 +378,33 @@ app.post(`${P}/admin/prices`, async (c) => {
       plans[k] = n;
     }
     const original = Math.round(Number(b.original) || 0);
+    if (planList.some((l) => !plans[l])) return c.json({ error: "Thiếu giá cho gói mới" }, 400);
     prices[name] = {
       plans,
+      ...(planList.length ? { planList } : {}),
       ...(original > 0 ? { original } : {}),
       ...(prices[name]?.soldOut ? { soldOut: true } : {}),
     };
   }
   await kv.set("prices", prices);
   return c.json({ success: true, prices });
+});
+
+/** Admin lưu thứ tự sản phẩm trong 1 mục: { section, names: string[] }. */
+app.post(`${P}/admin/order`, async (c) => {
+  if (!adminOk(c)) return c.json({ error: "Sai mật khẩu quản trị" }, 401);
+  let b: any = {};
+  try {
+    b = await c.req.json();
+  } catch (err) {
+    return c.json({ error: `Body không hợp lệ: ${String(err)}` }, 400);
+  }
+  const section = String(b?.section || "").trim();
+  if (!section || !Array.isArray(b?.names)) return c.json({ error: "Thiếu dữ liệu sắp xếp" }, 400);
+  const order: any = (await kv.get("layout")) || {};
+  order[section] = b.names.map((n: any) => String(n)).slice(0, 200);
+  await kv.set("layout", order);
+  return c.json({ success: true, order });
 });
 
 /**

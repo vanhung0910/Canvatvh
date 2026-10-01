@@ -22,17 +22,8 @@ import { OrderModal } from "./components/OrderModal";
 import { PaymentReturnModal } from "./components/PaymentReturnModal";
 import { FloatingButtons } from "./components/FloatingButtons";
 import { AdminPage } from "./components/AdminPage";
-import {
-  BEST_SELLERS,
-  DESIGN_PRODUCTS,
-  AI_PRODUCTS,
-  WORK_PRODUCTS,
-  ENTERTAINMENT_PRODUCTS,
-  EDUCATION_PRODUCTS,
-  VPN_PRODUCTS,
-  applyOverrides,
-} from "./data/products";
-import { usePrices } from "./data/usePrices";
+import { SECTIONS, applyOverrides, orderProducts } from "./data/products";
+import { useCatalog } from "./data/usePrices";
 
 const TESTIMONIALS = [
   {
@@ -149,7 +140,7 @@ function ProductSection({
 }
 
 function Storefront() {
-  const prices = usePrices();
+  const { prices, order } = useCatalog();
   const withPrices = (list: Product[]) => list.map((p) => applyOverrides(p, prices));
   const [selectedProduct, setSelectedProduct] =
     useState<Product | null>(null);
@@ -545,50 +536,16 @@ function Storefront() {
       </section>
 
       {/* Product Sections */}
-      <ProductSection
-        id="best-sellers"
-        title="ĐANG BÁN CHẠY"
-        products={withPrices(BEST_SELLERS)}
-        bg="gray"
-        onClick={setSelectedProduct}
-      />
-      <ProductSection
-        id="other-products"
-        title="THIẾT KẾ"
-        products={withPrices(DESIGN_PRODUCTS)}
-        bg="gradient"
-        onClick={setSelectedProduct}
-      />
-      <ProductSection
-        title="TRỢ LÝ AI"
-        products={withPrices(AI_PRODUCTS)}
-        bg="gray"
-        onClick={setSelectedProduct}
-      />
-      <ProductSection
-        title="LÀM VIỆC"
-        products={withPrices(WORK_PRODUCTS)}
-        bg="gradient"
-        onClick={setSelectedProduct}
-      />
-      <ProductSection
-        title="XEM PHIM - GIẢI TRÍ"
-        products={withPrices(ENTERTAINMENT_PRODUCTS)}
-        bg="gray"
-        onClick={setSelectedProduct}
-      />
-      <ProductSection
-        title="HỌC TẬP"
-        products={withPrices(EDUCATION_PRODUCTS)}
-        bg="gradient"
-        onClick={setSelectedProduct}
-      />
-      <ProductSection
-        title="VPN GIÁ RẺ"
-        products={withPrices(VPN_PRODUCTS)}
-        bg="gray"
-        onClick={setSelectedProduct}
-      />
+      {SECTIONS.map((section, i) => (
+        <ProductSection
+          key={section.id}
+          id={i < 2 ? section.id : undefined}
+          title={section.title}
+          products={orderProducts(withPrices(section.products), order[section.id])}
+          bg={i % 2 === 0 ? "gray" : "gradient"}
+          onClick={setSelectedProduct}
+        />
+      ))}
 
       {/* Facebook Community CTA */}
       <section className="py-12 px-4 bg-white">

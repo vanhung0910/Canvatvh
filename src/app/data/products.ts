@@ -1004,18 +1004,42 @@ export const ALL_PRODUCTS: Product[] = [
   ...VPN_PRODUCTS,
 ];
 
+export const SECTIONS = [
+  { id: "best-sellers", title: "ĐANG BÁN CHẠY", products: BEST_SELLERS },
+  { id: "other-products", title: "THIẾT KẾ", products: DESIGN_PRODUCTS },
+  { id: "ai", title: "TRỢ LÝ AI", products: AI_PRODUCTS },
+  { id: "work", title: "LÀM VIỆC", products: WORK_PRODUCTS },
+  { id: "entertainment", title: "XEM PHIM - GIẢI TRÍ", products: ENTERTAINMENT_PRODUCTS },
+  { id: "education", title: "HỌC TẬP", products: EDUCATION_PRODUCTS },
+  { id: "vpn", title: "VPN GIÁ RẺ", products: VPN_PRODUCTS },
+];
+
+/** Sắp xếp theo thứ tự admin đặt; sản phẩm mới chưa có trong danh sách nằm cuối. */
+export function orderProducts<T extends { name: string }>(list: T[], names?: string[]): T[] {
+  if (!names?.length) return list;
+  const rank = (n: string) => {
+    const i = names.indexOf(n);
+    return i === -1 ? names.length : i;
+  };
+  return [...list].sort((a, b) => rank(a.name) - rank(b.name));
+}
+
 // Gói Canva tự động giao link (link chọn theo TÊN GÓI, không theo số tiền).
 export const CANVA_PLANS = ["1 Tháng", "3 Tháng", "1 Năm"];
 
 /**
  * Giá admin sửa trên trang quản trị (lưu ở Supabase, key "prices").
  * plans: tên gói -> giá (ChatGPT dùng key "share" / "chinh-chu"); original: giá gốc gạch ngang;
+ * planList: danh sách + thứ tự gói admin đặt (thêm/xóa gói); không có thì dùng gói mặc định;
  * soldOut: hết hàng (ẩn nút mua, server từ chối tạo đơn).
  */
 export type PriceOverrides = Record<
   string,
-  { plans?: Record<string, number>; original?: number; soldOut?: boolean }
+  { plans?: Record<string, number>; planList?: string[]; original?: number; soldOut?: boolean }
 >;
+
+/** Thứ tự sản phẩm trong từng mục (id mục -> danh sách tên), admin sắp xếp. */
+export type ProductOrder = Record<string, string[]>;
 
 export function parsePrice(priceStr: string): number {
   return parseInt(String(priceStr).replace(/[^\d]/g, ""), 10) || 0;
@@ -1033,13 +1057,17 @@ export function editablePlans(product: Product, ov?: PriceOverrides) {
   if (isChatGPTProduct(product.name)) {
     return CHATGPT_VARIANTS.map((v) => ({ key: v.key, label: v.label, price: o[v.key] ?? v.price }));
   }
-  return product.plans.map((p) => ({ key: p.label, label: p.label, price: o[p.label] ?? parsePrice(p.price) }));
+  const defaults = Object.fromEntries(product.plans.map((p) => [p.label, parsePrice(p.price)]));
+  const labels = ov?.[product.name]?.planList?.length
+    ? ov[product.name].planList!
+    : product.plans.map((p) => p.label);
+  return labels.map((label) => ({ key: label, label, price: o[label] ?? defaults[label] ?? 0 }));
 }
 
 /** Áp giá admin + tự tính lại % giảm từ giá gốc và giá thấp nhất. */
 export function applyOverrides(product: Product, ov?: PriceOverrides): Product {
   const plansNow = editablePlans(product, ov);
-  const minPrice = Math.min(...plansNow.map((p) => p.price));
+  const minPrice = Math.min(...plansNow.map((p) => p.price).filter((n) => n > 0));
   const original = ov?.[product.name]?.original ?? parsePrice(product.originalPrice || "");
   const pct = original > minPrice ? Math.round((1 - minPrice / original) * 100) : 0;
   return {
