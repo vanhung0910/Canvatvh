@@ -13,7 +13,9 @@ const HEAD = `
     <meta name="description" content="${DESCRIPTION}" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="${SITE}/" />
-    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#5b2fa0" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="vi_VN" />
@@ -80,6 +82,9 @@ export function seoPlugin(): Plugin {
       this.emitFile({ type: "asset", fileName: "sitemap.xml", source: SITEMAP });
       for (const [src, out] of [
         ["src/imports/logo.png", "logo.png"],
+        ["src/imports/favicon-64.png", "favicon.png"],
+        ["src/imports/icon-512.png", "icon-512.png"],
+        ["src/imports/apple-touch-icon.png", "apple-touch-icon.png"],
         ["src/imports/og-image.jpg", "og-image.jpg"],
       ]) {
         const file = path.resolve(__dirname, src);
@@ -94,7 +99,7 @@ export function seoPlugin(): Plugin {
         .replace(/<title>[\s\S]*?<\/title>/gi, "")
         .replace(/<meta[^>]+name=["'](robots|description|googlebot)["'][^>]*>/gi, "")
         .replace(/<meta[^>]+(property|name)=["'](og|twitter):[^"']*["'][^>]*>/gi, "")
-        .replace(/<link[^>]+rel=["'](canonical|icon)["'][^>]*>/gi, "")
+        .replace(/<link[^>]+rel=["'](canonical|icon|shortcut icon|apple-touch-icon)["'][^>]*>/gi, "")
         .replace(/<script[^>]*googletagmanager[^>]*><\/script>/gi, "")
         .replace(/<head>/i, `<head>${HEAD}`);
     },
