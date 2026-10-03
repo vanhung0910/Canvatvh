@@ -63,6 +63,9 @@ export function PaymentReturnModal({
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Kết quả thanh toán"
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
@@ -89,6 +92,8 @@ export function PaymentReturnModal({
         </div>
 
         <button
+          type="button"
+          aria-label="Đóng"
           onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors"
         >

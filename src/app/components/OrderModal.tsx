@@ -75,6 +75,9 @@ export function OrderModal({
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Đặt mua ${product.name}`}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
@@ -114,6 +117,8 @@ export function OrderModal({
             {product.name} Giá Rẻ
           </h3>
           <button
+            type="button"
+            aria-label="Đóng"
             onClick={onClose}
             className="absolute top-4 right-4 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors"
           >
@@ -151,13 +156,22 @@ export function OrderModal({
             <div className="grid grid-cols-2 gap-3">
               <input
                 type="text"
+                name="name"
+                autoComplete="name"
+                aria-label="Họ và tên"
+                required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Tên"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all text-sm"
               />
               <input
-                type="text"
+                type="email"
+                name="email"
+                autoComplete="email"
+                inputMode="email"
+                aria-label="Email nhận tài khoản"
+                required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Email"
@@ -170,6 +184,7 @@ export function OrderModal({
               <div className="relative">
                 {isChatGPT ? (
                   <select
+                    aria-label="Sản phẩm"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 appearance-none bg-white text-sm pr-8"
                     value={chatgptType}
                     onChange={(e) =>
@@ -187,6 +202,7 @@ export function OrderModal({
                   </select>
                 ) : (
                   <select
+                    aria-label="Loại tài khoản"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 appearance-none bg-white text-sm pr-8"
                     disabled
                     value={product.name}
@@ -212,6 +228,7 @@ export function OrderModal({
               <div className="relative">
                 {isChatGPT ? (
                   <select
+                    aria-label="Sản phẩm"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 appearance-none bg-white text-sm pr-8"
                     disabled
                   >
@@ -219,6 +236,7 @@ export function OrderModal({
                   </select>
                 ) : (
                   <select
+                    aria-label="Gói"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2.5 outline-none focus:border-purple-400 appearance-none bg-white text-sm pr-8"
                     value={selectedPlan}
                     onChange={(e) =>

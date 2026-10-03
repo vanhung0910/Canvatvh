@@ -74,6 +74,19 @@ const SITEMAP = `<?xml version="1.0" encoding="UTF-8"?>
 </urlset>
 `;
 
+const LLMS = `# TVH Canva
+
+> Cửa hàng bán tài khoản phần mềm bản quyền giá rẻ tại Việt Nam: Canva Pro, CapCut Pro, ChatGPT Plus, Google One, Netflix, VPN...
+
+- Đặt mua: bấm "Mua ngay" trên thẻ sản phẩm, chọn gói, nhập tên và email, thanh toán chuyển khoản qua cổng Sepay.
+- Canva Pro (1 Tháng, 3 Tháng, 1 Năm): link mời gửi tự động ngay sau khi thanh toán và qua email.
+- Sản phẩm khác: tài khoản được gửi qua email sau khi xử lý.
+- Hỗ trợ: Zalo https://zalo.me/g/wvhu5evlevj1vvnzccgo · Facebook https://www.facebook.com/groups/tvhcanva
+
+## Trang
+- [Trang chủ & bảng giá](${SITE}/)
+`;
+
 export function seoPlugin(): Plugin {
   return {
     name: "tvh-seo",
@@ -81,6 +94,7 @@ export function seoPlugin(): Plugin {
     generateBundle() {
       this.emitFile({ type: "asset", fileName: "robots.txt", source: ROBOTS });
       this.emitFile({ type: "asset", fileName: "sitemap.xml", source: SITEMAP });
+      this.emitFile({ type: "asset", fileName: "llms.txt", source: LLMS });
       for (const [src, out] of [
         ["src/imports/icon-512.png", "logo.png"],
         ["src/imports/favicon-64.png", "favicon.png"],

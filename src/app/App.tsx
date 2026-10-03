@@ -219,6 +219,9 @@ function Storefront() {
               ))}
             </nav>
             <button
+              type="button"
+              aria-label={mobileMenuOpen ? "Đóng menu" : "Mở menu"}
+              aria-expanded={mobileMenuOpen}
               className="md:hidden text-white text-xl"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
