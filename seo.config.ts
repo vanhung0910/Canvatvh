@@ -13,6 +13,7 @@ const HEAD = `
     <meta name="description" content="${DESCRIPTION}" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="${SITE}/" />
+    <link rel="preconnect" href="https://content.pancake.vn" />
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -81,7 +82,7 @@ export function seoPlugin(): Plugin {
       this.emitFile({ type: "asset", fileName: "robots.txt", source: ROBOTS });
       this.emitFile({ type: "asset", fileName: "sitemap.xml", source: SITEMAP });
       for (const [src, out] of [
-        ["src/imports/logo.png", "logo.png"],
+        ["src/imports/icon-512.png", "logo.png"],
         ["src/imports/favicon-64.png", "favicon.png"],
         ["src/imports/icon-512.png", "icon-512.png"],
         ["src/imports/apple-touch-icon.png", "apple-touch-icon.png"],

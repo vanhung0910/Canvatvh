@@ -12,7 +12,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 5,
     bgColor: "#1a1a2e",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/13/1a/60/66/6bfe386de212ab2d2d36baf219722399a5996b23e5e5f87eb78cdd49-w:2400-h:3600-l:857912-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/13/1a/60/66/6bfe386de212ab2d2d36baf219722399a5996b23e5e5f87eb78cdd49-w:2400-h:3600-l:857912-t:image/png.png",
     plans: [
       { label: "7 Ngày", price: "15.000đ" },
       { label: "1 Tháng", price: "68.000đ" },
@@ -27,7 +27,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 7,
     bgColor: "#7c3aed",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/cf/87/0e/58/77923d59f6e92885f56671d17fc3d9885168822cfbc04acc22f9d236-w:2400-h:3600-l:1401843-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/cf/87/0e/58/77923d59f6e92885f56671d17fc3d9885168822cfbc04acc22f9d236-w:2400-h:3600-l:1401843-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "15.000đ" },
       { label: "3 Tháng", price: "40.000đ" },
@@ -43,7 +43,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 7,
     bgColor: "#e8f5e9",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/9c/85/95/e2/0643a19ac56e0d0e05e1be20b8eff0793ab1d1a5044d62fb8f95ad78-w:2400-h:3600-l:2758098-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/9c/85/95/e2/0643a19ac56e0d0e05e1be20b8eff0793ab1d1a5044d62fb8f95ad78-w:2400-h:3600-l:2758098-t:image/png.png",
     plans: [{ label: "1 Năm", price: "399.000đ" }],
   },
   {
@@ -55,7 +55,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 8,
     bgColor: "#10a37f",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/13/ce/96/58/4f93be895e52df7810b3dca33f45664ccc2bcaa559ab4f6f387c62e4-w:2400-h:3600-l:937688-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/13/ce/96/58/4f93be895e52df7810b3dca33f45664ccc2bcaa559ab4f6f387c62e4-w:2400-h:3600-l:937688-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "320.000đ" },
     ],
@@ -69,7 +69,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 7,
     bgColor: "#1db954",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/2e/c6/b9/8e/03794cc15316b8f068e8197f7d54ca71971fb40f1fdd440ccd865077-w:2400-h:3600-l:510259-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/2e/c6/b9/8e/03794cc15316b8f068e8197f7d54ca71971fb40f1fdd440ccd865077-w:2400-h:3600-l:510259-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "80.000đ" },
       { label: "3 Tháng", price: "230.000đ" },
@@ -85,7 +85,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 4,
     bgColor: "#ff0000",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/ca/04/cb/b7/3864eb267345978b394857b0a02aebe0b332027c3ab6e12f318cdc37-w:2400-h:3600-l:463501-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/ca/04/cb/b7/3864eb267345978b394857b0a02aebe0b332027c3ab6e12f318cdc37-w:2400-h:3600-l:463501-t:image/png.png",
     plans: [
       { label: "1 Năm", price: "599.000đ" },
     ],
@@ -99,7 +99,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 2,
     bgColor: "#e50914",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/b8/3c/28/1d/b46f8271b37b7c6e9faaa9acea3515d85cfcd03186ae6818d160c8ce-w:2400-h:3600-l:420124-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/b8/3c/28/1d/b46f8271b37b7c6e9faaa9acea3515d85cfcd03186ae6818d160c8ce-w:2400-h:3600-l:420124-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "80.000đ" },
     ],
@@ -113,7 +113,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 3,
     bgColor: "#ff6f00",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/94/3f/23/69/2ff09c3f77802d794693b54f3930d4ba8a5ebf0a1767bd0d14a86445-w:2400-h:3600-l:2948033-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/94/3f/23/69/2ff09c3f77802d794693b54f3930d4ba8a5ebf0a1767bd0d14a86445-w:2400-h:3600-l:2948033-t:image/png.png",
     plans: [
       { label: "1 Năm", price: "299.000đ" },
     ],
@@ -127,7 +127,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 7,
     bgColor: "#2e7d32",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/6d/be/ff/3f/a89ae0baf4a0a0acb411536c72bf8efb10e2881fd43338814f0f6f3c-w:2400-h:3600-l:1051242-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/6d/be/ff/3f/a89ae0baf4a0a0acb411536c72bf8efb10e2881fd43338814f0f6f3c-w:2400-h:3600-l:1051242-t:image/png.png",
     plans: [
       { label: "1 Năm", price: "299.000đ" },
     ],
@@ -141,7 +141,7 @@ export const BEST_SELLERS: Product[] = [
     slotsLeft: 7,
     bgColor: "#15803d",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/c6/ac/17/25/f6a3a80c013e0dff7c5edac0f46f4480f7a55db3668d1b5e125ba7c1-w:2400-h:3600-l:776470-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/c6/ac/17/25/f6a3a80c013e0dff7c5edac0f46f4480f7a55db3668d1b5e125ba7c1-w:2400-h:3600-l:776470-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "100.000đ" },
     ],
@@ -158,7 +158,7 @@ export const DESIGN_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#ff6f61",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/80/81/b8/7d/fbc5fff362f14a7bf242d4b6557a22447986eb6b421e55744960229a-w:2400-h:3600-l:1748870-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/80/81/b8/7d/fbc5fff362f14a7bf242d4b6557a22447986eb6b421e55744960229a-w:2400-h:3600-l:1748870-t:image/png.png",
     plans: [
       { label: "1 Năm", price: "799.000đ" },
     ],
@@ -186,7 +186,7 @@ export const DESIGN_PRODUCTS: Product[] = [
     slotsLeft: 4,
     bgColor: "#1e1e1e",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/0b/e0/2c/ea/4f85c905ca87bc4f8cc950905c8eed691e530101fec2497eb9b63abf-w:2400-h:3600-l:297633-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/0b/e0/2c/ea/4f85c905ca87bc4f8cc950905c8eed691e530101fec2497eb9b63abf-w:2400-h:3600-l:297633-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "179.000đ" },
     ],
@@ -218,7 +218,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#111",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/ae/1e/0e/63/d42e7e23395ebf23d795b1dc8eeeac5998bcae396345e30cb4165899-w:2400-h:3600-l:434204-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/ae/1e/0e/63/d42e7e23395ebf23d795b1dc8eeeac5998bcae396345e30cb4165899-w:2400-h:3600-l:434204-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "199.000đ" },
     ],
@@ -232,7 +232,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#1a1a2e",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/7e/c1/bf/0f/4da5a258d48fbe01388c7c96627f28a020d4358e26f794262a54777f-w:2400-h:3600-l:4747953-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/7e/c1/bf/0f/4da5a258d48fbe01388c7c96627f28a020d4358e26f794262a54777f-w:2400-h:3600-l:4747953-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "239.000đ" },
     ],
@@ -246,7 +246,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#7c3aed",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/bb/d6/f3/ec/f0ee5193609004c2ae13b695cc95cb7f6d619ff9e78e96dac6345b51-w:2400-h:3600-l:798212-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/bb/d6/f3/ec/f0ee5193609004c2ae13b695cc95cb7f6d619ff9e78e96dac6345b51-w:2400-h:3600-l:798212-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "99.000đ" },
     ],
@@ -260,7 +260,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#6366f1",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/70/70/2f/03/7f729f2d79cc119a8602a976438ea8a11c8bb418db5f7e97a4a44bef-w:2400-h:3600-l:620897-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/70/70/2f/03/7f729f2d79cc119a8602a976438ea8a11c8bb418db5f7e97a4a44bef-w:2400-h:3600-l:620897-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "129.000đ" },
     ],
@@ -274,7 +274,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#0f0f1e",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/a2/43/30/c8/afba8d316732adeb310ab4fe489008defa2566052f0c4e73a72c4f86-w:2400-h:3600-l:504749-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/a2/43/30/c8/afba8d316732adeb310ab4fe489008defa2566052f0c4e73a72c4f86-w:2400-h:3600-l:504749-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "500.000đ" },
     ],
@@ -288,7 +288,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#2d1b69",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/da/ec/37/7a/308afc4460e350d0a4ce2a0b9163c9f83512d7f0e1044af0e127318b-w:2400-h:3600-l:1032390-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/da/ec/37/7a/308afc4460e350d0a4ce2a0b9163c9f83512d7f0e1044af0e127318b-w:2400-h:3600-l:1032390-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "699.000đ" },
       { label: "3 Tháng", price: "1.899.000đ" },
@@ -305,7 +305,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#4f46e5",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/39/e2/2f/e3/0ff4621995c216015c849f357b8291af934387ec60ac2bc384285537-w:2400-h:3600-l:847510-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/39/e2/2f/e3/0ff4621995c216015c849f357b8291af934387ec60ac2bc384285537-w:2400-h:3600-l:847510-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "199.000đ" },
       { label: "3 Tháng", price: "549.000đ" },
@@ -322,7 +322,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#1a1a3e",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/24/70/4e/a1/31685431dd316f242f2748cc89e529380ac551abcdb6488b579be35f-w:2400-h:3600-l:559967-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/24/70/4e/a1/31685431dd316f242f2748cc89e529380ac551abcdb6488b579be35f-w:2400-h:3600-l:559967-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "699.000đ" },
       { label: "3 Tháng", price: "1.899.000đ" },
@@ -339,7 +339,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#e91e63",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/8b/6b/3d/14/a3b02ea9230b9227aa12cc043b54cb7865999f0cf063a9cc5b4b071a-w:2400-h:3600-l:4296782-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/8b/6b/3d/14/a3b02ea9230b9227aa12cc043b54cb7865999f0cf063a9cc5b4b071a-w:2400-h:3600-l:4296782-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "199.000đ" },
       { label: "3 Tháng", price: "549.000đ" },
@@ -356,7 +356,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#ff9800",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/77/48/bb/84/d0a0704d09275b60f3c8877500ee73c84ff6f4a4bf6dbed5ac61c4b4-w:2400-h:3600-l:973849-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/77/48/bb/84/d0a0704d09275b60f3c8877500ee73c84ff6f4a4bf6dbed5ac61c4b4-w:2400-h:3600-l:973849-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "129.000đ" },
       { label: "3 Tháng", price: "349.000đ" },
@@ -373,7 +373,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#00bcd4",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/78/b5/1f/9f/015eef6a0b11d8eef4ba09782f6311aa2d1a62903fd7511e93a5e009-w:2400-h:3600-l:1255014-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/78/b5/1f/9f/015eef6a0b11d8eef4ba09782f6311aa2d1a62903fd7511e93a5e009-w:2400-h:3600-l:1255014-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "150.000đ" },
       { label: "3 Tháng", price: "399.000đ" },
@@ -390,7 +390,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#00838f",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/7e/a4/03/79/b10bf015c3a8d4be57ab25e743d7215a4cd464b89611df3427a42960-w:2400-h:3600-l:1283877-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/7e/a4/03/79/b10bf015c3a8d4be57ab25e743d7215a4cd464b89611df3427a42960-w:2400-h:3600-l:1283877-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "599.000đ" },
       { label: "3 Tháng", price: "1.599.000đ" },
@@ -407,7 +407,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#d32f2f",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/b0/2a/11/ab/8650ec96ce06a38a3a1f75e1b8a24aaae9292ff49e9ca66741fa1988-w:2400-h:3600-l:6397998-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/b0/2a/11/ab/8650ec96ce06a38a3a1f75e1b8a24aaae9292ff49e9ca66741fa1988-w:2400-h:3600-l:6397998-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "699.000đ" },
       { label: "3 Tháng", price: "1.899.000đ" },
@@ -424,7 +424,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 4,
     bgColor: "#311b92",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/06/30/59/0e/df4388ebceac18b7f19aac61a3c0f845a0c958b9daaeb5cd4954aab3-w:2400-h:3600-l:1198905-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/06/30/59/0e/df4388ebceac18b7f19aac61a3c0f845a0c958b9daaeb5cd4954aab3-w:2400-h:3600-l:1198905-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "199.000đ" },
       { label: "3 Tháng", price: "549.000đ" },
@@ -441,7 +441,7 @@ export const AI_PRODUCTS: Product[] = [
     slotsLeft: 4,
     bgColor: "#e91e63",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/0c/b6/a0/1d/553879eb1429642a33b360d00fd342b38cb73b66c5079fc58d565c1d-w:2400-h:3600-l:987049-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/0c/b6/a0/1d/553879eb1429642a33b360d00fd342b38cb73b66c5079fc58d565c1d-w:2400-h:3600-l:987049-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "299.000đ" },
       { label: "3 Tháng", price: "799.000đ" },
@@ -461,7 +461,7 @@ export const WORK_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#1a73e8",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/aa/7f/06/98/d732ff2e1b9e9537e8674f23bd70dfb690a4c757d719f3bd34a4df27-w:2400-h:3600-l:1066683-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/aa/7f/06/98/d732ff2e1b9e9537e8674f23bd70dfb690a4c757d719f3bd34a4df27-w:2400-h:3600-l:1066683-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "299.000đ" },
       { label: "3 Tháng", price: "799.000đ" },
@@ -478,7 +478,7 @@ export const WORK_PRODUCTS: Product[] = [
     slotsLeft: 9,
     bgColor: "#2d8cff",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/62/b9/17/2a/08bb42609843a90c8cd27d610c429caba94abdf190b530eb6cd5eb74-w:2400-h:3600-l:328768-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/62/b9/17/2a/08bb42609843a90c8cd27d610c429caba94abdf190b530eb6cd5eb74-w:2400-h:3600-l:328768-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "119.000đ" },
       { label: "3 Tháng", price: "319.000đ" },
@@ -495,7 +495,7 @@ export const WORK_PRODUCTS: Product[] = [
     slotsLeft: 3,
     bgColor: "#0a66c2",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/ac/0f/cb/4b/6847092e1ad98cc570af1f3741711bf71633fae66c802d18adf8ed99-w:2400-h:3600-l:2314993-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/ac/0f/cb/4b/6847092e1ad98cc570af1f3741711bf71633fae66c802d18adf8ed99-w:2400-h:3600-l:2314993-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "950.000đ" },
       { label: "3 Tháng", price: "2.599.000đ" },
@@ -512,7 +512,7 @@ export const WORK_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#1a1a2e",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/92/02/37/a2/16c1833f0031488bb4d95fc568a1239d028c2c00b7534580c7fdc333-w:2400-h:3600-l:671528-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/92/02/37/a2/16c1833f0031488bb4d95fc568a1239d028c2c00b7534580c7fdc333-w:2400-h:3600-l:671528-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "399.000đ" },
       { label: "3 Tháng", price: "1.099.000đ" },
@@ -532,7 +532,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#00c853",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/6c/fa/bb/11/5a7e3027159f2ec84a638c11254aa8369a5ab6312c49c8f2bbe9d778-w:2400-h:3600-l:484267-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/6c/fa/bb/11/5a7e3027159f2ec84a638c11254aa8369a5ab6312c49c8f2bbe9d778-w:2400-h:3600-l:484267-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "299.000đ" },
       { label: "3 Tháng", price: "799.000đ" },
@@ -549,7 +549,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#ff5722",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/13/1f/7d/2d/74e3f4ba7a383452359e5898288296dba55cc7b999367569e3c25dd6-w:2400-h:3600-l:2813521-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/13/1f/7d/2d/74e3f4ba7a383452359e5898288296dba55cc7b999367569e3c25dd6-w:2400-h:3600-l:2813521-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "199.000đ" },
       { label: "3 Tháng", price: "539.000đ" },
@@ -566,7 +566,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#ff9800",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/ee/ed/57/00/c9302c15ffea063c87ea30cec58f7c204fee9572b2fa4c523ffda03d-w:2400-h:3600-l:2153071-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/ee/ed/57/00/c9302c15ffea063c87ea30cec58f7c204fee9572b2fa4c523ffda03d-w:2400-h:3600-l:2153071-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "125.000đ" },
       { label: "3 Tháng", price: "339.000đ" },
@@ -583,7 +583,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#0f9d58",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/61/05/5e/6e/86395d719b218ef2091abd2711fc770159e56d2e59827e895f7f7ad2-w:2400-h:3600-l:551391-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/61/05/5e/6e/86395d719b218ef2091abd2711fc770159e56d2e59827e895f7f7ad2-w:2400-h:3600-l:551391-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "299.000đ" },
       { label: "3 Tháng", price: "799.000đ" },
@@ -600,7 +600,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#1976d2",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/3a/3b/2c/7c/ee28982e7b4d8b782d349a00fee706f67187977f804b82881e4413d2-w:2400-h:3600-l:544850-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/3a/3b/2c/7c/ee28982e7b4d8b782d349a00fee706f67187977f804b82881e4413d2-w:2400-h:3600-l:544850-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "359.000đ" },
       { label: "3 Tháng", price: "979.000đ" },
@@ -617,7 +617,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#d32f2f",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/a6/b0/d5/aa/522e603b987cf9809e18d0e1a430f1f57c6e0a26000d8d677417f4b7-w:2400-h:3600-l:658231-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/a6/b0/d5/aa/522e603b987cf9809e18d0e1a430f1f57c6e0a26000d8d677417f4b7-w:2400-h:3600-l:658231-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "125.000đ" },
       { label: "3 Tháng", price: "339.000đ" },
@@ -634,7 +634,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#e040fb",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/17/e2/90/ed/3abb07328c29096fd136629e25a6c3e48f3c27a3c5dd986ef062ffe9-w:2400-h:3600-l:5327075-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/17/e2/90/ed/3abb07328c29096fd136629e25a6c3e48f3c27a3c5dd986ef062ffe9-w:2400-h:3600-l:5327075-t:image/png.png",
     plans: [
       { label: "1 Năm", price: "399.000đ" },
     ],
@@ -648,7 +648,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#e91e63",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/02/ee/71/1b/7b07bbc4555706434bde5b6bcf397b314b70732cd68ab8b9716d480a-w:2400-h:3600-l:450589-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/02/ee/71/1b/7b07bbc4555706434bde5b6bcf397b314b70732cd68ab8b9716d480a-w:2400-h:3600-l:450589-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "299.000đ" },
       { label: "3 Tháng", price: "799.000đ" },
@@ -665,7 +665,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#2e7d32",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/97/a0/be/b4/dd949eedf6a510813081a7a7612f8b01e0c5bc19e437e61f3865653f-w:2400-h:3600-l:607820-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/97/a0/be/b4/dd949eedf6a510813081a7a7612f8b01e0c5bc19e437e61f3865653f-w:2400-h:3600-l:607820-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "500.000đ" },
       { label: "3 Tháng", price: "1.399.000đ" },
@@ -682,7 +682,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#ff6b6b",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/1c/22/37/b2/6b57703cd9dcb21c35cbe30ef2c33412252749671e677a7e73c99962-w:2400-h:3600-l:923142-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/1c/22/37/b2/6b57703cd9dcb21c35cbe30ef2c33412252749671e677a7e73c99962-w:2400-h:3600-l:923142-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "450.000đ" },
       { label: "3 Tháng", price: "1.199.000đ" },
@@ -699,7 +699,7 @@ export const ENTERTAINMENT_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#ffc107",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/73/09/d0/bd/ea86b6cc506dcc4c611399aa4735516c1c3d8a52e56082b807790778-w:2400-h:3600-l:314182-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/73/09/d0/bd/ea86b6cc506dcc4c611399aa4735516c1c3d8a52e56082b807790778-w:2400-h:3600-l:314182-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "450.000đ" },
       { label: "3 Tháng", price: "1.199.000đ" },
@@ -719,7 +719,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#283593",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/62/bb/8b/4b/5eae354cb7e1e5aad5da07c4893037a46fbd342c53fdacbc1bf0ab01-w:2400-h:3600-l:1643427-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/62/bb/8b/4b/5eae354cb7e1e5aad5da07c4893037a46fbd342c53fdacbc1bf0ab01-w:2400-h:3600-l:1643427-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "1.350.000đ" },
       { label: "3 Tháng", price: "3.699.000đ" },
@@ -736,7 +736,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#7c3aed",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/10/4f/98/fb/bce52d8c6f2c00a4e8aa80f3f1f79ea33dbc43a1aa8a0511241ed837-w:2400-h:3600-l:902073-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/10/4f/98/fb/bce52d8c6f2c00a4e8aa80f3f1f79ea33dbc43a1aa8a0511241ed837-w:2400-h:3600-l:902073-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "199.000đ" },
       { label: "3 Tháng", price: "549.000đ" },
@@ -753,7 +753,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#5624d0",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/4f/b7/7a/68/a6c6ef57c5b0c6961625fa3ee8d102613b9d238b5d8cbd03cdc2d2e9-w:2400-h:3600-l:484447-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/4f/b7/7a/68/a6c6ef57c5b0c6961625fa3ee8d102613b9d238b5d8cbd03cdc2d2e9-w:2400-h:3600-l:484447-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "550.000đ" },
       { label: "3 Tháng", price: "1.499.000đ" },
@@ -770,7 +770,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#0056d2",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/c9/9d/26/b2/af1336da537c37e34291543f26c780a432820f5c36b28ad1b903c4c9-w:2400-h:3600-l:550582-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/c9/9d/26/b2/af1336da537c37e34291543f26c780a432820f5c36b28ad1b903c4c9-w:2400-h:3600-l:550582-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "529.000đ" },
       { label: "3 Tháng", price: "1.449.000đ" },
@@ -787,7 +787,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#4257b2",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/42/bb/0b/26/5674a252a51b30a5dbcc9a65fd7142cf827d7c0f1577d650d641690f-w:2400-h:3600-l:604865-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/42/bb/0b/26/5674a252a51b30a5dbcc9a65fd7142cf827d7c0f1577d650d641690f-w:2400-h:3600-l:604865-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "299.000đ" },
       { label: "3 Tháng", price: "799.000đ" },
@@ -804,7 +804,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#ff6600",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/02/81/04/2c/f4dce4860b374f8da5913959172900cf7a620bc886c937436c009348-w:2400-h:3600-l:708987-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/02/81/04/2c/f4dce4860b374f8da5913959172900cf7a620bc886c937436c009348-w:2400-h:3600-l:708987-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "259.000đ" },
       { label: "3 Tháng", price: "699.000đ" },
@@ -821,7 +821,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#1a1a1a",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/c6/d1/c3/bf/db8b1db00fb404af2f82329ecc7c2df03a993f1b57652ce92bb17772-w:2400-h:3600-l:586764-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/c6/d1/c3/bf/db8b1db00fb404af2f82329ecc7c2df03a993f1b57652ce92bb17772-w:2400-h:3600-l:586764-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "799.000đ" },
       { label: "3 Tháng", price: "2.199.000đ" },
@@ -838,7 +838,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#e0e7ff",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/8c/29/44/92/4fd27b49e41ed673e5ff8204d93ac98a0a7851baed31b09e4a2bb34a-w:2400-h:3600-l:1415844-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/8c/29/44/92/4fd27b49e41ed673e5ff8204d93ac98a0a7851baed31b09e4a2bb34a-w:2400-h:3600-l:1415844-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "260.000đ" },
       { label: "3 Tháng", price: "699.000đ" },
@@ -855,7 +855,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 7,
     bgColor: "#7c3aed",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/14/af/8e/c5/78fb019099f641b81ced5773ecdcfdd2aab77bdd922cec20fb3d9504-w:2400-h:3600-l:605698-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/14/af/8e/c5/78fb019099f641b81ced5773ecdcfdd2aab77bdd922cec20fb3d9504-w:2400-h:3600-l:605698-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "450.000đ" },
       { label: "3 Tháng", price: "1.199.000đ" },
@@ -872,7 +872,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#46178f",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/0a/01/7e/53/a6219eaf9948a76818f92333e41fd742a091ff4a38078f04cd79e1f8-w:2400-h:3600-l:647900-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/0a/01/7e/53/a6219eaf9948a76818f92333e41fd742a091ff4a38078f04cd79e1f8-w:2400-h:3600-l:647900-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "150.000đ" },
       { label: "3 Tháng", price: "399.000đ" },
@@ -889,7 +889,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 6,
     bgColor: "#2196f3",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/97/64/8a/13/8725f6666ea1df316edb71e746702b9ab68ef17fbd94bd1ee35e81b6-w:2400-h:3600-l:330952-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/97/64/8a/13/8725f6666ea1df316edb71e746702b9ab68ef17fbd94bd1ee35e81b6-w:2400-h:3600-l:330952-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "350.000đ" },
       { label: "3 Tháng", price: "949.000đ" },
@@ -906,7 +906,7 @@ export const EDUCATION_PRODUCTS: Product[] = [
     slotsLeft: 5,
     bgColor: "#e8eaf6",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/03/4b/76/a9/4f9314fc628c4518f8aa02c4d58fee1cfe57c45a6592656b893ad604-w:2400-h:3600-l:1170189-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/03/4b/76/a9/4f9314fc628c4518f8aa02c4d58fee1cfe57c45a6592656b893ad604-w:2400-h:3600-l:1170189-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "399.000đ" },
       { label: "3 Tháng", price: "1.099.000đ" },
@@ -926,7 +926,7 @@ export const VPN_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#ffd600",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/5b/d9/b1/8c/f1cc86c06563a9ed4c561308b3e68ad46ba46e7d7380ddcc28b85e7c-w:2400-h:3600-l:1148196-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/5b/d9/b1/8c/f1cc86c06563a9ed4c561308b3e68ad46ba46e7d7380ddcc28b85e7c-w:2400-h:3600-l:1148196-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "69.000đ" },
       { label: "3 Tháng", price: "189.000đ" },
@@ -943,7 +943,7 @@ export const VPN_PRODUCTS: Product[] = [
     slotsLeft: 9,
     bgColor: "#d32f2f",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/04/24/f8/ff/154524676dd7caaad228a85600a63e8da1225c4d024b6b9acc6d79ee-w:2400-h:3600-l:568725-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/04/24/f8/ff/154524676dd7caaad228a85600a63e8da1225c4d024b6b9acc6d79ee-w:2400-h:3600-l:568725-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "69.000đ" },
       { label: "3 Tháng", price: "189.000đ" },
@@ -960,7 +960,7 @@ export const VPN_PRODUCTS: Product[] = [
     slotsLeft: 8,
     bgColor: "#1a2744",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/08/1e/8d/be/d94f5ee3d6f9e6f5a33ea5a1f75194689f886a7ff58ac0088390d955-w:2400-h:3600-l:2428773-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/08/1e/8d/be/d94f5ee3d6f9e6f5a33ea5a1f75194689f886a7ff58ac0088390d955-w:2400-h:3600-l:2428773-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "69.000đ" },
       { label: "3 Tháng", price: "189.000đ" },
@@ -977,7 +977,7 @@ export const VPN_PRODUCTS: Product[] = [
     slotsLeft: 9,
     bgColor: "#178a80",
     image:
-      "https://content.pancake.vn/1/s702x1053/fwebp0/a3/0d/d3/8d/636384bd45bc2dca1241107fed4a01495381215c42f1f82067b5f124-w:2400-h:3600-l:706958-t:image/png.png",
+      "https://content.pancake.vn/1/s420x630/fwebp0/a3/0d/d3/8d/636384bd45bc2dca1241107fed4a01495381215c42f1f82067b5f124-w:2400-h:3600-l:706958-t:image/png.png",
     plans: [
       { label: "1 Tháng", price: "399.000đ" },
       { label: "3 Tháng", price: "1.099.000đ" },

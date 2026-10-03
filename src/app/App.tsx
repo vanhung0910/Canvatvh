@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 const FACEBOOK_GROUP_URL = "https://www.facebook.com/groups/tvhcanva";
-import logoImg from "../imports/logo.png";
+import logoImg from "../imports/logo-96.webp";
 import {
   ProductCard,
   type Product,
@@ -30,28 +30,28 @@ const TESTIMONIALS = [
     name: "Chị My",
     role: "Sinh viên",
     avatar:
-      "https://content.pancake.vn/1/f6/c7/6b/c2/870293ade67fc411fc854e4cabd360f1fbf509a4951e6c5e1d2bd122-w:500-h:750-l:50062-t:image/jpeg.jpg",
+      "https://content.pancake.vn/1/s200x300/f6/c7/6b/c2/870293ade67fc411fc854e4cabd360f1fbf509a4951e6c5e1d2bd122-w:500-h:750-l:50062-t:image/jpeg.jpg",
     text: "Mình đã so sánh nhiều shop khác nhưng tvhcanva.com có giá cả cạnh tranh nhất. Chất lượng tài khoản Canva Pro rất tốt, giúp mình tiết kiệm được nhiều thời gian.",
   },
   {
     name: "Anh Vinh",
     role: "Trưởng phòng",
     avatar:
-      "https://content.pancake.vn/1/s668x632/ab/68/df/55/c144ecc3169eabb59f6beedcd6971695b168d7314ac29fed592b297f-w:1000-h:945-l:249213-t:image/jpeg.jpg",
+      "https://content.pancake.vn/1/s200x190/ab/68/df/55/c144ecc3169eabb59f6beedcd6971695b168d7314ac29fed592b297f-w:1000-h:945-l:249213-t:image/jpeg.jpg",
     text: "tvhcanva.com đã giúp mình tìm được tài khoản Google One với dung lượng lớn mà giá cả lại rất hợp lý. Nhân viên hỗ trợ nhiệt tình, giải đáp mọi thắc mắc của mình.",
   },
   {
     name: "Chị Thu",
     role: "Content Creator",
     avatar:
-      "https://images.unsplash.com/photo-1758600587709-ad6b8e429896?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMHdvbWFuJTIwY29udGVudCUyMGNyZWF0b3IlMjBzb2NpYWwlMjBtZWRpYXxlbnwxfHx8fDE3NzU4NDMyMTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1758600587709-ad6b8e429896?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMHdvbWFuJTIwY29udGVudCUyMGNyZWF0b3IlMjBzb2NpYWwlMjBtZWRpYXxlbnwxfHx8fDE3NzU4NDMyMTR8MA&ixlib=rb-4.1.0&q=80&w=200",
     text: "tvhcanva.com là nơi mình tin tưởng để mua tài khoản ChatGPT Plus. Tài khoản hoạt động ổn định, giá cả hợp lý và đội ngũ hỗ trợ rất chuyên nghiệp.",
   },
   {
     name: "Anh Tuấn",
     role: "Video Editor",
     avatar:
-      "https://images.unsplash.com/photo-1769755031467-1553dd467c9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMG1hbiUyMHZpZGVvJTIwZWRpdG9yJTIwY3JlYXRpdmV8ZW58MXx8fHwxNzc1ODQzMjE0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "https://images.unsplash.com/photo-1769755031467-1553dd467c9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhc2lhbiUyMG1hbiUyMHZpZGVvJTIwZWRpdG9yJTIwY3JlYXRpdmV8ZW58MXx8fHwxNzc1ODQzMjE0fDA&ixlib=rb-4.1.0&q=80&w=200",
     text: "Mình rất hài lòng với dịch vụ của tvhcanva.com. Tài khoản Capcut Pro hoạt động ổn định, giá cả phải chăng và giao dịch rất nhanh gọn. Mình sẽ tiếp tục ủng hộ shop.",
   },
 ];
@@ -184,6 +184,8 @@ function Storefront() {
               <img
                 src={logoImg}
                 alt="TVHCanva Logo"
+                width={40}
+                height={40}
                 className="h-10 w-10 object-cover rounded-full"
               />
               <div>
@@ -655,6 +657,10 @@ function Storefront() {
                 <img
                   src={t.avatar}
                   alt={t.name}
+                  loading="lazy"
+                  decoding="async"
+                  width={96}
+                  height={96}
                   className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg mb-4"
                 />
                 <div className="bg-white rounded-2xl p-5 shadow-lg w-full">
@@ -715,6 +721,9 @@ function Storefront() {
                 <img
                   src={logoImg}
                   alt="TVHCanva Logo"
+                  loading="lazy"
+                  width={40}
+                  height={40}
                   className="h-10 w-10 object-contain rounded-full"
                 />
                 <div>
