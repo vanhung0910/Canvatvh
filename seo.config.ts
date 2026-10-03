@@ -42,13 +42,22 @@ const HEAD = `
         "https://zalo.me/g/wvhu5evlevj1vvnzccgo",
       ],
     })}</script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       if (!location.pathname.startsWith('/admin') && location.hash !== '#admin') {
         gtag('config', '${GA_ID}');
+        // Tải GA sau khi trang hiện xong để không làm chậm lần tải đầu
+        var loadGa = function () {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=${GA_ID}';
+          document.head.appendChild(s);
+        };
+        addEventListener('load', function () {
+          (window.requestIdleCallback || setTimeout)(loadGa, 2500);
+        });
       }
     </script>`;
 

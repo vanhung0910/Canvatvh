@@ -80,7 +80,7 @@ function SectionTitle({
         fontStyle: "italic",
         color: white ? "#fff" : "#1a1a4e",
         textDecoration: "underline",
-        textDecorationColor: white ? "#fff" : "#e91e63",
+        textDecorationColor: white ? "#fff" : "#d81b60",
         textUnderlineOffset: "8px",
       }}
     >
@@ -244,6 +244,7 @@ function Storefront() {
           )}
         </div>
       </header>
+      <main>
 
       {/* Hero Banner */}
       <section
@@ -276,7 +277,7 @@ function Storefront() {
                 style={{
                   fontSize: "1rem",
                   fontWeight: 700,
-                  color: "#e91e63",
+                  color: "#d81b60",
                 }}
               >
                 CHẤT LƯỢNG
@@ -291,7 +292,7 @@ function Storefront() {
                 style={{
                   fontSize: "1rem",
                   fontWeight: 700,
-                  color: "#e91e63",
+                  color: "#d81b60",
                 }}
               >
                 GIÁ RẺ
@@ -353,7 +354,7 @@ function Storefront() {
                 style={{
                   fontSize: "1rem",
                   fontWeight: 700,
-                  color: "#e91e63",
+                  color: "#d81b60",
                 }}
               >
                 BẢO HÀNH 24/7
@@ -368,7 +369,7 @@ function Storefront() {
                 style={{
                   fontSize: "1rem",
                   fontWeight: 700,
-                  color: "#e91e63",
+                  color: "#d81b60",
                 }}
               >
                 UY TÍN
@@ -426,15 +427,15 @@ function Storefront() {
                       className="text-green-500 flex-shrink-0 mt-0.5"
                     />
                     <div>
-                      <h4
+                      <h3
                         style={{
                           fontSize: "1rem",
                           fontWeight: 700,
-                          color: "#e91e63",
+                          color: "#d81b60",
                         }}
                       >
                         {item.t}
-                      </h4>
+                      </h3>
                       <p
                         className="text-gray-500"
                         style={{ fontSize: "0.78rem" }}
@@ -509,7 +510,7 @@ function Storefront() {
                 key={item.step}
                 className="bg-white rounded-2xl p-5 text-center shadow-lg"
               >
-                <h4
+                <h3
                   className="mb-3"
                   style={{
                     fontSize: "1rem",
@@ -520,7 +521,7 @@ function Storefront() {
                   }}
                 >
                   {item.step}
-                </h4>
+                </h3>
                 <div className="flex justify-center mb-3">
                   {item.icon}
                 </div>
@@ -712,6 +713,7 @@ function Storefront() {
       </section>
 
       {/* Footer */}
+      </main>
       <footer
         id="contact"
         className="bg-gray-900 text-gray-400 py-10 px-4"
@@ -748,7 +750,7 @@ function Storefront() {
                 </div>
               </div>
               <div className="mt-4">
-                <h4
+                <h3
                   className="text-pink-400 mb-3"
                   style={{
                     fontSize: "0.9rem",
@@ -757,7 +759,7 @@ function Storefront() {
                   }}
                 >
                   Về chúng tôi
-                </h4>
+                </h3>
                 <div
                   className="space-y-1.5"
                   style={{ fontSize: "0.82rem" }}
